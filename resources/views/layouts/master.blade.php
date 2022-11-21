@@ -14,6 +14,8 @@
     @stack('third_party_stylesheets')
     <link rel="stylesheet" href="{{ url('css/datatable/responsive.bootstrap4.css') }}">
     <link rel="stylesheet" href="{{ url('css/datatable/dataTables.bootstrap4.css') }}">
+    <!-- Jquery.js -->
+    <script src="{{ url('js/jquery.min.js') }}" type="text/javascript"></script>
 
     @stack('page_css')
 </head>
@@ -83,12 +85,14 @@
 
 @vite(['resources/js/app.js'])
 
+
 @stack('third_party_scripts')
-<!-- Jquery.js -->
-<script src="{{ url('js/jquery.min.js') }}" type="text/javascript"></script>
+
+
+
 <!-- Datatable,  -->
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <!-- All of the customize function can check in custom.js -->
 <script src="{{ url('js/custom.js') }}" type="text/javascript"></script>
 

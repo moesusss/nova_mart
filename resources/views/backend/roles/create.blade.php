@@ -47,7 +47,7 @@
                                         <span class="text-danger">*</span></label>
                                     <div class="col-sm-10">
                                     <div class="icheck-primary d-inline">
-                                        <input type="checkbox" id="select-all">
+                                        <input type="checkbox" id="select-all" onclick="toggle(this);">
                                         <label for="select-all">Select All</label>
                                      </div>
                                     <br>
@@ -91,18 +91,14 @@
         </div><!-- /.container-fluid -->
     </section>
 <!-- /.content -->
-<script>
-    $('#select-all').click(function(event) {   
-        if(this.checked) {
-            // Iterate each checkbox
-            $(':checkbox').each(function() {
-                this.checked = true;                        
-            });
-        } else {
-            $(':checkbox').each(function() {
-                this.checked = false;                       
-            });
-        }
-    });
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+<script>  
+function toggle(source) {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i] != source)
+            checkboxes[i].checked = source.checked;
+    }
+} 
 </script>
 @endsection
