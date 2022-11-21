@@ -48,7 +48,7 @@
                                     <label for="username" class="col-sm-2 col-form-label">Permission<span class="text-danger">*</span></label>
                                     <div class="col-sm-10">
                                         <div class="icheck-primary d-inline">
-                                            <input type="checkbox" id="select-all">
+                                            <input type="checkbox" id="select-all" onclick="toggle(this);">
                                             <label for="select-all">Select All</label>
                                          </div>
                                         <br>
@@ -96,18 +96,4 @@
     </section>
 <!-- /.content -->
 <!-- </div> -->
-<script>
-    $('#select-all').click(function(event) {   
-        if(this.checked) {
-            // Iterate each checkbox
-            $(':checkbox').each(function() {
-                this.checked = true;                        
-            });
-        } else {
-            $(':checkbox').each(function() {
-                this.checked = false;                       
-            });
-        }
-    });
-</script>
 @endsection
