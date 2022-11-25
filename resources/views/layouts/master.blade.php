@@ -83,20 +83,42 @@
     </footer>
 </div>
 
-@vite(['resources/js/app.js'])
+<!-- @vite(['resources/js/app.js']) -->
 
 
 @stack('third_party_scripts')
-
-
+<!-- Select 2 plugin -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- Datatable,  -->
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <!-- All of the customize function can check in custom.js -->
+
 <script src="{{ url('js/custom.js') }}" type="text/javascript"></script>
 
-
 @stack('page_scripts')
+<script>
+    $(document).on('click','.destroy_btn',function(){
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this imaginary file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+                var form_id = $(this).attr('data-origin');
+                $('#'+form_id).submit();
+            } else {
+                // swal("Your imaginary file is safe!");
+            }
+        });
+    });
+
+  
+</script>
+
 </body>
 </html>

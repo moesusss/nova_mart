@@ -7,6 +7,7 @@ use Exception;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\Backend\UserRepository;
 use App\Services\Interfaces\UserServiceInterface;
 
@@ -17,6 +18,11 @@ class UserService implements UserServiceInterface
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
+    }
+
+    public function getAuthenticatedUser()
+    {
+        return Auth::user();
     }
 
     public function getUsers($request)

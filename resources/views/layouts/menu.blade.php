@@ -13,4 +13,12 @@
             </p>
         </a>
     </li>
+    <li class="nav-item">
+        <a href="{{ route('main_services.index') }}" class="nav-link {{ $activePage == 'main_service' ? ' active' : '' }}">
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
+            {{ __('Main Service') }}
+            </p>
+        </a>
+    </li>
 </li>
