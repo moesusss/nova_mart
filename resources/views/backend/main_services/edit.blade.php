@@ -39,7 +39,7 @@
                                     <label for="code" class="col-sm-2 col-form-label">Code<span class="text-danger">*</span></label>
                                     <div class="col-sm-6">
                                     <input type="name" class="form-control @error('code') is-invalid @enderror" id="code" name="code" placeholder="Code" value="{{ $main_service->code }}">
-                                        @error('name')
+                                        @error('code')
                                             <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -59,7 +59,7 @@
                                     <label for="name" class="col-sm-2 col-form-label">Myanmar Name</label>
                                     <div class="col-sm-6">
                                     <input type="name" class="form-control @error('mm_name') is-invalid @enderror" id="mm_name" name="mm_name" placeholder="Name" value="{{ $main_service->mm_name }}">
-                                        @error('name')
+                                        @error('mm_name')
                                             <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
                                     </div>

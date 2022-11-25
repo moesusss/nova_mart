@@ -24,8 +24,8 @@ class UpdateMainServiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|unique:main_services,code,'.$this->route('main_service')->id,
-            'name' => 'required|unique:main_services,name,'.$this->route('main_service')->id
+            'code' => 'required|string|max:255|unique:main_services,code,'.$this->route('main_service')->id.',id,deleted_at,NULL',
+            'code' => 'required|string|max:255|unique:main_services,name,'.$this->route('main_service')->id.',id,deleted_at,NULL',
         ];
     }
 }

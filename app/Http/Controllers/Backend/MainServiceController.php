@@ -30,8 +30,26 @@ class MainServiceController extends Controller
         if($request->ajax()){            
             return DataTables::of($main_services)
                             ->addIndexColumn()
+                            ->editColumn('is_active', function ($main_services) {
+                                if($main_services->is_active == 0){
+                                    return 'Inactive';
+                                }else{
+                                    return 'Active';
+                                }
+                            })
                             ->addColumn('action',function($row){
-                                $btn ='<a rel="tooltip" class="btn btn-success" href="'. route('main_services.edit', $row->id) .'"
+                                if($row->is_active==0){
+                                    $status = '<i class="fas fa-thumbs-up"> Active</i>';
+                                }else{
+                                    $status = '<i class="fas fa-thumbs-down"> Inactive</i>';
+                                    
+                                }
+                                $btn = '<a rel="tooltip" class="btn btn-success" href="'. url('admin/main_services/'.$row->id.'/change_status') .'"
+                                data-original-title="" title="">
+                                '.$status.'
+                                <div class="ripple-container"></div>
+                                </a> &nbsp;';
+                                $btn = $btn.'<a rel="tooltip" class="btn btn-primary" href="'. url('main_services/'.$row->id.'/change_status') .'"
                                 data-original-title="" title="">
                                 <i class="fas fa-edit"> Edit</i>
                                 <div class="ripple-container"></div>
@@ -121,5 +139,17 @@ class MainServiceController extends Controller
     {
         $result = $this->mainserviceService->destroy($main_service);
         return redirect('admin/main_services')->withStatus(__('Main service successfully deleted.'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function changeStatus(MainService $main_service)
+    {
+        $result = $this->mainserviceService->changeStatus($main_service);
+        return redirect('admin/main_services')->withStatus(__('Main service successfully updated.'));
     }
 }
