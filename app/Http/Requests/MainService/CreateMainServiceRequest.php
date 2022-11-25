@@ -24,8 +24,8 @@ class CreateMainServiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|unique:main_services,code',
-            'name' => 'required|unique:main_services,name'
+            'code' => 'required|unique:main_services,code,NULL,id,deleted_at,NULL',
+            'name' => 'required|unique:main_services,name,NULL,id,deleted_at,NULL'
         ];
     }
 }

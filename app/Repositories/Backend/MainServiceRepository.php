@@ -59,6 +59,26 @@ class MainServiceRepository extends BaseRepository
     }
 
     /**
+     * @param MainService  $main_service
+     * @param array $data
+     *
+     * @return mixed
+     */
+    public function changeStatus(MainService $main_service)
+    {
+       if($main_service->is_active==0){
+            $main_service->is_active=1;
+       }else{
+            $main_service->is_active=0;
+       }
+       if($main_service->isDirty()){
+        //    $main_service->updated_by = $data['updatedBy'];
+           $main_service->save();
+       }
+       return $main_service->refresh();
+    }
+
+    /**
      * @param MainService $main_service
      */
     public function destroy(MainService $main_service)

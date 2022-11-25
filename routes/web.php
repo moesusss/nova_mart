@@ -25,6 +25,9 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function () {
     //Route::post('logout', 'LoginController@logout')->name('logout');
     // Route::resource('users', 'UserController');
     Route::resource('roles', App\Http\Controllers\Backend\RoleController::class);
+    // Main Service Route
     Route::resource('main_services', App\Http\Controllers\Backend\MainServiceController::class);
+
+    Route::get('main_services/{main_service}/change_status', [App\Http\Controllers\Backend\MainServiceController::class,'changeStatus']);
 
 });

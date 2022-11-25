@@ -74,4 +74,22 @@ class MainServiceService implements MainServiceInterface
         
         return $result;
     }
+
+    // change Status
+    public function changeStatus(MainService $main_service)
+    {
+
+        DB::beginTransaction();
+        try {
+            $result = $this->mainserviceRepository->changeStatus($main_service);
+        }
+        catch(Exception $exc){
+            DB::rollBack();
+            Log::error($exc->getMessage());
+            throw new InvalidArgumentException('Unable to active main service');
+        }
+        DB::commit();
+
+        return $result;
+    }
 }

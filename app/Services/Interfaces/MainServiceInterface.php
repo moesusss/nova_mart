@@ -7,6 +7,7 @@ use App\Models\MainService;
 interface MainServiceInterface
 {
     public function getMainServices();
+    public function changeStatus(MainService $main_service);
     public function getMainService(MainService $main_service);
     public function create(array $data);
     public function update(MainService $main_service,array $data);
