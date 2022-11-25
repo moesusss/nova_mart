@@ -22,3 +22,22 @@ function toggle(source) {
             checkboxes[i].checked = source.checked;
     }
 } 
+//  Main Service index table
+$('.main-service-data-table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: $('#table_url').attr('data-table-url'),
+    columns: [
+        {data: 'name', name: 'name'},
+        {data: 'code', name: 'code'},
+        {data: 'is_active', name: 'is_active'},
+        {
+            data: 'action', 
+            name: 'action', 
+            orderable: false, 
+            searchable: false,
+            "class" : "td-actions text-right",  
+        },
+    ]
+});
+
