@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\CustomerAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+// Route::post('/otp_request',[App\Http\Controllers\Api\V1\CustomerAuthController::class, 'otp_request']);
+// Route::post('/login', 'CustomerAuthController@login');
+Route::prefix('v1')->group(function () {
+    Route::post('/otp_request',[App\Http\Controllers\Api\V1\CustomerAuthController::class, 'otp_request']);
+});
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
