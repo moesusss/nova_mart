@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\V1\OTPVerify;
+namespace App\Http\Resources\api\v1\OTPVerify;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 

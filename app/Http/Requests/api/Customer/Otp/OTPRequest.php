@@ -24,7 +24,7 @@ class OTPRequest extends FormRequest
     public function rules()
     {
         return [
-            'mobile' => 'required|min:9'
+            'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|phone:MM',
         ];
     }
 }

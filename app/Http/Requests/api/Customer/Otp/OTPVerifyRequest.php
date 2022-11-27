@@ -25,8 +25,9 @@ class OTPVerifyRequest extends FormRequest
     {
         return [
             'request_id' => 'required',
-            'mobile'     => 'required',
-            'otp_code'   => 'required'
+            'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|phone:MM',
+            'otp_code'   => 'required',
+            'is_login'   => 'required'
         ];
     }
 }

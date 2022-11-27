@@ -39,7 +39,6 @@ class SMSService implements ISMSService
             if($response->ok())
             {
                 $respBody = $response->json();
-                dd($respBody);
                 return $respBody;
             }
         }
@@ -60,8 +59,6 @@ class SMSService implements ISMSService
             'request_id' => $request_id,
             'code' => $code
         ]);
-
-        dd($response['status']);
 
         if($response->ok())
         {

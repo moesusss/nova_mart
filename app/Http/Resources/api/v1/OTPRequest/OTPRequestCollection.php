@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\V1\OTPRequest;
+namespace App\Http\Resources\api\v1\OTPRequest;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class OTPRequestResource extends ResourceCollection
+class OTPRequestCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -14,12 +14,7 @@ class OTPRequestResource extends ResourceCollection
      */
     public function toArray($request)
     {
-        return [
-            'id'            => $this->first()->id,
-            'request_id'    => $this->first()->request_id,
-            'mobile'        => $this->first()->to,
-            'expired_at'    => \Carbon\Carbon::parse($this->first()->sms_created_at)->addMinutes(1)->format('Y-m-d H:i:s')
-        ];
+        return parent::toArray($request);
     }
 
     /**

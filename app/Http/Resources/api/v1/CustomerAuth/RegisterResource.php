@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\V1\OTPVerify;
+namespace App\Http\Resources\api\v1\CustomerAuth;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OTPVerifyResource extends JsonResource
+class Register extends JsonResource
 {
     /**
      * Transform the resource into an array.

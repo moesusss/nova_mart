@@ -5,16 +5,17 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
+use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
   
 class Customer extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, Uuids;
+    use  HasFactory, Notifiable, HasRoles, Uuids, HasApiTokens;
   
     /**
      * The attributes that are mass assignable.
@@ -46,4 +47,13 @@ class Customer extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the address for customer.
+     */
+
+    public function customer_addresses()
+    {
+        return $this->hasMany(CustomerAddress::class);
+    }
 }

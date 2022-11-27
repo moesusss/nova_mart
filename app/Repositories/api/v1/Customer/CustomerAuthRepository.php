@@ -25,17 +25,16 @@ class CustomerAuthRepository extends BaseRepository
      */
     public function create(array $data)
     {
-        if(isset($data['avatar']))
-        {
-            $image = base64_encode(file_get_contents($data['avatar']));
-        }
         
-        return Customer::create([
+        $customer = Customer::create([
             'name' => $data['name'],
             'mobile' => isset($data['mobile'])? $data['mobile']: null,
             'sms_verified_at' => 1,
             'is_active' => 1
         ]);
+
+        return $customer;
+
     }
 
     /**

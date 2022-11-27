@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Customer;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Services\CustomerAuthService;
@@ -11,8 +12,10 @@ use App\Services\CheckSMSVerifyLogService;
 use App\Http\Requests\api\Customer\Otp\OTPRequest;
 use App\Http\Requests\api\Customer\Otp\OTPVerifyRequest;
 use App\Http\Requests\CustomerAuth\CustomerLoginRequest;
-use App\Http\Resources\V1\OTPRequest\OTPRequestResource;
+use App\Http\Resources\api\v1\OTPRequest\OTPRequestResource;
 use App\Http\Requests\api\Customer\Auth\CustomerRegisterRequest;
+use App\Http\Resources\api\v1\Customer\Profile\ProfileResource;
+use App\Http\Resources\api\v1\CustomerAddress\CustomerAddressCollection;
 
 class CustomerAuthController extends Controller
 {
@@ -27,54 +30,60 @@ class CustomerAuthController extends Controller
     }
 
     //  Customer Login Function 
-    public function login(Request $request){
-        $customer = Customer::where('mobile', $request['mobile'])->firstOrFail();
-        // if (auth()->attempt($request->all())) {
-        //     return response([
-        //         'user' => auth()->user(),
-        //         'access_token' => auth()->user()->createToken('authToken')->accessToken
-        //     ], Response::HTTP_OK);
-        // }
-        $loginData = [
-            
-            'mobile' => $request['mobile'],
-            'is_active' => 1,
-        ];
-        Auth::guard('customer')->check($customer);
-        dd(Auth::guard('customer')->check($customer));
-        // $token = auth()->createToken('authToken')->accessToken;
-        // dd($token);
-        // if (auth()->guard('customer')->attempt($loginData)) {
-        //     $accessToken = auth()->guard('customer')->createToken('authToken')->accessToken;   
-        // }else{
-        //     return response()->json(['status'=>false,'message'=>'Invalid Credentials']);
-        // }
-        
-        // return $accessToken;
-        // Auth::guard('customer')->attempt($customer);
-        //     $accessToken = Auth::guard('customer')->user()->createToken('authToken')->accessToken;
-        //     return response()->json([
-        //         'status' => 1,
-        //         'message' => 'Success',
-        //         'access_token' => $accessToken,
-        //         'data' => $customer
-        //         // 'user' => new AgentResource($agent->load([
-        //         //                             'region','district','township','city','zone','ward','account',
-        //         //                             'created_by','updated_by','bank_informations','bank_informations.bank'
-        //         //                         ])),
-        //     ], 200);
+    public function login(Request $request){;
     }
 
     // Request OTP for login or register
     public function otpRequest(OTPRequest $request){
-        $result = $this->customerAuth->requestOTP($request->all());
-        $check_sms_log = $this->checksmslogService->getCheckSMSVerifyLog($result);
-        return new OTPRequestResource($check_sms_log);
+        if($request->is_login==1){
+            $valid_verify=true;
+        }else{
+            $customer = $this->customerAuth->checkMemberValid($request->mobile);
+            if($customer){
+                $valid_verify=false;
+                return response()->json(['status'=>false,'message'=>'Mobile number already use'],Response::HTTP_OK);
+            }else{
+                $valid_verify=true;
+            }
+        }
+        if($valid_verify){
+            $result = $this->customerAuth->requestOTP($request->all());
+            $check_sms_log = $this->checksmslogService->getCheckSMSVerifyLog($result);
+          
+            return new OTPRequestResource($check_sms_log);
+        }
+       
     }
 
     // Verify OTP for login or register
     public function otpVerify(OTPVerifyRequest $request){
         $result = $this->customerAuth->verifyOTP($request->all());
+        if($request->is_login==1){
+            if($result){
+                if(!$result['status'])
+                {
+                    return response()->json(['status'=>false,'message'=>'Your login is failed!'],Response::HTTP_OK);
+                }else{
+                    return response()->json([
+                        'status'=>true,
+                        'message'=>'Success',
+                        'token'=> $result['token'],
+                        'data' => new ProfileResource($result['data']->load(['customer_addresses']))
+                    
+                    ],Response::HTTP_OK);
+                }
+            }else{
+                return response()->json(['status'=>false,'message'=>'Your login is failed!'],Response::HTTP_OK);
+            }
+        }else{
+            if(!$result['status'])
+            {
+                return response()->json(['status'=>false,'message'=>'OTP Verify process is failed!'],Response::HTTP_OK);
+            }
+
+            return response(['status'=>true,'message'=>'OTP Verify process success']);
+        }
+        
     }
 
     //  Customer Register Function
@@ -82,9 +91,17 @@ class CustomerAuthController extends Controller
         $result = $this->customerAuth->create($request->all());
 
         
-        if(!isset($result))
+        if(!$result['status'])
         {
             return response()->json(['status'=>false,'message'=>'Your registration is failed!'],Response::HTTP_OK);
+        }else{
+            return response()->json([
+                'status'=>true,
+                'message'=>'Success',
+                'token'=> $result['token'],
+                'data' => new ProfileResource($result['data']->load(['customer_addresses']))
+            
+            ],Response::HTTP_OK);
         }
     }
 }

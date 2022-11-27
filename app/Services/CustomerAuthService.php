@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Services\CustomerService;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CustomerAuth\OTPRequest;
 use App\Repositories\CheckSMSVerifyLogRepository;
 use App\Services\Interfaces\CustomerAuthServiceInterface;
@@ -28,83 +29,66 @@ class CustomerAuthService implements CustomerAuthServiceInterface
         $this->addressRepository = $addressRepository;
     }
 
-    public function create(array $data){        
-        $customer = $this->authRepository->create($data);  
-        $success['token'] =  $customer->createToken('MyApp')->accessToken;
-        dd($success['token']);
-        $data['customer_id']= $customer->id;
+    public function create(array $data){       
+        $customer = $this->authRepository->create($data); 
+        $data['customer_id']= $customer->id; 
         $address = $this->addressRepository->create($data);
-        return $customer;
+        $token = $this->login($customer);
+        $response['status'] = true;
+        $response['token'] = $token;
+        $response['data'] = $customer->refresh();
+        return $response;
     }
 
     public function requestOTP(array $data){
         // $reqID = 0;
-        $sms_data = [ // app/Services/SMSService.php:42
-            "channel" => "SMS",
-            "status" => true,
-            "request_id" => 988575,
-            "to" => "09420118185",
-            "created_at" => "2022-11-24 08:15:56",
-            "expire_at" => "2022-11-24 01:50:56"
-        ];
        
-        // $sms_data = $this->smsService->verifyRequest($data['mobile']);  
+        $sms_data = $this->smsService->verifyRequest($data['mobile']);  
         if($sms_data){
             $sms_logs = $this->checksmslogRepository->create($sms_data); 
             // $check_sms_log = $this->checksmslogService->getCheckSMSVerifyLog($sms_logs->id);
             return $sms_logs->id;
         }
-        
-        // $user["sms_request_id"] = $reqID;
-        // session()->put('sms_request_id',$reqID);
-    }
-
-    public function verifyAccount($token)
-    {
-        // $user = $this->authRepository->checkField('email_verification_token',$token);
-        // if($user == null ){
-        //     return null;
-        // }
-        // $verify_user = $this->authRepository->verifyAccount($user);
-        // return $verify_user;
     }
 
     public function VerifyOTP(array $data)
     {
-        $user = $this->checkMemberValid($data['mobile']);
+        // $result=true;
+        $response['status'] = false;
         $result = $this->smsService->verify($data['request_id'], $data['otp_code']);
+        if($result){
+            if($data['is_login']==1){
+                $customer = $this->checkMemberValid($data['mobile']);
+                if($customer){
+                    $token = $this->login($customer);
+                    $data['customer_id']= $customer->id;
+                    $response['status'] = true;
+                    $response['token'] = $token;
+                    $response['data'] = $customer->refresh();
+                    $response['sms_result'] = $result;
+                    return $response;
+                }else{
+                    $response['status'] = false;
+                }
+                
+                $response['status'] = true;
+            }else{
+                $response['status'] = true;
+            }
+        }
         
+        
+        return $response;   
     }
 
-    public function login($request){        
-        // $user = $this->checkMemberValid($request->verify);
-        // if(!$user)
-        // {
-        //     return null;
-        // }
-
-        // $loginData = [
-        //     'email' => $request->verify,
-        //     'password' => $request->password,
-        //     'is_verified' => 1,
-        // ];
-
-        // if(is_numeric($request->verify))
-        // {
-        //     $loginData = [
-        //         'phone' => $request->verify,
-        //         'password' => $request->password,
-        //         'is_verified' => 1,
-        //     ];
-        // }
-
-        // if (auth()->attempt($loginData)) {
-        //     $accessToken = auth()->user()->createToken('authToken')->accessToken;   
-        // }else{
-        //     return response()->json(['status'=>false,'message'=>'Invalid Credentials']);
-        // }
+    public function login($customer){   
         
+        Auth::guard('customer')->setUser($customer);
+      
         // return $accessToken;
+        $accessToken = Auth::guard('customer')->user()->createToken('authToken')->accessToken;
+        return $accessToken;
+        
     }
 
     public function checkMemberValid($mobile){
