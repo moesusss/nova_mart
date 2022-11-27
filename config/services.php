@@ -30,5 +30,13 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'sms' => [
+        'key' => env('SMS_KEY'),
+        'base_url' => env('SMS_URL', 'https://smspoh.com/api'),
+        'verify_url' => env('SMS_VERIFY_LINK', 'https://verify.smspoh.com/api'),
+        'send_api' => env('SMS_SEND_ENDPOINT', '/v2/send'),
+        'verify_request' => env('SMS_REQUEST_ENDPOINT', '/v2/request'),
+        'verify' => env('SMS_VERIFY_ENDPOINT', '/v2/verify'),
+    ],
 
 ];

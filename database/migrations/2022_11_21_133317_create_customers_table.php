@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('mobile')->unique();
             $table->boolean('is_active')->default(0);
             $table->string('password')->nullable();
+            $table->timestamp('sms_verified_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

@@ -144,6 +144,14 @@ return [
     ],
 
     /*
+    |-------------------------------------------
+    | Current API Version
+    |-------------------------------------------
+    */
+
+    'api_latest'  => '1',
+
+    /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
@@ -195,6 +203,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
 
     ],
 
