@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
         <div class="col-sm-6">
-            <h1>Role Management</h1>
+            <!-- <h1>Role Management</h1> -->
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -74,18 +74,12 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="offset-sm-2 col-sm-10">
+                                    <a href="{{url('admin/roles')}}" class="btn btn-primary">Back</a>
                                     <button type="submit" class="btn btn-danger">Submit</button>
                                     </div>
                                 </div>
                             </div>
                             {!! Form::close() !!}
-                            <div class="card-footer">
-                                <div class="card-tools">
-                                    <a style="color:rgba(0,0,0,.5)" href="{{url('admin/roles')}}">
-                                        <h3 class="card-title text-warning">BACK TO ROLES</h3>
-                                    </a>
-                                </div>
-                            </div>
                       </div>
                       <!-- /.card -->
           

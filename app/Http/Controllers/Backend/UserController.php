@@ -9,6 +9,7 @@ use App\Services\UserService;
 use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 
 class UserController extends Controller
 {
@@ -38,9 +39,53 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        dd('hi');
         $users = $this->userService->getUsers($request);
-        return view('backend.user.index', ['users' => $users]);
+        if($request->ajax()){            
+            return DataTables::of($users)
+                            ->addIndexColumn()
+                            ->addColumn('role', function ($users) {
+                                return $users->roles->pluck('name')->first();
+
+                            })
+                            ->editColumn('is_active', function ($users) {
+                                if($users->is_active == 0){
+                                    return 'Inactive';
+                                }else{
+                                    return 'Active';
+                                }
+                            })
+                            ->addColumn('action',function($row){
+                                if($row->is_active==0){
+                                    $status = '<i class="fas fa-thumbs-up"> Active</i>';
+                                }else{
+                                    $status = '<i class="fas fa-thumbs-down"> Inactive</i>';
+                                    
+                                }
+                                $btn = '<a rel="tooltip" class="btn btn-success" href="'. url('admin/users/'.$row->id.'/change_status') .'"
+                                data-original-title="" title="">
+                                '.$status.'
+                                <div class="ripple-container"></div>
+                                </a> &nbsp;';
+                                $btn = $btn.'<a rel="tooltip" class="btn btn-primary" href="'. url('admin/users/'.$row->id.'/edit') .'"
+                                data-original-title="" title="">
+                                <i class="fas fa-edit"> Edit</i>
+                                <div class="ripple-container"></div>
+                                </a>';
+                                $btn = $btn.'<form action="'. route('users.destroy',$row->id) .'" method="POST" id="del-role-'.$row->id.'" class="d-inline">
+                                <input type="hidden" name="_token" value="'.csrf_token() .'">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="button" class="btn btn-danger  destroy_btn" data-original-title="" data-origin="del-role-'.$row->id.'">
+                                    <i class="fas fa-trash"> Delete</i>
+                                    <div class="ripple-container"></div>
+                                </button>                                                    
+                                </form>';
+                                
+                                return $btn;
+                            })
+                            ->rawColumns(['action'])
+                            ->make(true);
+        }
+        return view('backend.users.index', ['users' => $users]);
     }
 
     /**
@@ -51,7 +96,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = $this->roleService->getRolesPluckName();
-        return view('backend.user.create',compact('roles'));
+        return view('backend.users.create',compact('roles'));
     }
 
     /**
@@ -76,7 +121,7 @@ class UserController extends Controller
     {
         $roles = $this->roleService->getRolesPluckName();
         $userRole = $this->userService->getUserRolesPluckName($user);
-        return view('backend.user.show',compact('user','roles','userRole'));
+        return view('backend.users.show',compact('user','roles','userRole'));
     }
 
     /**
@@ -89,7 +134,7 @@ class UserController extends Controller
     {
         $roles = $this->roleService->getRolesPluckName();
         $userRole = $this->userService->getUserRolesPluckName($user);
-        return view('backend.user.edit',compact('user','roles','userRole'));
+        return view('backend.users.edit',compact('user','roles','userRole'));
     }
 
     /**
@@ -99,7 +144,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         $this->userService->update($user, $request->all());
         return redirect()->route('users.index')->with('status', 'User has been updated successfully');
@@ -115,5 +160,17 @@ class UserController extends Controller
     {
         $this->userService->destroy($user);
         return redirect()->route('users.index')->with('status', 'User has been deleted successfully');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function changeStatus(User $user)
+    {
+        $result = $this->userService->changeStatus($user);
+        return redirect('admin/users')->withStatus(__('User successfully updated.'));
     }
 }

@@ -32,8 +32,8 @@ class UserRepository extends BaseRepository
             'name'              => $data['name'],
             'password'          => Hash::make($data['password']),
             'email'             => $data['email'],
-            'phone'             => isset($data['phone']) ? $data['phone'] : null,
-            'address'           => isset($data['address']) ? $data['address'] : null,
+            'mobile'            => isset($data['mobile']) ? $data['mobile'] : null,
+            'is_active'         => 1,
         ]);
         $user->assignRole($data['roles']);
         return $user;
@@ -49,8 +49,7 @@ class UserRepository extends BaseRepository
     {
         $user->name = isset($data['name']) ? $data['name'] : $user->name ;
         $user->email = isset($data['email']) ? $data['email']: $user->email;
-        $user->phone = isset($data['phone']) ? $data['phone'] : $user->phone;
-        $user->address = isset($data['address']) ? $data['address'] : $user->address;
+        $user->mobile = isset($data['mobile']) ? $data['mobile'] : $user->mobile;
         $user->password = isset($data['password'])? Hash::make($data['password']) : $user->password;
 
         if ($user->isDirty()) {
@@ -74,5 +73,25 @@ class UserRepository extends BaseRepository
         if ($deleted) {
             $user->save();
         }
+    }
+
+    /**
+     * @param User  $user
+     * @param array $data
+     *
+     * @return mixed
+     */
+    public function changeStatus(User $user)
+    {
+       if($user->is_active==0){
+            $user->is_active=1;
+       }else{
+            $user->is_active=0;
+       }
+       if($user->isDirty()){
+        //    $main_service->updated_by = $data['updatedBy'];
+           $user->save();
+       }
+       return $user->refresh();
     }
 }

@@ -41,3 +41,23 @@ $('.main-service-data-table').DataTable({
     ]
 });
 
+//  User index table
+$('.user-data-table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: $('#table_url').attr('data-table-url'),
+    columns: [
+        {data: 'name', name: 'name'},
+        {data: 'role', name: 'role'},
+        {data: 'email', name: 'email'},
+        {data: 'is_active', name: 'is_active'},
+        {
+            data: 'action', 
+            name: 'action', 
+            orderable: false, 
+            searchable: false,
+            "class" : "td-actions text-right",  
+        },
+    ]
+});
+

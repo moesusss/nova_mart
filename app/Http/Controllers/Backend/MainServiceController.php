@@ -17,6 +17,10 @@ class MainServiceController extends Controller
     public function __construct(MainServiceService $mainserviceService)
     {
         $this->mainserviceService = $mainserviceService;
+        $this->middleware('permission:main-service-list|main-service-create|main-service-edit|main-service-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:main-service-create', ['only' => ['create','store']]);
+        $this->middleware('permission:main-service-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:main-service-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -54,7 +58,7 @@ class MainServiceController extends Controller
                                 <i class="fas fa-edit"> Edit</i>
                                 <div class="ripple-container"></div>
                                 </a>';
-                                $btn = $btn.'<form action="'. route('main_services.destroy',$row->id) .'" method="POST" id="del-role-'.$row->id.'" class="d-inline">
+                                $btn = $btn.'<form action="'. route('main_services.destroy',$row->id) .'" method="POST" id="del-main-service-'.$row->id.'" class="d-inline">
                                 <input type="hidden" name="_token" value="'.csrf_token() .'">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="button" class="btn btn-danger  destroy_btn" data-original-title="" data-origin="del-role-'.$row->id.'">
