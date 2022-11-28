@@ -68,18 +68,12 @@
 
                                 <div class="form-group row">
                                     <div class="offset-sm-2 col-sm-10">
+                                    <a class="btn btn-primary" href="{{url('admin/main_services')}}">Back</a>
                                     <button type="submit" class="btn btn-danger">Submit</button>
                                     </div>
                                 </div>
                             </div>
                             {!! Form::close() !!}
-                            <div class="card-footer">
-                                <div class="card-tools">
-                                    <a style="color:rgba(0,0,0,.5)" href="{{url('admin/main_services')}}">
-                                        <h3 class="card-title text-warning">BACK TO MAIN SERVICE</h3>
-                                    </a>
-                                </div>
-                            </div>
                       </div>
                       <!-- /.card -->
           

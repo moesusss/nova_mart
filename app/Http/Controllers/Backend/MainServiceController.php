@@ -49,7 +49,7 @@ class MainServiceController extends Controller
                                 '.$status.'
                                 <div class="ripple-container"></div>
                                 </a> &nbsp;';
-                                $btn = $btn.'<a rel="tooltip" class="btn btn-primary" href="'. url('main_services/'.$row->id.'/change_status') .'"
+                                $btn = $btn.'<a rel="tooltip" class="btn btn-primary" href="'. url('admin/main_services/'.$row->id.'/edit') .'"
                                 data-original-title="" title="">
                                 <i class="fas fa-edit"> Edit</i>
                                 <div class="ripple-container"></div>
