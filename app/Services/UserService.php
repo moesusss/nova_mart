@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\User;
+use App\Models\User;
 use Exception;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +27,8 @@ class UserService implements UserServiceInterface
 
     public function getUsers($request)
     {
-        return $this->userRepository->getUsers($request);
+        return $this->userRepository->orderBy('created_at','desc')->get();
+        // return $this->userRepository->getUsers($request);
     }
 
     public function getUser($id)
@@ -75,6 +76,24 @@ class UserService implements UserServiceInterface
         }
         DB::commit();
         
+        return $result;
+    }
+
+    // change Status
+    public function changeStatus(User $user)
+    {
+
+        DB::beginTransaction();
+        try {
+            $result = $this->userRepository->changeStatus($user);
+        }
+        catch(Exception $exc){
+            DB::rollBack();
+            Log::error($exc->getMessage());
+            throw new InvalidArgumentException('Unable to active main service');
+        }
+        DB::commit();
+
         return $result;
     }
 

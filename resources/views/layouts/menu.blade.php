@@ -5,6 +5,17 @@
         {{ __('Dashboard') }}
         </p>
     </a>
+    @can('user-list')
+    <li class="nav-item">
+        <a href="{{ route('users.index') }}" class="nav-link {{ $activePage == 'user' ? ' active' : '' }}">
+            <i class="nav-icon fas fa-user"></i>
+            <p>
+            {{ __('User') }}
+            </p>
+        </a>
+    </li>
+    @endcan
+    @can('role-list')
     <li class="nav-item">
         <a href="{{ route('roles.index') }}" class="nav-link {{ $activePage == 'role' ? ' active' : '' }}">
             <i class="nav-icon fas fa-th"></i>
@@ -13,6 +24,8 @@
             </p>
         </a>
     </li>
+    @endcan
+    @can('main-service-list')
     <li class="nav-item">
         <a href="{{ route('main_services.index') }}" class="nav-link {{ $activePage == 'main_service' ? ' active' : '' }}">
             <i class="nav-icon fas fa-chart-pie"></i>
@@ -21,4 +34,5 @@
             </p>
         </a>
     </li>
+    @endcan
 </li>

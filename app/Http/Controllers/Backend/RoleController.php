@@ -6,12 +6,9 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Services\RoleService;
 use Yajra\DataTables\DataTables;
-use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Services\PermissionService;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Permission;
 use App\Http\Requests\Role\CreateRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
     
@@ -26,10 +23,10 @@ class RoleController extends Controller
     {
          $this->roleService = $roleService;
          $this->permissionService = $permissionService;
-        //  $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
-        //  $this->middleware('permission:role-create', ['only' => ['create','store']]);
-        //  $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-        //  $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+         $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:role-create', ['only' => ['create','store']]);
+         $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
     
     /**
@@ -46,14 +43,14 @@ class RoleController extends Controller
                             ->addColumn('action',function($row){
                                 $btn ='<a rel="tooltip" class="btn btn-success" href="'. route('roles.edit', $row->id) .'"
                                 data-original-title="" title="">
-                                <i class="fas fa-edit">edit</i>
+                                <i class="fas fa-edit"> Edit</i>
                                 <div class="ripple-container"></div>
                                 </a>';
                                 $btn = $btn.'<form action="'. route('roles.destroy',$row->id) .'" method="POST" id="del-role-'.$row->id.'" class="d-inline">
                                 <input type="hidden" name="_token" value="'.csrf_token() .'">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="button" class="btn btn-danger  destroy_btn" data-original-title="" data-origin="del-role-'.$row->id.'">
-                                    <i class="fas fa-trash">delete</i>
+                                    <i class="fas fa-trash"> Delete</i>
                                     <div class="ripple-container"></div>
                                 </button>                                                    
                                 </form>';
