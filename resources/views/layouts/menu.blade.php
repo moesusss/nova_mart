@@ -35,4 +35,15 @@
         </a>
     </li>
     @endcan
+
+    @can('category-list')
+    <li class="nav-item">
+        <a href="{{ route('categories.index') }}" class="nav-link {{ $activePage == 'category' ? ' active' : '' }}">
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
+            {{ __('Category') }}
+            </p>
+        </a>
+    </li>
+    @endcan
 </li>

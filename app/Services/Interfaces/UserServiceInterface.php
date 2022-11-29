@@ -8,7 +8,7 @@ interface UserServiceInterface
 {
     public function getUsers($request);
     public function getUser($id);
-    public function changeStatus(User $main_service);
+    public function changeStatus(User $user);
     public function create(array $data);
     public function update(User $user,array $data);
     public function destroy(User $user);

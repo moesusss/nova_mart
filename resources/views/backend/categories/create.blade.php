@@ -1,4 +1,4 @@
-@extends('layouts.master', ['activePage' => 'main_service', 'titlePage' => __('New Main Service')])
+@extends('layouts.master', ['activePage' => 'category', 'titlePage' => __('New Category')])
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -11,7 +11,7 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a class="text-gray" href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item active" >Create Main Service</li>
+            <li class="breadcrumb-item active" >Create Category</li>
             </ol>
         </div>
         </div>
@@ -26,13 +26,31 @@
                 <div class="col-12">
                     <div class="card card-primary card-outline">
                         <div class="card-header">
-                          <h3 class="card-title">Create Main Service</h3>
+                          <h3 class="card-title">Create Category</h3>
                         </div>
                         
                         <!-- /.card-header -->
                         <!-- form start -->
-                        {!! Form::open(array('route' => 'main_services.store','method'=>'POST', 'class'=>'form-horizontal')) !!}
+                        {!! Form::open(array('route' => 'categories.store','method'=>'POST', 'class'=>'form-horizontal')) !!}
                             <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="main_service_id" class="col-sm-2 col-form-label">Main Service <span class="text-danger">*</span></label>
+                                    <div class="col-sm-6">
+                                        <!-- <label>Please Select Role</label> -->
+                                        <div class="select2-purple">
+                                            <select class="form-control @error('main_service_id') is-invalid @enderror" name="main_service_id" data-placeholder="Select Main Service" data-dropdown-css-class="" style="width: 100%;">
+                                                <option value="">Select Main Service</option>
+                                                @foreach ($main_services as $main_service)
+                                                    <option value="{{ $main_service->id }}">{{$main_service->name}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('main_service_id')
+                                                <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label for="code" class="col-sm-2 col-form-label">Code <span class="text-danger">*</span></label>
                                     <div class="col-sm-6">
@@ -67,7 +85,7 @@
                            
                                 <div class="form-group row">
                                     <div class="offset-sm-2 col-sm-10">
-                                    <a class="btn btn-primary" href="{{url('admin/main_services')}}">Back</a>
+                                    <a class="btn btn-primary" href="{{url('admin/categories')}}">Back</a>
                                     <button type="submit" class="btn btn-danger">Submit</button>
                                     </div>
                                 </div>
