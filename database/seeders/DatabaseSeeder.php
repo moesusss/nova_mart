@@ -25,8 +25,9 @@ class DatabaseSeeder extends Seeder
             PermissionTableSeeder::class,
             CountrySeeder::class,
             CitySeeder::class,
-            CreateAdminUserSeeder::class
-
+            CreateAdminUserSeeder::class,
+            MainServiceTableSeeder::class,
+            CategoryTableSeeder::class,
         ]);
     }
 }
