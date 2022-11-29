@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\MainService;
+namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateMainServiceRequest extends FormRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class UpdateMainServiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|string|max:255|unique:main_services,code,'.$this->route('main_service')->id.',id,deleted_at,NULL',
-            'name' => 'required|string|max:255|unique:main_services,name,'.$this->route('main_service')->id.',id,deleted_at,NULL',
+            'code' => 'required|string|unique:categories,code,'.$this->route('category')->id.',id,deleted_at,NULL',
+            'main_service_id' => 'required',
+            'name' => 'required|string|unique:categories,name,'.$this->route('category')->id.',id,deleted_at,NULL',
         ];
     }
 }

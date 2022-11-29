@@ -41,6 +41,26 @@ $('.main-service-data-table').DataTable({
     ]
 });
 
+//  Category index table
+$('.category-data-table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: $('#table_url').attr('data-table-url'),
+    columns: [
+        {data: 'name', name: 'name'},
+        {data: 'main_service', name: 'main_service'},
+        {data: 'code', name: 'code'},
+        {data: 'is_active', name: 'is_active'},
+        {
+            data: 'action', 
+            name: 'action', 
+            orderable: false, 
+            searchable: false,
+            "class" : "td-actions text-right",  
+        },
+    ]
+});
+
 //  User index table
 $('.user-data-table').DataTable({
     processing: true,
