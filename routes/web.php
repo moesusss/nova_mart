@@ -16,22 +16,28 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/login');
 });
+
+Route::get('admin/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes(['register' => false]);
 
 Auth::routes();
 
 Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function () {
-    Route::get('admin/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    
     //Route::post('logout', 'LoginController@logout')->name('logout');
     
     // User Route
     Route::resource('users', App\Http\Controllers\Backend\UserController::class);
     Route::get('users/{user}/change_status', [App\Http\Controllers\Backend\UserController::class,'changeStatus']);
-    
+    // User Route
     Route::resource('roles', App\Http\Controllers\Backend\RoleController::class);
     // Main Service Route
     Route::resource('main_services', App\Http\Controllers\Backend\MainServiceController::class);
-
     Route::get('main_services/{main_service}/change_status', [App\Http\Controllers\Backend\MainServiceController::class,'changeStatus']);
+    // CategoryRoute
+    Route::resource('categories', App\Http\Controllers\Backend\CategoryController::class);
+    Route::get('categories/{category}/change_status', [App\Http\Controllers\Backend\CategoryController::class,'changeStatus']);
+
+    
 
 });
