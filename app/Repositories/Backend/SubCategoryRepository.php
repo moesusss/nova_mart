@@ -17,9 +17,11 @@ class SubCategoryRepository extends BaseRepository
         return SubCategory::class;
     }
 
-    public function getCategories()
+    public function getSubCategories()
     {
-        $sub_categories = SubCategory::filter(request()->all())->orderBy('id','desc');
+        $sub_categories = SubCategory::with(['category'])
+                        ->filter(request()->all())
+                        ->orderBy('id','desc');
          if (request()->has('paginate')) {
             $sub_categories = $sub_categories->paginate(request()->get('paginate'));
         } else {

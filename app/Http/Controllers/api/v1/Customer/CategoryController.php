@@ -46,7 +46,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return new CategoryResource($category->load(['main_service']));
+        return new CategoryResource($category->load(['main_service','sub_categories']));
     }
 
     

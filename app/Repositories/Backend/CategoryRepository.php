@@ -19,7 +19,8 @@ class CategoryRepository extends BaseRepository
 
     public function getCategories()
     {
-        $categories = Category::filter(request()->all())->orderBy('id','desc');
+        $categories = Category::with(['sub_categories'])
+                            ->filter(request()->all())->orderBy('id','desc');
          if (request()->has('paginate')) {
             $categories = $categories->paginate(request()->get('paginate'));
         } else {

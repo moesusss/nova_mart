@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Resources\api\v1\Customer\Category;
+namespace App\Http\Resources\api\v1\Customer\SubCategory;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\ResourceCollection;
-use App\Http\Resources\api\v1\Customer\MainService\MainServiceResource;
-use App\Http\Resources\api\v1\Customer\SubCategory\SubCategoryCollection;
+use App\Http\Resources\api\v1\Customer\Category\CategoryResource;
 
-class CategoryResource extends JsonResource
+class SubCategoryResource extends JsonResource
 {
     /**
      * Transform the resource collection into an array.
@@ -23,9 +21,8 @@ class CategoryResource extends JsonResource
             'name'           => $this->name,
             'mm_name'           => $this->mm_name,
             'is_active'           => $this->is_active,
-            'main_service_id'           => $this->main_service_id,
-            'main_service' => MainServiceResource::make($this->whenLoaded('main_service')),
-            'sub_categories' => SubCategoryCollection::make($this->whenLoaded('sub_categories')),
+            'category_id'           => $this->category_id,
+            'category' => CategoryResource::make($this->whenLoaded('category')),
         ];
     }
 

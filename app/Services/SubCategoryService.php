@@ -31,7 +31,7 @@ class SubCategoryService implements SubCategoryServiceInterface
     public function getSubCategories()
     {
         if( request()->is('api/*')){
-            return $this->subcategoryRepository->getCategories();
+            return $this->subcategoryRepository->getSubCategories();
         }
         return $this->subcategoryRepository->orderBy('created_at','desc')->get();
         

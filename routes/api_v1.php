@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\CustomerAuthController;
 use App\Http\Controllers\api\v1\Customer\CategoryController;
 use App\Http\Controllers\api\v1\Customer\MainServiceController;
+use App\Http\Controllers\api\v1\Customer\SubCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +28,7 @@ Route::post('/login',[App\Http\Controllers\Api\v1\Customer\CustomerAuthControlle
 Route::group([ 'middleware' => ['auth:customer']], function () {
     Route::apiResource('main_services', MainServiceController::class)->only(['index','show']);
     Route::apiResource('categories', CategoryController::class)->only(['index','show']);
+    Route::apiResource('sub_categories', SubCategoryController::class)->only(['index','show']);
+    
     
 });
