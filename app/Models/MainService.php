@@ -19,4 +19,13 @@ class MainService extends Model
     {
         return $this->hasMany(Category::class);
     }
+
+    public function scopeFilter($query, $filter)
+    {
+        if (isset($filter['search']) && $search = $filter['search']) {
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('mm_name', 'like', "%{$search}%")
+                  ->orWhere('code', 'like', "%{$search}%");
+        }
+    }
 }

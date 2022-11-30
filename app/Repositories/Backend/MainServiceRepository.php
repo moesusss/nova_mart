@@ -15,6 +15,17 @@ class MainServiceRepository extends BaseRepository
     {
         return MainService::class;
     }
+
+    public function getMainServices()
+    {
+        $main_services = MainService::filter(request()->all())->orderBy('id','desc');
+         if (request()->has('paginate')) {
+            $main_services = $main_services->paginate(request()->get('paginate'));
+        } else {
+            $main_services = $main_services->get();
+        }
+        return $main_services;
+    }
     
     /**
      * @param string $id

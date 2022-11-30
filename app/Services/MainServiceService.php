@@ -24,6 +24,9 @@ class MainServiceService implements MainServiceInterface
 
     public function getMainServices()
     {
+        if( request()->is('api/*')){
+            return $this->mainserviceRepository->getMainServices();
+        }
         return $this->mainserviceRepository->orderBy('created_at','desc')->get();
     }
 

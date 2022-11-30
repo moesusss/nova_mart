@@ -21,9 +21,8 @@ class Category extends Model
         return $this->belongsTo(MainService::class);
     }
 
-     public function scopeFilter($query, $filter)
+    public function scopeFilter($query, $filter)
     {
-        
         if (isset($filter['search']) && $search = $filter['search']) {
             $query->where('name', 'like', "%{$search}%")
                   ->orWhere('mm_name', 'like', "%{$search}%")

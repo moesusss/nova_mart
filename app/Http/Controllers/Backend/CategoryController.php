@@ -40,7 +40,7 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = $this->categoryService->getCategories($request);
+        $categories = $this->categoryService->getCategories();
         
         if($request->ajax()){            
             return DataTables::of($categories)

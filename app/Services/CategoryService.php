@@ -28,8 +28,11 @@ class CategoryService implements CategoryServiceInterface
 
     public function getCategories()
     {
-        // return $this->categoryRepository->orderBy('created_at','desc')->get();
-        return $this->categoryRepository->getCategories();
+        if( request()->is('api/*')){
+            return $this->categoryRepository->getCategories();
+        }
+        return $this->categoryRepository->orderBy('created_at','desc')->get();
+        
     }
 
     public function getCategory($id)
