@@ -39,9 +39,19 @@
     @can('category-list')
     <li class="nav-item">
         <a href="{{ route('categories.index') }}" class="nav-link {{ $activePage == 'category' ? ' active' : '' }}">
-            <i class="nav-icon fas fa-chart-pie"></i>
+            <i class="nav-icon fas fa-copy"></i>
             <p>
             {{ __('Category') }}
+            </p>
+        </a>
+    </li>
+    @endcan
+    @can('sub-category-list')
+    <li class="nav-item">
+        <a href="{{ route('sub_categories.index') }}" class="nav-link {{ $activePage == 'sub-category' ? ' active' : '' }}">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+            {{ __('Sub Category') }}
             </p>
         </a>
     </li>

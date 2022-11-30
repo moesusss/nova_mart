@@ -61,6 +61,28 @@ $('.category-data-table').DataTable({
     ]
 });
 
+
+//  Sub Category index table
+$('.sub-category-data-table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: $('#table_url').attr('data-table-url'),
+    columns: [
+        {data: 'name', name: 'name'},
+        {data: 'category', name: 'category'},
+        {data: 'code', name: 'code'},
+        {data: 'is_active', name: 'is_active'},
+        {
+            data: 'action', 
+            name: 'action', 
+            orderable: false, 
+            searchable: false,
+            "class" : "td-actions text-right",  
+        },
+    ]
+});
+
+
 //  User index table
 $('.user-data-table').DataTable({
     processing: true,
