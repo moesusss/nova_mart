@@ -33,7 +33,7 @@ class SMSService implements ISMSService
                 'access-token' => $this->key,
                 'to' => $phone,
                 'code_length'=>6,
-                'brand_name' => config('app.name')
+                'brand_name' => config('services.sms.sms_brand_name')
             ]);
 
             if($response->ok())

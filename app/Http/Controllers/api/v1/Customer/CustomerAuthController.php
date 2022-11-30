@@ -35,7 +35,7 @@ class CustomerAuthController extends Controller
 
     // Request OTP for login or register
     public function otpRequest(OTPRequest $request){
-        if($request->is_login==1){
+        if($request->is_login=='1'){
             $valid_verify=true;
         }else{
             $customer = $this->customerAuth->checkMemberValid($request->mobile);
@@ -48,9 +48,14 @@ class CustomerAuthController extends Controller
         }
         if($valid_verify){
             $result = $this->customerAuth->requestOTP($request->all());
-            $check_sms_log = $this->checksmslogService->getCheckSMSVerifyLog($result);
+            if($result){
+                $check_sms_log = $this->checksmslogService->getCheckSMSVerifyLog($result);
           
-            return new OTPRequestResource($check_sms_log);
+                return new OTPRequestResource($check_sms_log);
+            }else{
+                return response()->json(['status'=>false,'message'=>'OTP request failed!'],Response::HTTP_OK);
+            }
+            
         }
        
     }
@@ -58,7 +63,7 @@ class CustomerAuthController extends Controller
     // Verify OTP for login or register
     public function otpVerify(OTPVerifyRequest $request){
         $result = $this->customerAuth->verifyOTP($request->all());
-        if($request->is_login==1){
+        if($request->is_login=='1'){
             if($result){
                 if(!$result['status'])
                 {
@@ -81,7 +86,7 @@ class CustomerAuthController extends Controller
                 return response()->json(['status'=>false,'message'=>'OTP Verify process is failed!'],Response::HTTP_OK);
             }
 
-            return response(['status'=>true,'message'=>'OTP Verify process success']);
+            return response(['status'=>true,'message'=>'OTP Verify process success','data'=>[]]);
         }
         
     }

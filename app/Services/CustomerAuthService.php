@@ -42,20 +42,21 @@ class CustomerAuthService implements CustomerAuthServiceInterface
 
     public function requestOTP(array $data){
         // $reqID = 0;
-       
         $sms_data = $this->smsService->verifyRequest($data['mobile']);  
         if($sms_data){
             $sms_logs = $this->checksmslogRepository->create($sms_data); 
             // $check_sms_log = $this->checksmslogService->getCheckSMSVerifyLog($sms_logs->id);
             return $sms_logs->id;
         }
+        return $sms_data;
+        
     }
 
     public function VerifyOTP(array $data)
     {
         // $result=true;
-        $response['status'] = false;
         $result = $this->smsService->verify($data['request_id'], $data['otp_code']);
+        $response['status'] = false;
         if($result){
             if($data['is_login']==1){
                 $customer = $this->checkMemberValid($data['mobile']);

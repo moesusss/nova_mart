@@ -37,6 +37,7 @@ return [
         'send_api' => env('SMS_SEND_ENDPOINT', '/v2/send'),
         'verify_request' => env('SMS_REQUEST_ENDPOINT', '/v2/request'),
         'verify' => env('SMS_VERIFY_ENDPOINT', '/v2/verify'),
+        'sms_brand_name' => env('SMS_BRAND_NAME', 'Hello'),
     ],
 
 ];
