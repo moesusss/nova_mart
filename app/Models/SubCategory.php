@@ -3,27 +3,21 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
-use App\Models\MainService;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Category extends Model
+class SubCategory extends Model
 {
-    use HasFactory,Uuids,SoftDeletes;
+    use HasFactory, Uuids, SoftDeletes;
 
     protected $fillable = [
-        'code', 'name', 'mm_name', 'is_active','main_service_id'
+        'code', 'name', 'mm_name', 'is_active','category_id'
     ];
 
-    public function main_service()
+    public function category()
     {
-        return $this->belongsTo(MainService::class);
-    }
-
-    public function sub_categories()
-    {
-        return $this->hasMany(SubCategory::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function scopeFilter($query, $filter)

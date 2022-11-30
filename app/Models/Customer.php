@@ -54,6 +54,6 @@ class Customer extends Authenticatable
 
     public function customer_addresses()
     {
-        return $this->hasMany(CustomerAddresses::class);
+        return $this->hasMany(CustomerAddress::class);
     }
 }
