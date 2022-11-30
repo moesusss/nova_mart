@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\Hash;
 
-class categoryRepository extends BaseRepository
+class CategoryRepository extends BaseRepository
 {
     /**
      * @return string
@@ -45,7 +45,7 @@ class categoryRepository extends BaseRepository
     }
 
     /**
-     * @param Agent  $agent
+     * @param Category  $category
      * @param array $data
      *
      * @return mixed
