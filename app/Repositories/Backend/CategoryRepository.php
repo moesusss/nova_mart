@@ -17,9 +17,15 @@ class categoryRepository extends BaseRepository
         return Category::class;
     }
 
-    public function getCategories($request)
+    public function getCategories()
     {
-        return Category::filter(request()->only(['search']))->orderBy('id','desc')->paginate(25);
+        $categories = Category::filter(request()->all())->orderBy('id','desc');
+         if (request()->has('paginate')) {
+            $categories = $categories->paginate(request()->get('paginate'));
+        } else {
+            $categories = $categories->get();
+        }
+        return $categories;
     }
     /**
      * @param array $data

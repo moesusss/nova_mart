@@ -6,7 +6,7 @@ use App\Models\Category;
 
 interface CategoryServiceInterface
 {
-    public function getCategories($request);
+    public function getCategories();
     public function getCategory($id);
     public function changeStatus(Category $category);
     public function create(array $data);

@@ -21,11 +21,11 @@ Route::post('/otp_verify',[App\Http\Controllers\Api\v1\Customer\CustomerAuthCont
 Route::post('/register',[App\Http\Controllers\Api\v1\Customer\CustomerAuthController::class, 'register']);
 Route::post('/login',[App\Http\Controllers\Api\v1\Customer\CustomerAuthController::class, 'login']);
 
-Route::apiResource('main_services', MainServiceController::class)->only(['index','show']);
-Route::apiResource('categories', CategoryController::class)->only(['index','show']);
+// Route::apiResource('main_services', MainServiceController::class)->only(['index','show']);
+// Route::apiResource('categories', CategoryController::class)->only(['index','show']);
 
 Route::group([ 'middleware' => ['auth:customer']], function () {
-    // Route::apiResource('main_services', MainServiceController::class)->only(['index','show']);
-    // Route::apiResource('categories', CategoryController::class)->only(['index','show']);
+    Route::apiResource('main_services', MainServiceController::class)->only(['index','show']);
+    Route::apiResource('categories', CategoryController::class)->only(['index','show']);
     
 });

@@ -26,10 +26,10 @@ class CategoryService implements CategoryServiceInterface
         return Auth::user();
     }
 
-    public function getCategories($request)
+    public function getCategories()
     {
-        return $this->categoryRepository->orderBy('created_at','desc')->get();
-        // return $this->categoryRepository->getUsers($request);
+        // return $this->categoryRepository->orderBy('created_at','desc')->get();
+        return $this->categoryRepository->getCategories();
     }
 
     public function getCategory($id)

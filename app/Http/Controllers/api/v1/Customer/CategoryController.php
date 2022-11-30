@@ -32,7 +32,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categorys = $this->categoryService->getCategories(request()->all());
+        $categorys = $this->categoryService->getCategories();
         return new CategoryCollection($categorys);
     }
 

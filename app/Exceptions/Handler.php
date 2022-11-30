@@ -95,22 +95,22 @@ class Handler extends ExceptionHandler
         if ($exception instanceof ModelNotFoundException) {
             $modelName = strtolower(class_basename($exception->getModel()));
 
-            if ($modelName == 'producttype') {
-                $message = "Cannot find product type";
-            } elseif ($modelName == 'producttag') {
-                $message = "Cannot find product tag";
-            } elseif ($modelName == 'variationmeta') {
-                $message = "Cannot find variation meta";
-            } elseif ($modelName == 'productvariation') {
-                $message = "Cannot find product variation";
-            } elseif ($modelName == 'productreview') {
-                $message = "Cannot find product review";
-            } elseif ($modelName == 'productdiscount') {
-                $message = "Cannot find product discount";
-            } else {
+            // if ($modelName == 'producttype') {
+            //     $message = "Cannot find product type";
+            // } elseif ($modelName == 'producttag') {
+            //     $message = "Cannot find product tag";
+            // } elseif ($modelName == 'variationmeta') {
+            //     $message = "Cannot find variation meta";
+            // } elseif ($modelName == 'productvariation') {
+            //     $message = "Cannot find product variation";
+            // } elseif ($modelName == 'productreview') {
+            //     $message = "Cannot find product review";
+            // } elseif ($modelName == 'productdiscount') {
+            //     $message = "Cannot find product discount";
+            // } else {
                 $modelName = class_basename($exception->getModel());
                 $message = "Cannot find {$modelName}";
-            }
+            // }
             return response()->json([
                 'status' => false,
                 'message' => $message,
