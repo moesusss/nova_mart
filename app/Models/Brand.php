@@ -7,25 +7,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SubCategory extends Model
+class Brand extends Model
 {
-    use HasFactory, Uuids, SoftDeletes;
+    use HasFactory, Uuids,SoftDeletes;
 
     protected $fillable = [
-        'code', 'name', 'mm_name', 'is_active','category_id'
+        'code', 'name', 'mm_name', 'is_active','sub_category_id'
     ];
 
-    public function category()
+    public function sub_category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(SubCategory::class);
     }
 
-    public function brands()
-    {
-        return $this->hasMany(Brand::class);
-    }
-
-   public function scopeFilter($query, $filter)
+    public function scopeFilter($query, $filter)
     {
         if (isset($filter['search']) && $search = $filter['search']) {
             $query->where('name', 'like', "%{$search}%")
@@ -50,4 +45,5 @@ class SubCategory extends Model
             $query->where('is_active', $is_active );
         }
     }
+
 }

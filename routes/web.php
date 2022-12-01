@@ -37,9 +37,12 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function () {
     // CategoryRoute
     Route::resource('categories', App\Http\Controllers\Backend\CategoryController::class);
     Route::get('categories/{category}/change_status', [App\Http\Controllers\Backend\CategoryController::class,'changeStatus']);
-    // CategoryRoute
+    // Sub CategoryRoute
     Route::resource('sub_categories', App\Http\Controllers\Backend\SubCategoryController::class);
     Route::get('sub_categories/{sub_category}/change_status', [App\Http\Controllers\Backend\SubCategoryController::class,'changeStatus']);
+    // Brand Route
+    Route::resource('brands', App\Http\Controllers\Backend\BrandController::class);
+    Route::get('brands/{brand}/change_status', [App\Http\Controllers\Backend\BrandController::class,'changeStatus']);
 
     
 

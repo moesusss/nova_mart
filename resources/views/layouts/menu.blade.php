@@ -56,4 +56,15 @@
         </a>
     </li>
     @endcan
+
+    @can('brand-list')
+    <li class="nav-item">
+        <a href="{{ route('brands.index') }}" class="nav-link {{ $activePage == 'brand' ? ' active' : '' }}">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+            {{ __('Brand') }}
+            </p>
+        </a>
+    </li>
+    @endcan
 </li>
