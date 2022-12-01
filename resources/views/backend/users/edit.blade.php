@@ -1,4 +1,4 @@
-@extends('layouts.master', ['activePage' => 'main_service', 'titlePage' => __('Update Main Service')])
+@extends('layouts.master', ['activePage' => 'user', 'titlePage' => __('Update User')])
 
 @section('content')
 <!-- <div class="content-wrapper"> -->
@@ -12,7 +12,7 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item active">Main Service List</li>
+            <li class="breadcrumb-item active">User List</li>
             </ol>
         </div>
         </div>
@@ -27,7 +27,7 @@
                 <div class="col-12">
                     <div class="card card-primary card-outline">
                         <div class="card-header">
-                          <h3 class="card-title"> Edit Main Service</h3>
+                          <h3 class="card-title"> Edit User</h3>
                         </div>
                         
                         <!-- /.card-header -->

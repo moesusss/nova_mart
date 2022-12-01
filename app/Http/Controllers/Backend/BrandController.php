@@ -2,36 +2,37 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use App\Services\BrandService;
 use Yajra\DataTables\DataTables;
-use App\Services\CategoryService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Brand\CreateBrandRequest;
+use App\Http\Requests\Brand\UpdateBrandRequest;
 use App\Services\SubCategoryService;
-use App\Http\Requests\SubCategory\CreateSubCategoryRequest;
-use App\Http\Requests\SubCategory\UpdateSubCategoryRequest;
+use App\Models\Brand;
 
-class SubCategoryController extends Controller
+class BrandController extends Controller
 {
     /**
-     * @var categoryService
+     * @var brandService
      */
+    protected $brandService;
     protected $subcategoryService;
-    protected $categoryService;
+   
 
     /**
      * AgentController constructor.
      *
      * @param categoryService $categoryService
      */
-    public function __construct(SubCategoryService $subcategoryService,CategoryService $categoryService)
+    public function __construct(BrandService $brandService,SubCategoryService $subcategoryService)
     {
+        $this->brandService = $brandService;
         $this->subcategoryService = $subcategoryService;
-        $this->categoryService = $categoryService;
-        $this->middleware('permission:sub-category-list|sub-category-create|sub-category-edit|sub-category-delete', ['only' => ['index','show']]);
-        $this->middleware('permission:sub-category-create', ['only' => ['create','store']]);
-        $this->middleware('permission:sub-category-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:sub-category-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:brand-list|brand-create|brand-edit|brand-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:brand-create', ['only' => ['create','store']]);
+        $this->middleware('permission:brand-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:brand-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -40,17 +41,18 @@ class SubCategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $sub_categories = $this->subcategoryService->getSubCategories();
+        $brands = $this->brandService->getBrands();
+        
         
         if($request->ajax()){            
-            return DataTables::of($sub_categories)
+            return DataTables::of($brands)
                             ->addIndexColumn()
-                            ->addColumn('category', function ($sub_categories) {
-                                return $sub_categories->category->name;
+                            ->addColumn('sub_category', function ($brands) {
+                                return $brands->sub_category->name;
 
                             })
-                            ->editColumn('is_active', function ($sub_categories) {
-                                if($sub_categories->is_active == 0){
+                            ->editColumn('is_active', function ($brands) {
+                                if($brands->is_active == 0){
                                     return 'Inactive';
                                 }else{
                                     return 'Active';
@@ -63,17 +65,17 @@ class SubCategoryController extends Controller
                                     $status = '<i class="fas fa-thumbs-down"> Inactive</i>';
                                     
                                 }
-                                $btn = '<a rel="tooltip" class="btn btn-success" href="'. url('admin/sub_categories/'.$row->id.'/change_status') .'"
+                                $btn = '<a rel="tooltip" class="btn btn-success" href="'. url('admin/brands/'.$row->id.'/change_status') .'"
                                 data-original-title="" title="">
                                 '.$status.'
                                 <div class="ripple-container"></div>
                                 </a> &nbsp;';
-                                $btn = $btn.'<a rel="tooltip" class="btn btn-primary" href="'. url('admin/sub_categories/'.$row->id.'/edit') .'"
+                                $btn = $btn.'<a rel="tooltip" class="btn btn-primary" href="'. url('admin/brands/'.$row->id.'/edit') .'"
                                 data-original-title="" title="">
                                 <i class="fas fa-edit"> Edit</i>
                                 <div class="ripple-container"></div>
                                 </a>';
-                                $btn = $btn.'<form action="'. route('sub_categories.destroy',$row->id) .'" method="POST" id="del-role-'.$row->id.'" class="d-inline">
+                                $btn = $btn.'<form action="'. route('brands.destroy',$row->id) .'" method="POST" id="del-role-'.$row->id.'" class="d-inline">
                                 <input type="hidden" name="_token" value="'.csrf_token() .'">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="button" class="btn btn-danger  destroy_btn" data-original-title="" data-origin="del-role-'.$row->id.'">
@@ -87,7 +89,7 @@ class SubCategoryController extends Controller
                             ->rawColumns(['action'])
                             ->make(true);
         }
-        return view('backend.sub_categories.index', ['sub_categories' => $sub_categories]);
+        return view('backend.brands.index', ['brands' => $brands]);
     }
 
     /**
@@ -97,8 +99,8 @@ class SubCategoryController extends Controller
      */
     public function create()
     {
-        $categories = $this->categoryService->getCategories();
-        return view('backend.sub_categories.create',compact('categories'));
+        $sub_categories = $this->subcategoryService->getSubCategories();
+        return view('backend.brands.create',compact('sub_categories'));
     }
 
     /**
@@ -107,10 +109,10 @@ class SubCategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateSubCategoryRequest $request)
+    public function store(CreateBrandRequest $request)
     {
-        $result = $this->subcategoryService->create($request->all());
-        return redirect('admin/sub_categories')->withStatus(__('Sub Category successfully created.'));
+        $result = $this->brandService->create($request->all());
+        return redirect('admin/brands')->withStatus(__('Brand successfully created.'));
     }
 
     /**
@@ -130,10 +132,10 @@ class SubCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(SubCategory $sub_category)
+    public function edit(Brand $brand)
     {
-        $categories = $this->categoryService->getCategories();
-        return view('backend.sub_categories.edit',compact('categories','sub_category'));
+        $sub_categories = $this->subcategoryService->getSubCategories();
+        return view('backend.brands.edit',compact('sub_categories','brand'));
     }
 
     /**
@@ -143,10 +145,10 @@ class SubCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSubCategoryRequest $request, SubCategory $sub_category)
+    public function update(UpdateBrandRequest $request, Brand $brand)
     {
-        $this->subcategoryService->update($sub_category, $request->all());
-        return redirect()->route('sub_categories.index')->with('status', 'Sub Category has been updated successfully');
+        $this->brandService->update($brand, $request->all());
+        return redirect()->route('brands.index')->with('status', 'Brand has been updated successfully');
     }
 
     /**
@@ -155,10 +157,10 @@ class SubCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SubCategory $sub_category)
+    public function destroy(Brand $brand)
     {
-        $this->subcategoryService->destroy($sub_category);
-        return redirect()->route('sub_categories.index')->with('status', 'Sub Category has been deleted successfully');
+        $this->brandService->destroy($brand);
+        return redirect()->route('brands.index')->with('status', 'Brand has been deleted successfully');
     }
 
      /**
@@ -167,9 +169,9 @@ class SubCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function changeStatus(SubCategory $sub_category)
+    public function changeStatus(Brand $brand)
     {
-        $result = $this->subcategoryService->changeStatus($sub_category);
-        return redirect('admin/sub_categories')->withStatus(__('Sub Category successfully updated.'));
+        $result = $this->brandService->changeStatus($brand);
+        return redirect('admin/brands')->withStatus(__('Brand successfully updated.'));
     }
 }
