@@ -30,8 +30,9 @@ class MainServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $request['is_active'] = true;
         $mainServices = $this->mainServiceService->getMainServices();
         return new MainServiceCollection($mainServices);
     }

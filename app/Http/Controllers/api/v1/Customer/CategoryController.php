@@ -30,8 +30,9 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $request['is_active'] = true;
         $categorys = $this->categoryService->getCategories();
         return new CategoryCollection($categorys);
     }
