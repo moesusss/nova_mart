@@ -109,4 +109,5 @@ class CustomerAuthController extends Controller
             ],Response::HTTP_OK);
         }
     }
+    
 }
