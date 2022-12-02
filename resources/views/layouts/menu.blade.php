@@ -67,4 +67,15 @@
         </a>
     </li>
     @endcan
+
+    @can('hub-vendor-list')
+    <li class="nav-item">
+        <a href="{{ route('hub_vendors.index') }}" class="nav-link {{ $activePage == 'hub_vendor' ? ' active' : '' }}">
+            <i class="nav-icon fas fa-shield-alt"></i>
+            <p>
+            {{ __('Hub Vendor') }}
+            </p>
+        </a>
+    </li>
+    @endcan
 </li>

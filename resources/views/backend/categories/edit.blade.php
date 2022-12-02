@@ -41,7 +41,7 @@
                                         <!-- <label>Please Select Role</label> -->
                                         <div class="select2-purple">
                                             <select class="form-control @error('main_service_id') is-invalid @enderror" name="main_service_id" data-placeholder="Select Main Service" data-dropdown-css-class="" style="width: 100%;">
-                                                <option value="">Select Category</option>
+                                                <option value="">Select Main Service</option>
                                                 @foreach ($main_services as $main_service)
                                                     <option value="{{ $main_service->id }}" {{($main_service->id==$category->main_service_id)?"selected":""}}>{{$main_service->name}}</option>
                                                 @endforeach
