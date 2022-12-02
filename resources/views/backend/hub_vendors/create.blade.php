@@ -78,6 +78,16 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label for="address" class="col-sm-2 col-form-label">Address </label>
+                                <div class="col-sm-6">
+                                  <input type="address" name="address" class="form-control @error('address') is-invalid @enderror" id="address" placeholder="Address" value="{{ old('address') }}">
+                                  @error('address')
+                                      <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
+                                  @enderror
+                                </div>
+                            </div>
                             
                             <div class="form-group row">
                                 <div class="offset-sm-2 col-sm-10">
