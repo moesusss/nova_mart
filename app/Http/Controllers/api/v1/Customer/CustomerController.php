@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\CustomerService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\api\v1\Customer\Profile\ProfileResource;
+use Illuminate\Http\Response;
 
 class CustomerController extends Controller
 {
@@ -54,7 +55,13 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        return new ProfileResource($customer->load(['customer_addresses']));
+            return response()->json([
+                'status'=>true,
+                'data' => new ProfileResource($customer->load(['customer_addresses']))
+            
+            ],Response::HTTP_OK);
+       
+       
     }
 
     /**

@@ -114,6 +114,7 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'status' => false,
                 'message' => $message,
+                'data' => null
             ], Response::HTTP_NOT_FOUND);
         }
         if ($exception instanceof NotFoundHttpException) {

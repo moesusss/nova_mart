@@ -86,7 +86,7 @@ class CustomerAuthController extends Controller
                 return response()->json(['status'=>false,'message'=>'OTP Verify process is failed!'],Response::HTTP_OK);
             }
 
-            return response(['status'=>true,'message'=>'OTP Verify process success','data'=>[]]);
+            return response(['status'=>true,'message'=>'OTP Verify process success','data'=>null]);
         }
         
     }
