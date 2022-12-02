@@ -20,6 +20,11 @@ class MainService extends Model
         return $this->hasMany(Category::class);
     }
 
+    public function hub_vendors()
+    {
+        return $this->hasMany(HubVendor::class);
+    }
+
     public function scopeFilter($query, $filter)
     {
         if (isset($filter['search']) && $search = $filter['search']) {

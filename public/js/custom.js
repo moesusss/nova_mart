@@ -82,7 +82,7 @@ $('.sub-category-data-table').DataTable({
     ]
 });
 
-//  Sub Category index table
+//  Brand index table
 $('.brand-data-table').DataTable({
     processing: true,
     serverSide: true,
@@ -91,6 +91,28 @@ $('.brand-data-table').DataTable({
         {data: 'name', name: 'name'},
         {data: 'sub_category', name: 'sub_category'},
         {data: 'code', name: 'code'},
+        {data: 'is_active', name: 'is_active'},
+        {
+            data: 'action', 
+            name: 'action', 
+            orderable: false, 
+            searchable: false,
+            "class" : "td-actions text-right",  
+        },
+    ]
+});
+
+//  Hub Vendor index table
+$('.hub-vendor-data-table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: $('#table_url').attr('data-table-url'),
+    columns: [
+        {data: 'name', name: 'name'},
+        {data: 'main_service', name: 'main_service'},
+        {data: 'email', name: 'email'},
+        {data: 'mobile', name: 'mobile'},
+        {data: 'address', name: 'address'},
         {data: 'is_active', name: 'is_active'},
         {
             data: 'action', 

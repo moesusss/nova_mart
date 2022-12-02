@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\HubVendor;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateUserRequest extends FormRequest
+class CreateHubVendorRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Determine if the hub vendor is authorized to make this request.
      *
      * @return bool
      */
@@ -25,10 +25,11 @@ class CreateUserRequest extends FormRequest
     {
         return [
             'name'      => 'required|string|max:255',
-            'email'     => 'required|email|unique:users,email',
-            'mobile'     => 'nullable|unique:users,phone|regex:/^([0-9\s\-\+\(\)]*)$/|phone:MM',
+            'main_service_id'      => 'required',
+            'address'      => 'required',
+            'email'     => 'required|email|unique:hub_vendors,email',
+            'mobile'     => 'unique:hub_vendors,mobile|regex:/^([0-9\s\-\+\(\)]*)$/|phone:MM',
             'password' => 'required|string|same:password_confirmation|min:6',
-            'roles' => 'required'
         ];
     }
 }
