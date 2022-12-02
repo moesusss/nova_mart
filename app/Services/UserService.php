@@ -13,7 +13,7 @@ use App\Services\Interfaces\UserServiceInterface;
 
 class UserService implements UserServiceInterface
 {
-    protected $catRepository;
+    protected $userRepository;
 
     public function __construct(UserRepository $userRepository)
     {
@@ -90,7 +90,7 @@ class UserService implements UserServiceInterface
         catch(Exception $exc){
             DB::rollBack();
             Log::error($exc->getMessage());
-            throw new InvalidArgumentException('Unable to active main service');
+            throw new InvalidArgumentException('Unable to active user');
         }
         DB::commit();
 
