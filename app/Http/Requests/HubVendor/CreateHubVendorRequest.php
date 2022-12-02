@@ -25,8 +25,10 @@ class CreateHubVendorRequest extends FormRequest
     {
         return [
             'name'      => 'required|string|max:255',
+            'main_service_id'      => 'required',
+            'address'      => 'required',
             'email'     => 'required|email|unique:hub_vendors,email',
-            'phone'     => 'nullable|unique:hub_vendors,phone|regex:/^([0-9\s\-\+\(\)]*)$/|phone:MM',
+            'mobile'     => 'unique:hub_vendors,mobile|regex:/^([0-9\s\-\+\(\)]*)$/|phone:MM',
             'password' => 'required|string|same:password_confirmation|min:6',
         ];
     }

@@ -29,10 +29,12 @@ class HubVendorRepository extends BaseRepository
     public function create(array $data) : HubVendor
     {
         $hub_vendor = HubVendor::create([
-            'name'              => $data['name'],
-            'password'          => Hash::make($data['password']),
-            'email'             => $data['email'],
-            'mobile'            => isset($data['mobile']) ? $data['mobile'] : null,
+            'name'                  => $data['name'],
+            'password'              => Hash::make($data['password']),
+            'email'                 => $data['email'],
+            'address'               => isset($data['address']) ? $data['address'] : null,
+            'main_service_id'       => $data['main_service_id'],
+            'mobile'                => isset($data['mobile']) ? $data['mobile'] : null,
             'is_active'         => 1,
         ]);
         return $hub_vendor;
@@ -50,6 +52,8 @@ class HubVendorRepository extends BaseRepository
         $hub_vendor->email = isset($data['email']) ? $data['email']: $hub_vendor->email;
         $hub_vendor->mobile = isset($data['mobile']) ? $data['mobile'] : $hub_vendor->mobile;
         $hub_vendor->password = isset($data['password'])? Hash::make($data['password']) : $hub_vendor->password;
+        $hub_vendor->main_service_id = isset($data['main_service_id'])? $data['main_service_id'] : $hub_vendor->main_service_id;
+        $hub_vendor->address = isset($data['address'])? $data['address'] : $hub_vendor->address;
 
         if ($hub_vendor->isDirty()) {
             $hub_vendor->save();

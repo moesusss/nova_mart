@@ -25,6 +25,8 @@ class UpdateHubVendorRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'main_service_id'      => 'required',
+            'address'      => 'required',
             'email' => 'required|email|unique:hub_vendors,email,'.$this->route('hub_vendor')->id,
             'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|phone:MM|unique:hub_vendors,mobile,'.$this->route('hub_vendor')->id,
             'password' => 'same:password_confirmation'

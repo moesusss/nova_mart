@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Services\HubVendorService;
 use App\Http\Controllers\Controller;
+use App\Services\MainServiceService;
 use App\Http\Requests\HubVendor\CreateHubVendorRequest;
 use App\Http\Requests\HubVendor\UpdateHubVendorRequest;
 
@@ -17,15 +18,17 @@ class HubVendorController extends Controller
      * @var HubVendorService
      */
     protected $hubvendorService;
+    protected $mainService;
 
     /**
      * AgentController constructor.
      *
      * @param HubVendorService $hubvendorService
      */
-    public function __construct(HubVendorService $hubvendorService)
+    public function __construct(HubVendorService $hubvendorService,MainServiceService $mainService)
     {
         $this->hubvendorService = $hubvendorService;
+        $this->mainService = $mainService;
         $this->middleware('permission:hub-vendor-list|hub-vendor-create|hub-vendor-edit|hub-vendor-delete', ['only' => ['index','show']]);
         $this->middleware('permission:hub-vendor-create', ['only' => ['create','store']]);
         $this->middleware('permission:hub-vendor-edit', ['only' => ['edit','update']]);
@@ -42,8 +45,8 @@ class HubVendorController extends Controller
         if($request->ajax()){            
             return DataTables::of($hub_vendors)
                             ->addIndexColumn()
-                            ->addColumn('role', function ($hub_vendors) {
-                                return $hub_vendors->roles->pluck('name')->first();
+                            ->addColumn('main_service', function ($hub_vendors) {
+                                return $hub_vendors->main_service->name;
 
                             })
                             ->editColumn('is_active', function ($hub_vendors) {
@@ -94,7 +97,8 @@ class HubVendorController extends Controller
      */
     public function create()
     {
-        return view('backend.hub_vendors.create');
+        $main_services = $this->mainService->getMainServices();
+        return view('backend.hub_vendors.create',compact('main_services'));
     }
 
     /**
@@ -129,7 +133,8 @@ class HubVendorController extends Controller
      */
     public function edit(HubVendor $hub_vendor)
     {
-        return view('backend.vendors.edit',compact('hub_vendor'));
+        $main_services = $this->mainService->getMainServices();
+        return view('backend.hub_vendors.edit',compact('hub_vendor','main_services'));
     }
 
     /**
@@ -142,7 +147,7 @@ class HubVendorController extends Controller
     public function update(UpdateHubVendorRequest $request, HubVendor $hub_vendor)
     {
         $this->hubvendorService->update($hub_vendor, $request->all());
-        return redirect()->route('vendors.index')->with('status', 'Hub vendor has been updated successfully');
+        return redirect()->route('hub_vendors.index')->with('status', 'Hub vendor has been updated successfully');
     }
 
     /**
@@ -154,7 +159,7 @@ class HubVendorController extends Controller
     public function destroy(HubVendor $hub_vendor)
     {
         $this->hubvendorService->destroy($hub_vendor);
-        return redirect()->route('vendors.index')->with('status', 'Hub vendor has been deleted successfully');
+        return redirect()->route('hub_vendors.index')->with('status', 'Hub vendor has been deleted successfully');
     }
 
     /**

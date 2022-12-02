@@ -1,4 +1,4 @@
-@extends('layouts.master', ['activePage' => 'user', 'titlePage' => __('User')])
+@extends('layouts.master', ['activePage' => 'hub_vendor', 'titlePage' => __('Hub Vendor')])
 
 @section('content')
 <!-- Content Header (Page header) -->
@@ -26,7 +26,7 @@
                     <div class="card-header">
                     <div class="col-md-3">
                     <a href="{{route('hub_vendors.create')}}" class="btn btn-block btn-primary"><i class="fas fa-plus"></i>
-                    Add User</a>
+                    Add Hub Vendor</a>
                     </div>
                     </div>
                     <div class="card-body">
@@ -37,8 +37,10 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Role</th>
+                                        <th>Main Service</th>
                                         <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>Address</th>
                                         <th>Active Status</th>
                                         <th>Action</th>
                                     </tr>

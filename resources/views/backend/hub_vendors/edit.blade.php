@@ -39,6 +39,24 @@
                         {{-- <form class="form-horizontal"> --}}
                           <div class="card-body">
                             <div class="form-group row">
+                                    <label for="main_service_id" class="col-sm-2 col-form-label">Category <span class="text-danger">*</span></label>
+                                    <div class="col-sm-6">
+                                        <!-- <label>Please Select Role</label> -->
+                                        <div class="select2-purple">
+                                            <select class="form-control @error('main_service_id') is-invalid @enderror" name="main_service_id" data-placeholder="Select Main Service" data-dropdown-css-class="" style="width: 100%;">
+                                                <option value="">Select Main Service</option>
+                                                @foreach ($main_services as $main_service)
+                                                    <option value="{{ $main_service->id }}" {{($main_service->id==$hub_vendor->main_service_id)?"selected":""}}>{{$main_service->name}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('main_service_id')
+                                                <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            <div class="form-group row">
                                 <label for="name" class="col-sm-2 col-form-label">Name <span class="text-danger">*</span></label>
                                 <div class="col-sm-6">
                                    <input type="name" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Name" value="{{ $hub_vendor->name }}">
@@ -66,7 +84,7 @@
                               </div>
                             </div>
                             <div class="form-group row">
-                                <label for="mobile" class="col-sm-2 col-form-label">Mobile No </label>
+                                <label for="mobile" class="col-sm-2 col-form-label">Mobile No <span class="text-danger">*</span></label>
                                 <div class="col-sm-6">
                                   <input type="mobile" name="mobile" class="form-control @error('mobile') is-invalid @enderror" id="mobile" placeholder="Mobile No" value="{{ $hub_vendor->mobile }}">
                                   @error('mobile')
@@ -90,6 +108,16 @@
                                     @error('password_confirmation')
                                         <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
                                     @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="address" class="col-sm-2 col-form-label">Address <span class="text-danger">*</span></label>
+                                <div class="col-sm-6">
+                                    <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror" placeholder="Address">{{ $hub_vendor->address }}</textarea>
+                                  <!-- <input type="address" name="address" class="form-control @error('address') is-invalid @enderror" id="address" placeholder="Address" value="{{ old('address') }}"> -->
+                                  @error('address')
+                                      <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
+                                  @enderror
                                 </div>
                             </div>
                             <div class="form-group row">

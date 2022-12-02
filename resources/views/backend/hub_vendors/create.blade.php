@@ -1,4 +1,4 @@
-@extends('layouts.master', ['activePage' => 'hub-vendor', 'titlePage' => __('New Hub Vendor')])
+@extends('layouts.master', ['activePage' => 'hub_vendor', 'titlePage' => __('New Hub Vendor')])
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -33,6 +33,24 @@
                         {!! Form::open(array( 'url' => 'admin/hub_vendors' ,'files' => 'true', 'class'=>'form-horizontal')) !!} 
                         {{-- <form class="form-horizontal"> --}}
                           <div class="card-body">
+                          <div class="form-group row">
+                                    <label for="main_service_id" class="col-sm-2 col-form-label">Main Service <span class="text-danger">*</span></label>
+                                    <div class="col-sm-6">
+                                        <!-- <label>Please Select Role</label> -->
+                                        <div class="select2-purple">
+                                            <select class="form-control @error('main_service_id') is-invalid @enderror" name="main_service_id" data-placeholder="Select Main Service" data-dropdown-css-class="" style="width: 100%;">
+                                                <option value="">Select Main Service</option>
+                                                @foreach ($main_services as $main_service)
+                                                    <option value="{{ $main_service->id }}">{{$main_service->name}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('main_service_id')
+                                                <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    
+                                    </div>
+                                </div>
                             <div class="form-group row">
                                 <label for="name" class="col-sm-2 col-form-label">Name <span class="text-danger">*</span></label>
                                 <div class="col-sm-6">
@@ -42,6 +60,7 @@
                                     @enderror
                                 </div>
                             </div>
+                            
                             <div class="form-group row">
                               <label for="email" class="col-sm-2 col-form-label">Email <span class="text-danger">*</span></label>
                               <div class="col-sm-6">
@@ -52,7 +71,7 @@
                               </div>
                             </div>
                             <div class="form-group row">
-                                <label for="mobile" class="col-sm-2 col-form-label">Mobile </label>
+                                <label for="mobile" class="col-sm-2 col-form-label">Mobile <span class="text-danger">*</span></label>
                                 <div class="col-sm-6">
                                   <input type="mobile" name="mobile" class="form-control @error('mobile') is-invalid @enderror" id="mobile" placeholder="Mobile No" value="{{ old('mobile') }}">
                                   @error('mobile')
@@ -80,9 +99,10 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="address" class="col-sm-2 col-form-label">Address </label>
+                                <label for="address" class="col-sm-2 col-form-label">Address <span class="text-danger">*</span></label>
                                 <div class="col-sm-6">
-                                  <input type="address" name="address" class="form-control @error('address') is-invalid @enderror" id="address" placeholder="Address" value="{{ old('address') }}">
+                                    <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror" placeholder="Address">{{ old('address') }}</textarea>
+                                  <!-- <input type="address" name="address" class="form-control @error('address') is-invalid @enderror" id="address" placeholder="Address" value="{{ old('address') }}"> -->
                                   @error('address')
                                       <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
                                   @enderror
