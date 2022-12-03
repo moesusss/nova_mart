@@ -23,8 +23,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('main_service_id')
-            ->references('id')->on('main_services')->onDelete('cascade');
+            $table->foreign('main_service_id')->references('id')->on('main_services')->onDelete('cascade');
             $table->index(['name','code', 'id','is_active']);
             
         });
@@ -37,6 +36,8 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('categories');
+         Schema::enableForeignKeyConstraints();
     }
 };

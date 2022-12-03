@@ -11,6 +11,7 @@ class CategoryTableSeeder extends Seeder
 {
     protected $data = [
         ['name' => 'Meat', 'mm_name' => 'Meat',  ],
+        ['name' => 'Alcohol and Drinks', 'mm_name' => 'Alcohol and Drinks',  ],
         ['name' => 'Beauty', 'mm_name' => 'Beauty',  ],
         ['name' => 'Electronic', 'mm_name' => 'Electronic',  ]
     ];
@@ -21,8 +22,13 @@ class CategoryTableSeeder extends Seeder
      */
     public function run()
     {
-       Category::factory()
-            ->count(10)
-            ->create();
+        foreach ($this->data as $row) {
+           Category::factory()->create([
+                'name'  => $row['name'],
+                'mm_name'  => $row['mm_name'],
+            ]);
+        }
+        
+      
     }
 }

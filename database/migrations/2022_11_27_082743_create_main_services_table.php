@@ -21,8 +21,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(1);
             $table->softDeletes();
             $table->timestamps();
-            
-            $table->index(['name', 'id','is_active']);
+            $table->index(['name','is_active']);
         });
     }
 
@@ -33,6 +32,8 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('main_services');
+        Schema::enableForeignKeyConstraints();
     }
 };
