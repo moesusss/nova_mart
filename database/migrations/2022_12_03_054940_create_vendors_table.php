@@ -27,9 +27,14 @@ return new class extends Migration
             $table->string('opening_time');
             $table->string('closing_time');
             $table->boolean('is_active')->default(false);
+            $table->boolean('is_closed')->default(false);
+            $table->string('cover_image')->nullable();
             $table->string('lat');
             $table->string('lng');
             $table->time('min_order_time')->nullable();
+            $table->uuid('created_by')->nullable();
+            $table->uuid('updated_by')->nullable();
+            $table->uuid('deleted_by')->nullable();
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

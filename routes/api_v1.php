@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\CustomerAuthController;
+use App\Http\Controllers\api\v1\Customer\VendorController;
 use App\Http\Controllers\api\v1\Customer\CategoryController;
 use App\Http\Controllers\api\v1\Customer\CustomerController;
 use App\Http\Controllers\api\v1\Customer\MainServiceController;
@@ -31,6 +32,7 @@ Route::group([ 'middleware' => ['auth:customer']], function () {
     Route::apiResource('categories', CategoryController::class)->only(['index','show']);
     Route::apiResource('sub_categories', SubCategoryController::class)->only(['index','show']);
     Route::apiResource('customers', CustomerController::class)->only(['index','show']);
+    Route::apiResource('vendors', VendorController::class)->only(['index','show']);
     
     
 });

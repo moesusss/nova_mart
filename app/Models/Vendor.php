@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Traits\Uuids;
 use App\Models\HubVendor;
 use App\Models\MainService;
@@ -26,11 +27,21 @@ class Vendor extends Model
         'opening_time',
         'closing_time',
         'is_active',
+        'is_closed',
         'lat',
         'lng',
         'min_order_time',
+        'cover_image',
+        'created_by',
+        'updated_by',
+        'deleted_by',
     ];
     
+    public function created_user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function main_service()
     {
         return $this->belongsTo(MainService::class);
@@ -43,7 +54,7 @@ class Vendor extends Model
 
     public function scopeFilter($query, $filter)
     {
-        if (isset($filter['search']) && $search = $filter['search']) {
+        if (isset($filter['search_query']) && $search = $filter['search_query']) {
             $query->where('name', 'like', "%{$search}%")
                   ->orWhere('mm_name', 'like', "%{$search}%")
                   ->orWhere('email', 'like', "%{$search}%")
@@ -65,6 +76,12 @@ class Vendor extends Model
         }
         if (isset($filter['address']) && $address = $filter['address']) {
             $query->where('address', $address );
+        }
+        if (isset($filter['main_service_id']) && $main_service_id = $filter['main_service_id']) {
+            $query->where('main_service_id', $main_service_id );
+        }
+        if (isset($filter['hub_vendor_id']) && $hub_vendor_id = $filter['hub_vendor_id']) {
+            $query->where('hub_vendor_id', $hub_vendor_id );
         }
         
     }
