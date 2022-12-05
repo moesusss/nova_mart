@@ -3,6 +3,7 @@
 namespace App\Http\Resources\api\v1\Customer\MainService;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\api\v1\Customer\Vendor\VendorCollection;
 use App\Http\Resources\api\v1\Customer\Category\CategoryCollection;
 
 class MainServiceResource extends JsonResource
@@ -22,6 +23,7 @@ class MainServiceResource extends JsonResource
             'mm_name'           => $this->mm_name,
             'is_active'           => $this->is_active,
             'categories' => CategoryCollection::make($this->whenLoaded('categories')),
+            'vendors' => VendorCollection::make($this->whenLoaded('vendors')),
             
         ];
     }

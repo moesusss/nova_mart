@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
+use App\Models\Vendor;
 use App\Models\MainService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,8 +22,14 @@ class HubVendor extends Model
         'main_service_id',
         'address'
     ];
+
     public function main_service()
     {
         return $this->belongsTo(MainService::class);
+    }
+
+    public function vendors()
+    {
+        return $this->hasMany(Vendor::class);
     }
 }

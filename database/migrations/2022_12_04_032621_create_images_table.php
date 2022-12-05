@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('main_services', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('code');
-            $table->string('name');
-            $table->string('mm_name')->nullable();
-            $table->boolean('is_active')->default(1);
-            $table->softDeletes();
+            $table->string('resourceable_type');
+            $table->uuid('resourceable_id');
+            $table->string('image_url')->nullable();
+            $table->boolean('is_default')->default(false);
             $table->timestamps();
-            $table->index(['name','is_active']);
+            $table->softDeletes();
         });
     }
 
@@ -32,8 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('main_services');
-        Schema::enableForeignKeyConstraints();
+        Schema::dropIfExists('images');
     }
 };

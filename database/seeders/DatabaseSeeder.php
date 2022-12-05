@@ -28,6 +28,9 @@ class DatabaseSeeder extends Seeder
             CreateAdminUserSeeder::class,
             MainServiceTableSeeder::class,
             CategoryTableSeeder::class,
+            SubCategoryTableSeeder::class,
+            HubVendorTableSeeder::class,
+            VendorTableSeeder::class,
         ]);
     }
 }

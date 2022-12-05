@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use App\Traits\Uuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Vendor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class MainService extends Model
 {
@@ -23,6 +24,11 @@ class MainService extends Model
     public function hub_vendors()
     {
         return $this->hasMany(HubVendor::class);
+    }
+
+    public function vendors()
+    {
+        return $this->hasMany(Vendor::class);
     }
 
     public function scopeFilter($query, $filter)
