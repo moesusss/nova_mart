@@ -6,6 +6,8 @@ use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use App\Repositories\Backend\ImageRepository;
 
 class CategoryRepository extends BaseRepository
 {
@@ -35,11 +37,18 @@ class CategoryRepository extends BaseRepository
      */
     public function create(array $data) : Category
     {
+        $cover_image = null;
+        if (isset($data['cover_image']) && $data['cover_image']) {
+            $imageRepository = new ImageRepository();
+            $path_name = 'categories';
+            $cover_image = $imageRepository->create_file($data['cover_image'], $path_name);
+        }
         $category = Category::create([
             'code'              => $data['code'],
             'name'              => $data['name'],
             'mm_name'           => $data['mm_name'],
             'main_service_id'   => $data['main_service_id'],
+            'cover_image'       => $cover_image,
             'is_active'         => 1,
         ]);
         return $category;
@@ -53,10 +62,22 @@ class CategoryRepository extends BaseRepository
      */
     public function update(Category $category, array $data) : Category
     {
+        $cover_image = null;
         $category->name = isset($data['name']) ? $data['name'] : $category->name ;
         $category->mm_name = isset($data['mm_name']) ? $data['mm_name']: $category->mm_name;
         $category->code = isset($data['code']) ? $data['code'] : $category->code;
         $category->main_service_id = isset($data['main_service_id']) ? $data['main_service_id'] : $category->main_service_id;
+        $category->cover_image = $cover_image;
+
+        if (isset($data['cover_image']) && $data['cover_image']) {
+            $imageRepository = new ImageRepository();
+            $path_name = 'categories';
+            $cover_image = $imageRepository->create_file($data['cover_image'], $path_name);
+             if ($category->cover_image && $cover_image) {
+                 Storage::disk('public')->delete($path_name.'/'.$category->cover_image);
+             }
+            $category->cover_image = $cover_image;
+         }
 
         if ($category->isDirty()) {
             $category->save();

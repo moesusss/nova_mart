@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('vendors', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('mm_name');
-            $table->string('email')->unique();
-            $table->string('username')->unique();
-            $table->string('mobile')->unique()->nullable();
-            $table->string('password');
+            $table->string('mm_name')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('username')->unique()->nullable();
+            $table->string('mobile')->unique();
+            $table->string('password')->nullable();
             $table->uuid('main_service_id');
             $table->uuid('hub_vendor_id');
             $table->string('address');
@@ -31,7 +31,8 @@ return new class extends Migration
             $table->string('cover_image')->nullable();
             $table->string('lat');
             $table->string('lng');
-            $table->time('min_order_time')->nullable();
+            $table->integer('min_order_time')->default(0);
+            $table->integer('min_order_amount')->default(0);
             $table->uuid('created_by')->nullable();
             $table->uuid('updated_by')->nullable();
             $table->uuid('deleted_by')->nullable();

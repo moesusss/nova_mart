@@ -24,6 +24,7 @@ class VendorFactory extends Factory
             'mm_name'      => $this->faker->name,
             'email'      => $this->faker->unique()->safeEmail(),
             'username'      => $this->faker->unique()->userName(),
+            'mobile'      => $this->faker->unique()->e164PhoneNumber(),
             'password'      => Hash::make('password'),
             'main_service_id' => $hub_vendor->main_service_id,
             'hub_vendor_id' => $hub_vendor->id,

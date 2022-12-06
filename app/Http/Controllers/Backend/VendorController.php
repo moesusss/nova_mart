@@ -3,29 +3,34 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
-use App\Services\RoleService;
-use App\Services\UserService;
+use App\Services\VendorService;
 use Yajra\DataTables\DataTables;
+use App\Services\HubVendorService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Requests\Vendor\CreateVendorRequest;
+use App\Http\Requests\Vendor\UpdateVendorRequest;
 
-class UserController extends Controller
+class VendorController extends Controller
 {
     /**
-     * @var UserService
+     * @var VendorService
      */
     protected $vendorService;
+    protected $hubvendorService;
 
     /**
      * AgentController constructor.
      *
-     * @param UserService $vendorService
+     * @param VendorService $vendorService
      */
-    public function __construct(UserService $vendorService)
+    public function __construct(VendorService $vendorService,HubVendorService $hubvendorService)
     {
         $this->vendorService = $vendorService;
+        $this->hubvendorService = $hubvendorService;
         $this->middleware('permission:vendor-list|vendor-create|vendor-edit|vendor-delete', ['only' => ['index','show']]);
         $this->middleware('permission:vendor-create', ['only' => ['create','store']]);
         $this->middleware('permission:vendor-edit', ['only' => ['edit','update']]);
@@ -38,10 +43,21 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $vendors = $this->vendorService->getUsers($request);
+        $vendors = $this->vendorService->getVendors($request);
         if($request->ajax()){            
             return DataTables::of($vendors)
                             ->addIndexColumn()
+                            ->addColumn('hub_vendor', function ($vendors) {
+                                return $vendors->hub_vendor->name;
+
+                            })
+                            ->editColumn('is_active', function ($vendors) {
+                                if($vendors->is_active == 0){
+                                    return 'Inactive';
+                                }else{
+                                    return 'Active';
+                                }
+                            })
                             ->addColumn('action',function($row){
                                 if($row->is_active==0){
                                     $status = '<i class="fas fa-thumbs-up"> Active</i>';
@@ -49,8 +65,25 @@ class UserController extends Controller
                                     $status = '<i class="fas fa-thumbs-down"> Inactive</i>';
                                     
                                 }
+                                if($row->is_active==0){
+                                    $status = '<i class="fas fa-thumbs-up"> Active</i>';
+                                }else{
+                                    $status = '<i class="fas fa-thumbs-down"> Inactive</i>';
+                                    
+                                }
+                                $btn = '<a rel="tooltip" class="btn btn-success" href="'. url('admin/vendors/'.$row->id.'/change_status') .'"
+                                data-original-title="" title="">
+                                '.$status.'
+                                <div class="ripple-container"></div>
+                                </a> &nbsp;';
+
+                                $btn = $btn.'<a rel="tooltip" class="btn btn-warning" href="'. url('admin/vendors/'.$row->id.'/') .'"
+                                data-original-title="" title="" style="color:#FFF">
+                                <i class="fas fa-eye"> View</i>
+                                <div class="ripple-container"></div>
+                                </a> &nbsp;';
                                 
-                                $btn = '<a rel="tooltip" class="btn btn-primary" href="'. url('admin/vendors/'.$row->id.'/edit') .'"
+                                $btn = $btn. '<a rel="tooltip" class="btn btn-primary" href="'. url('admin/vendors/'.$row->id.'/edit') .'"
                                 data-original-title="" title="">
                                 <i class="fas fa-edit"> Edit</i>
                                 <div class="ripple-container"></div>
@@ -79,8 +112,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = $this->roleService->getRolesPluckName();
-        return view('backend.vendors.create',compact('roles'));
+        $hub_vendors = $this->hubvendorService->getHubVendors();
+        return view('backend.vendors.create',compact('hub_vendors'));
     }
 
     /**
@@ -89,10 +122,10 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateUserRequest $request)
+    public function store(CreateVendorRequest $request)
     {
         $this->vendorService->create($request->all());
-        return redirect()->route('vendors.index')->with('status', 'User has been added successfully');
+        return redirect()->route('vendors.index')->with('status', 'Vendor has been added successfully');
     }
 
     /**
@@ -101,11 +134,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $vendor)
+    public function show(Vendor $vendor)
     {
-        $roles = $this->roleService->getRolesPluckName();
-        $vendorRole = $this->vendorService->getUserRolesPluckName($vendor);
-        return view('backend.vendors.show',compact('user','roles','userRole'));
+        $hub_vendors = $this->hubvendorService->getHubVendors();
+        return view('backend.vendors.show',compact('vendor','hub_vendors'));
     }
 
     /**
@@ -114,11 +146,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $vendor)
+    public function edit(Vendor $vendor)
     {
-        $roles = $this->roleService->getRolesPluckName();
-        $vendorRole = $this->vendorService->getUserRolesPluckName($vendor);
-        return view('backend.vendors.edit',compact('user','roles','userRole'));
+        $hub_vendors = $this->hubvendorService->getHubVendors();
+        return view('backend.vendors.edit',compact('vendor','hub_vendors'));
     }
 
     /**
@@ -128,10 +159,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $vendor)
+    public function update(Request $request, Vendor $vendor)
     {
         $this->vendorService->update($vendor, $request->all());
-        return redirect()->route('vendors.index')->with('status', 'User has been updated successfully');
+        return redirect()->route('vendors.index')->with('status', 'Vendor has been updated successfully');
     }
 
     /**
@@ -140,21 +171,21 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $vendor)
+    public function destroy(Vendor $vendor)
     {
         $this->vendorService->destroy($vendor);
-        return redirect()->route('vendors.index')->with('status', 'User has been deleted successfully');
+        return redirect()->route('vendors.index')->with('status', 'Vendor has been deleted successfully');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Change the active status for the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function changeStatus(User $vendor)
+    public function changeStatus(Vendor $vendor)
     {
         $result = $this->vendorService->changeStatus($vendor);
-        return redirect('admin/vendors')->withStatus(__('User successfully updated.'));
+        return redirect('admin/vendors')->withStatus(__('Vendor successfully updated.'));
     }
 }

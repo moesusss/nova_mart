@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Exception;
 use App\Models\Vendor;
+use App\Repositories\Backend\HubVendorRepository;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -14,10 +15,12 @@ class VendorService implements VendorServiceInterface
 {
     protected $vendorRepository;
     protected $userService;
+    protected $hubvendorRepository;
 
-    public function __construct(VendorRepository $vendorRepository)
+    public function __construct(VendorRepository $vendorRepository,HubVendorRepository $hubvendorRepository)
     {
         $this->vendorRepository = $vendorRepository;
+        $this->hubvendorRepository = $hubvendorRepository;
     }
 
     public function getVendors()
@@ -34,14 +37,17 @@ class VendorService implements VendorServiceInterface
     }
 
     public function create(array $data)
-    { 
+    {   
+        $hub_vendor= $this->hubvendorRepository->getHubVendor($data['hub_vendor_id']);
+        $data['main_service_id'] = $hub_vendor->main_service_id;
         $result = $this->vendorRepository->create($data);
         return $result;
     }
 
     public function update(Vendor $vendor,array $data)
     {
-        // $data['updatedBy'] = $this->userService->getAuthenticatedUser()->id;
+        $hub_vendor= $this->hubvendorRepository->getHubVendor($data['hub_vendor_id']);
+        $data['main_service_id'] = $hub_vendor->main_service_id;
 
         DB::beginTransaction();
         try {
@@ -70,6 +76,24 @@ class VendorService implements VendorServiceInterface
         }
         DB::commit();
         
+        return $result;
+    }
+
+    // change Status
+    public function changeStatus(Vendor $hub_vendor)
+    {
+
+        DB::beginTransaction();
+        try {
+            $result = $this->vendorRepository->changeStatus($hub_vendor);
+        }
+        catch(Exception $exc){
+            DB::rollBack();
+            Log::error($exc->getMessage());
+            throw new InvalidArgumentException('Unable to active vendor');
+        }
+        DB::commit();
+
         return $result;
     }
 }

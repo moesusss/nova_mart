@@ -31,7 +31,7 @@
                         
                         <!-- /.card-header -->
                         <!-- form start -->
-                        {!! Form::open(array('route' => 'categories.store','method'=>'POST', 'class'=>'form-horizontal')) !!}
+                        {!! Form::open(array('route' => 'categories.store','method'=>'POST','files' => 'true', 'class'=>'form-horizontal')) !!}
                             <div class="card-body">
                                 <div class="form-group row">
                                     <label for="main_service_id" class="col-sm-2 col-form-label">Main Service <span class="text-danger">*</span></label>
@@ -78,6 +78,26 @@
                                         @error('mm_name')
                                             <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="cover_image" class="col-sm-2 col-form-label">Cover Image</label>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="cover_image" readonly>
+                                                <span class="input-group-btn">
+                                                    <span class="btn btn-default btn-file">
+                                                        Browse… <input type="file" id="imgInp" name="cover_image">
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <img id='img-upload' class="img-responsive" style="width:300px"/>
+                                            @error('file')
+                                                <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                                 

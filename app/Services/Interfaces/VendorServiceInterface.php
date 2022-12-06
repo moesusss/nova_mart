@@ -11,5 +11,6 @@ interface VendorServiceInterface
     public function create(array $data);
     public function update(Vendor $vendor,array $data);
     public function destroy(Vendor $vendor);
+    public function changeStatus(Vendor $vendor);
     
 }

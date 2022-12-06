@@ -13,7 +13,7 @@ class Category extends Model
     use HasFactory,Uuids,SoftDeletes;
 
     protected $fillable = [
-        'code', 'name', 'mm_name', 'is_active','main_service_id'
+        'code', 'name', 'mm_name', 'is_active','main_service_id', 'cover_image'
     ];
 
     public function main_service()

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('name');
             $table->string('mm_name')->nullable();
+            $table->string('cover_image')->nullable();
             $table->boolean('is_active')->default(1);
             $table->softDeletes();
             $table->timestamps();
