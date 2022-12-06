@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\v1\Customer;
 use App\Models\Item;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use App\Services\ItemService;
 use Illuminate\Http\Response;
 use App\Services\VendorService;
 use App\Http\Controllers\Controller;
@@ -17,15 +18,17 @@ class VendorController extends Controller
      * @var VendorService
      */
     protected $vendorService;
+    protected $itemService;
 
     /**
      * VendorController constructor.
      *
      * @param VendorService $vendorService
      */
-    public function __construct(VendorService $vendorService)
+    public function __construct(VendorService $vendorService,ItemService $itemService)
     {
         $this->vendorService = $vendorService;
+        $this->itemService = $itemService;
     }
     /**
      * Display a listing of the resource.
@@ -49,24 +52,18 @@ class VendorController extends Controller
      */
     public function show(Vendor $vendor)
     {
-        $category = Item::where('vendor_id',$vendor->id)
-                    ->join('categories', 'categories.id', '=', 'items.category_id')
-                     ->selectRaw("
-                      categories.id as cat_id,
-                      categories.name as category_name
-                      ")
-                ->groupBy('cat_id')
-                ->get();
-        $special_items = Item::where('vendor_id',$vendor->id)
-                            ->where('item_type','best_deal')->get();
-        $best_items = Item::where('vendor_id',$vendor->id)
-                            ->where('item_type','best_seller')->get();
+        $categories = $this->itemService->getCategoryByVendor($vendor->id);
+        $best_sellers = $this->itemService->getBestSellerItems($vendor->id);
+        $best_deals = $this->itemService->getBestDealItems($vendor->id);
+        $new_arrivals = $this->itemService->getNewItems($vendor->id);
+       
         return response()->json([
-            'categories'=> $category,
-            'special_items'=> $special_items,
-            'best_items'=> $best_items,
                 'status'=>true,
-                'data' => new VendorResource($vendor->load([]))
+                'data' => new VendorResource($vendor->load([])),
+                'categories' => $categories,
+                'best_sellers' => $best_sellers,
+                'best_deals' => $best_deals,
+                'new_arrivals' => $new_arrivals,
             
             ],Response::HTTP_OK);
         return new VendorResource($vendor->load([]));

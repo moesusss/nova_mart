@@ -82,6 +82,12 @@ class Item extends Model
         if (isset($filter['is_active']) && $is_active = $filter['is_active']) {
             $query->where('is_active', $is_active );
         }
+        if (isset($filter['vendor_id']) && $vendor_id = $filter['vendor_id']) {
+            $query->where('vendor_id', $vendor_id );
+        }
+        if (isset($filter['category']) && $category = $filter['category']) {
+            $query->where('category', $category );
+        }
     }
 }
 
