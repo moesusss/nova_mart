@@ -1,4 +1,4 @@
-@extends('layouts.master', ['activePage' => 'user', 'titlePage' => __('Update User')])
+@extends('layouts.master', ['activePage' => 'hub_vendor', 'titlePage' => __('Hub Vendor')])
 
 @section('content')
 <!-- <div class="content-wrapper"> -->
@@ -39,7 +39,7 @@
                         {{-- <form class="form-horizontal"> --}}
                           <div class="card-body">
                             <div class="form-group row">
-                                    <label for="main_service_id" class="col-sm-2 col-form-label">Category <span class="text-danger">*</span></label>
+                                    <label for="main_service_id" class="col-sm-2 col-form-label">Main Service <span class="text-danger">*</span></label>
                                     <div class="col-sm-6">
                                         <!-- <label>Please Select Role</label> -->
                                         <div class="select2-purple">

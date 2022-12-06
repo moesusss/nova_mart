@@ -78,4 +78,15 @@
         </a>
     </li>
     @endcan
+
+    @can('vendor-list')
+    <li class="nav-item">
+        <a href="{{ route('vendors.index') }}" class="nav-link {{ $activePage == 'vendor' ? ' active' : '' }}">
+            <i class="nav-icon fas fa-table"></i>
+            <p>
+            {{ __('Vendor') }}
+            </p>
+        </a>
+    </li>
+    @endcan
 </li>

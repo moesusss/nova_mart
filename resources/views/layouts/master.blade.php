@@ -14,7 +14,10 @@
     @stack('third_party_stylesheets')
     <link rel="stylesheet" href="{{ url('css/datatable/responsive.bootstrap4.css') }}">
     <link rel="stylesheet" href="{{ url('css/datatable/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" href="{{ url('css/style.css') }}">
     <link rel="stylesheet" href="{{ url('plugins/toastr/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ url('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+
     <!-- Jquery.js -->
     <script src="{{ url('js/jquery.min.js') }}" type="text/javascript"></script>
 
@@ -94,10 +97,23 @@
 <!-- Datatable,  -->
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+<!-- Date Range Picker -->
+<script src="{{ url('plugins/moment/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ url('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}" type="text/javascript"></script>
+
 <!--  -->
-<script src="{{ url('js/custom.js') }}" type="text/javascript"></script>
-<!-- All of the customize function can check in custom.js -->
+<script src="{{ url('plugins/bootstrap/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>
+
+<!-- Toastr for alert message -->
 <script src="{{ url('plugins/toastr/toastr.min.js') }}" type="text/javascript"></script>
+<script type="text/javascript"
+    src="https://maps.google.com/maps/api/js?key={{env('GOOGLE_MAP_KEY')}}&libraries=places&callback=initialize" async defer></script>
+
+<!-- customer.js for all the custom javascript funcitons -->
+<script src="{{ url('js/custom.js') }}" type="text/javascript"></script>
+
+
 
 
 
@@ -126,7 +142,9 @@
         if(status){
         toastr.success(status);
         }
+        $("#opening_time").attr('readonly',true);
     });
+
 
   
 </script>

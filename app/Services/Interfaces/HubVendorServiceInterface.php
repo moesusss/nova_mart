@@ -6,7 +6,7 @@ use App\Models\HubVendor;
 
 interface HubVendorServiceInterface
 {
-    public function getHubVendors($request);
+    public function getHubVendors();
     public function getHubVendor($id);
     public function changeStatus(HubVendor $hub_vendor);
     public function create(array $data);
