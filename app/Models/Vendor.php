@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Item;
 use App\Models\User;
 use App\Traits\Uuids;
+use App\Models\Vendor;
 use App\Models\HubVendor;
 use App\Models\MainService;
 use Illuminate\Database\Eloquent\Model;
@@ -50,6 +52,11 @@ class Vendor extends Model
     public function hub_vendor()
     {
         return $this->belongsTo(HubVendor::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class);
     }
 
     public function scopeFilter($query, $filter)

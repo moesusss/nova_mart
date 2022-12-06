@@ -31,6 +31,8 @@ class DatabaseSeeder extends Seeder
             SubCategoryTableSeeder::class,
             HubVendorTableSeeder::class,
             VendorTableSeeder::class,
+            ItemTableSeeder::class,
+            ImageTableSeeder::class,
         ]);
     }
 }
