@@ -234,6 +234,30 @@
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
+        <!-- Start Origin Map Modal -->
+        <div class="modal fade" id="originMap" tabindex="-1" role="dialog" aria-labelledby="originMapLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document" width="96%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="destinationMapLabel">Enter Location</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="control-group">
+                            <div class="controls">
+                                <input type="text" class="form-control mb-3" name="keyword" id="keyword">
+                            </div>
+                        </div>
+                        <div id="map_canvas" style="width:100%; height:400px"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary getDestinationMapData" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>  
         
 
 <!-- /.content -->

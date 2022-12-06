@@ -33,7 +33,7 @@
                         <!-- /.card-header -->
                         <!-- form start -->
                         
-                        {!! Form::open(['route' => ['vendors.update', $vendor->id], 'class'=>'form-horizontal','method' => 'PATCH']) !!}
+                        {!! Form::open(['route' => ['vendors.update', $vendor->id],'files' => 'true', 'class'=>'form-horizontal','method' => 'PATCH']) !!}
                         <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">

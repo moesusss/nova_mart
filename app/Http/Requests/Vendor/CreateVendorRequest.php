@@ -25,15 +25,14 @@ class CreateVendorRequest extends FormRequest
     {
         return [
             'name'      => 'required|string|max:255',
-            'mm_name' => 'string|max:255',
             'email'  => 'nullable|string|unique:vendors,email',
             'username' => 'nullable|string|unique:vendors,username',
             'mobile' => 'required|numeric|phone:MM|unique:vendors,mobile',
             'password' => 'nullable|string|same:password_confirmation|min:6',
             'hub_vendor_id' => 'required|uuid|exists:hub_vendors,id',
             'address' => 'required|string',
-            'opening_time' => 'required|date_format:h:i A',
-            'closing_time' => 'required|after_or_equal:opening_time|date_format:h:i A',
+            'opening_time' => 'required',
+            'closing_time' => 'required|after_or_equal:opening_time',
             'is_active' => 'nullable|boolean',
             'is_closed' => 'nullable|boolean',
             'lat' => 'required',

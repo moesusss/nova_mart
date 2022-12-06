@@ -255,5 +255,5 @@ $('#originMap').on('show.bs.modal', function (event) {
 
 function initialize() {
 }
-google.maps.event.addDomListener(window, 'load', initialize);
+// google.maps.event.addDomListener(window, 'load', initialize);
 

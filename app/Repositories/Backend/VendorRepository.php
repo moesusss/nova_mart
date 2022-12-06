@@ -73,6 +73,12 @@ class VendorRepository extends BaseRepository
      */
     public function update(Vendor $vendor, array $data) : Vendor
     {
+        $cover_image = null;
+        if (isset($data['cover_image']) && $data['cover_image']) {
+            $imageRepository = new ImageRepository();
+            $path_name = 'vendors';
+            $cover_image = $imageRepository->create_file($data['cover_image'], $path_name);
+        }
         
         $vendor->name = isset($data['name']) ? $data['name'] : $vendor->name ;
         $vendor->mm_name = isset($data['mm_name']) ? $data['mm_name'] : $vendor->mm_name ;

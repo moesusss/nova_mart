@@ -33,7 +33,7 @@
                         <!-- /.card-header -->
                         <!-- form start -->
                         
-                        {!! Form::model($category, ['method' => 'PATCH','route' => ['categories.update', $category->id]]) !!}
+                        {!! Form::model($category, ['method' => 'PATCH','files' => 'true','route' => ['categories.update', $category->id]]) !!}
                             <div class="card-body">
                                 <div class="form-group row">
                                     <label for="main_service_id" class="col-sm-2 col-form-label">Category <span class="text-danger">*</span></label>
@@ -80,6 +80,27 @@
                                         @error('mm_name')
                                             <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
                                         @enderror
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="cover_image" class="col-sm-2 col-form-label">Cover Image</label>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="cover_image" value="{{$category->cover_image}}" readonly>
+                                                <span class="input-group-btn">
+                                                    <span class="btn btn-default btn-file">
+                                                        Browse… <input type="file" id="imgInp" name="cover_image">
+                                                    </span>
+                                                </span>
+                                            </div>
+                                            <img id='img-upload' class="img-responsive" style="width:300px" src="{{ asset("storage/categories/$category->cover_image") }}"/>
+                                            <!-- <img id='img-upload' class="img-responsive" style="width:300px"/> -->
+                                            @error('file')
+                                                <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
 

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('vendors', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('mm_name');
+            $table->string('mm_name')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('username')->unique()->nullable();
             $table->string('mobile')->unique();
