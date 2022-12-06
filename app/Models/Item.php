@@ -88,6 +88,11 @@ class Item extends Model
         if (isset($filter['category']) && $category = $filter['category']) {
             $query->where('category', $category );
         }
+
+        $sortBy = isset($order['sortBy']) ? $order['sortBy'] : 'created_at';
+        $orderBy = isset($order['orderBy']) ? $order['orderBy'] : 'desc';
+
+        $query->orderBy($sortBy, $orderBy);
     }
 }
 

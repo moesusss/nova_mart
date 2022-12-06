@@ -24,7 +24,7 @@ class ItemRepository extends BaseRepository
         if (request()->has('paginate')) {
             $items = $items->paginate(request()->get('paginate'));
         } else {
-            $items = $items->paginate(25);
+            $items = $items->get();
         }
         return $items;
     }
@@ -42,28 +42,6 @@ class ItemRepository extends BaseRepository
         return $result;
     }
 
-    public function getBestSellerItems($id)
-    {
-        $result = Item::where('vendor_id',$id)
-                    ->where('item_type', 'best_seller')
-                    ->get();
-        return $result;
-    }
-    public function getBestDealItems($id)
-    {
-        $result = Item::where('vendor_id',$id)
-                    ->where('item_type', 'best_deal')
-                    ->get();
-        return $result;
-    }
-    public function getNewItems($id)
-    {
-        $result = Item::where('vendor_id',$id)
-                         ->orderBy('created_at', 'desc')
-                        ->take(5)
-                        ->get();
-        return $result;
-    }
     /**
      * @param array $data
      *
