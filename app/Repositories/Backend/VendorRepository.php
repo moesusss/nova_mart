@@ -58,7 +58,8 @@ class VendorRepository extends BaseRepository
             'is_closed' => isset($data['is_closed']) ? $data['is_closed'] : false,
             'lat' => $data['lat'],
             'lng' => $data['lng'],
-            'min_order_time' => isset($data['min_order_time']) ? $data['min_order_time'] : null,
+            'min_order_time' => isset($data['min_order_time']) ? $data['min_order_time'] : 0,
+            'min_order_amount' => isset($data['min_order_amount']) ? $data['min_order_amount'] : 0,
             'created_by' => auth()->user()->id,
         ]);
         return $vendor;
@@ -93,9 +94,9 @@ class VendorRepository extends BaseRepository
         if (isset($data['cover_image']) && $data['cover_image']) {
            $imageRepository = new ImageRepository();
            $path_name = 'vendors';
-            $cover_image = $imageRepository->create($data['cover_image']);
+           $cover_image = $imageRepository->create_file($data['cover_image'], $path_name);
             if ($vendor->cover_image && $cover_image) {
-                Storage::disk('dospace')->delete($path_name.'/'.$vendor->cover_image);
+                Storage::disk('public')->delete($path_name.'/'.$vendor->cover_image);
             }
             $vendor->cover_image = $cover_image;
         }
@@ -110,7 +111,7 @@ class VendorRepository extends BaseRepository
     }
 
     /**
-     * @param Vendor $agent
+     * @param Vendor $vendor
      */
     public function destroy(Vendor $vendor)
     {
@@ -121,6 +122,28 @@ class VendorRepository extends BaseRepository
             $vendor->save();
         }
     }
+
+    /**
+     * @param Vendor  $vendor
+     * @param array $data
+     *
+     * @return mixed
+     */
+    public function changeStatus(Vendor $vendor)
+    {
+       if($vendor->is_active==0){
+            $vendor->is_active=1;
+       }else{
+            $vendor->is_active=0;
+       }
+       if($vendor->isDirty()){
+        //    $main_service->updated_by = $data['updatedBy'];
+           $vendor->save();
+       }
+       return $vendor->refresh();
+    }
+
+
 
    
 }

@@ -17,9 +17,18 @@ class HubVendorRepository extends BaseRepository
         return HubVendor::class;
     }
 
-    public function getHubVendors($request)
+    public function getHubVendors()
     {
         return HubVendor::filter(request()->only(['search']))->orderBy('id','desc')->paginate(25);
+    }
+    /**
+     * @param string $id
+     *
+     * @return HubVendor
+     */
+    public function getHubVendor($id)
+    {
+        return HubVendor::find($id);
     }
     /**
      * @param array $data
@@ -94,4 +103,5 @@ class HubVendorRepository extends BaseRepository
        }
        return $hub_vendor->refresh();
     }
+
 }

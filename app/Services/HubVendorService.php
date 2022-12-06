@@ -27,10 +27,13 @@ class HubVendorService implements HubVendorServiceInterface
         return Auth::user();
     }
 
-    public function getHubVendors($request)
+    public function getHubVendors()
     {
+        if( request()->is('api/*')){
+            return $this->hubvendorRepository->getHubVendors();
+        }
         return $this->hubvendorRepository->orderBy('created_at','desc')->get();
-        // return $this->hubvendorRepository->getUsers($request);
+        
     }
 
     public function getHubVendor($id)

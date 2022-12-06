@@ -45,11 +45,11 @@ class ImageRepository extends BaseRepository
         if ($file) {
             if (gettype($file) == 'string') {
                 $file_name = uniqid(). time(). '_' . '.' . 'png';
-                Storage::disk('dospace')->put($path . '/' . $file_name, base64_decode($file),'public');
+                Storage::disk('public')->put($path . '/' . $file_name, base64_decode($file),'public');
             } else {
                 $file_name = time() . '_' . $file->getClientOriginalName();
                 $content = file_get_contents($file);
-                Storage::disk('dospace')->put($path . '/' . $file_name, $content, 'public');
+                Storage::disk('public')->put($path . '/' . $file_name, $content, 'public');
             }
             Storage::setVisibility($path . '/' . $file_name, "public");
         }
