@@ -146,7 +146,7 @@
                                             <label for="opening_time" class="col-sm-3 col-form-label"> Opening Time <span class="text-danger">*</span></label>
                                                 <div class="col-sm-6">
                                                     <div class="input-group date" id="opening_time" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input @error('opening_time') is-invalid @enderror" data-target="#opening_time" name="opening_time" readonly/>
+                                                    <input type="text" class="form-control datetimepicker-input @error('opening_time') is-invalid @enderror" data-target="#opening_time" name="opening_time" onkeydown="return false" autocomplete="off"/>
                                                     <div class="input-group-append" data-target="#opening_time" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="far fa-clock"></i></div>
                                                     </div>
@@ -165,7 +165,7 @@
                                             <label for="closing_time" class="col-sm-3 col-form-label"> Closing Time <span class="text-danger">*</span></label>
                                                 <div class="col-sm-6">
                                                     <div class="input-group date" id="closing_time" data-target-input="nearest" >
-                                                    <input type="text" class="form-control datetimepicker-input @error('closing_time') is-invalid @enderror" data-target="#closing_time" name="closing_time" readonly/>
+                                                    <input type="text" class="form-control datetimepicker-input @error('closing_time') is-invalid @enderror" data-target="#closing_time" name="closing_time" onkeydown="return false" autocomplete="off"/>
                                                     <div class="input-group-append" data-target="#closing_time" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="far fa-clock"></i></div>
                                                     </div>
