@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\api\v1\Customer;
 
+use App\Models\Item;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use App\Services\ItemService;
+use Illuminate\Http\Response;
 use App\Services\VendorService;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\api\v1\Customer\Item\ItemCollection;
 use App\Http\Resources\api\v1\Customer\Vendor\VendorResource;
 use App\Http\Resources\api\v1\Customer\Vendor\VendorCollection;
+use App\Http\Resources\api\v1\Customer\Category\CategoryCollection;
 
 class VendorController extends Controller
 {
@@ -15,15 +20,17 @@ class VendorController extends Controller
      * @var VendorService
      */
     protected $vendorService;
+    protected $itemService;
 
     /**
      * VendorController constructor.
      *
      * @param VendorService $vendorService
      */
-    public function __construct(VendorService $vendorService)
+    public function __construct(VendorService $vendorService,ItemService $itemService)
     {
         $this->vendorService = $vendorService;
+        $this->itemService = $itemService;
     }
     /**
      * Display a listing of the resource.
@@ -45,8 +52,25 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Vendor $vendor)
+    public function show(Vendor $vendor, Request $request)
     {
+        $request['vendor_id'] = $vendor->id;
+        $request['orderBy'] = 'created_at';
+        $request['sortBy'] = 'desc';
+        $categories = $this->itemService->getCategoryByVendor($vendor->id);
+        $best_sellers = $this->itemService->getItems($request['item_type'] = 'best_seller');
+        $best_deals = $this->itemService->getItems($request['item_type'] = 'best_deal');
+        $new_arrivals = $this->itemService->getItems($request);
+       
+        return response()->json([
+                'status'=>true,
+                'data' => new VendorResource($vendor->load([])),
+                'categories' => new CategoryCollection($categories),
+                'best_sellers' =>  new ItemCollection($best_sellers),
+                'best_deals' =>  new ItemCollection($best_deals),
+                'new_arrivals' =>  new ItemCollection($new_arrivals),
+            
+            ],Response::HTTP_OK);
         return new VendorResource($vendor->load([]));
     }
 

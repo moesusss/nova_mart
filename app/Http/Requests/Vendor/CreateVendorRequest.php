@@ -30,7 +30,7 @@ class CreateVendorRequest extends FormRequest
             'mobile' => 'required|numeric|phone:MM|unique:vendors,mobile',
             'password' => 'nullable|string|same:password_confirmation|min:6',
             'hub_vendor_id' => 'required|uuid|exists:hub_vendors,id',
-            'address' => 'required|string',
+            'address' => 'nullable|string',
             'opening_time' => 'required',
             'closing_time' => 'required|after_or_equal:opening_time',
             'is_active' => 'nullable|boolean',
