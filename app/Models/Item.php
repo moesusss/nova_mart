@@ -85,8 +85,11 @@ class Item extends Model
         if (isset($filter['vendor_id']) && $vendor_id = $filter['vendor_id']) {
             $query->where('vendor_id', $vendor_id );
         }
-        if (isset($filter['category']) && $category = $filter['category']) {
-            $query->where('category', $category );
+        if (isset($filter['category_id']) && $category_id = $filter['category_id']) {
+            $query->where('category_id', $category_id );
+        }
+        if (isset($filter['item_type']) && $item_type = $filter['item_type']) {
+            $query->where('item_type', $item_type );
         }
 
         $sortBy = isset($order['sortBy']) ? $order['sortBy'] : 'created_at';
