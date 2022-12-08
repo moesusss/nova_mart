@@ -48,7 +48,7 @@ class ItemController extends Controller
      */
     public function show(Item $item, Request $request)
     {
-        return new ItemResource($item->load([]));
+        return new ItemResource($item->load(['images']));
     }
 
     

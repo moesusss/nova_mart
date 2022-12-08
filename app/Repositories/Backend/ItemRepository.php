@@ -20,7 +20,7 @@ class ItemRepository extends BaseRepository
 
     public function getItems()
     {
-        $items = Item::filter(request()->all())->orderBy('id','desc');
+        $items = Item::with(['images'])->filter(request()->all())->orderBy('id','desc');
         if (request()->has('paginate')) {
             $items = $items->paginate(request()->get('paginate'));
         } else {

@@ -3,9 +3,10 @@
 namespace App\Http\Resources\api\v1\Customer\Item;
 
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\api\v1\Customer\MainService\MainServiceResource;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\api\v1\Customer\Image\ImageCollection;
+use App\Http\Resources\api\v1\Customer\MainService\MainServiceResource;
 
 class ItemResource extends JsonResource
 {
@@ -44,7 +45,7 @@ class ItemResource extends JsonResource
             'description' => $this->description,
             'item_type' => $this->item_type,
             'unit_type' => $this->unit_type,
-            
+            'images' => ImageCollection::make($this->whenLoaded('images')),
             
         ];
     }
