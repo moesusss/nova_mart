@@ -30,6 +30,11 @@ class CategoryRepository extends BaseRepository
         }
         return $categories;
     }
+
+    public function getCategory($id){
+        $category = Category::find($id);
+        return $category;
+    }
     /**
      * @param array $data
      *

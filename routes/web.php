@@ -40,15 +40,20 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function () {
     // Sub CategoryRoute
     Route::resource('sub_categories', App\Http\Controllers\Backend\SubCategoryController::class);
     Route::get('sub_categories/{sub_category}/change_status', [App\Http\Controllers\Backend\SubCategoryController::class,'changeStatus']);
+    Route::get('sub_categories/getDataByCategoryID/{id}', [App\Http\Controllers\Backend\SubCategoryController::class,'getDataByCategoryID']);
     // Brand Route
     Route::resource('brands', App\Http\Controllers\Backend\BrandController::class);
     Route::get('brands/{brand}/change_status', [App\Http\Controllers\Backend\BrandController::class,'changeStatus']);
+    Route::get('brands/getDataBySubCategoryID/{id}', [App\Http\Controllers\Backend\BrandController::class,'getDataBySubCategoryID']);
     // Hub Vendor Route
     Route::resource('hub_vendors', App\Http\Controllers\Backend\HubVendorController::class);
     Route::get('hub_vendors/{hub_vendor}/change_status', [App\Http\Controllers\Backend\HubVendorController::class,'changeStatus']);
-    // Hub Vendor Route
+    // Vendor Route
     Route::resource('vendors', App\Http\Controllers\Backend\VendorController::class);
     Route::get('vendors/{vendor}/change_status', [App\Http\Controllers\Backend\VendorController::class,'changeStatus']);
+    // Vendor Item
+    Route::resource('items', App\Http\Controllers\Backend\ItemController::class);
+    Route::get('items/{item}/change_status', [App\Http\Controllers\Backend\ItemController::class,'changeStatus']);
     
 
 });

@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Brand\CreateBrandRequest;
 use App\Http\Requests\Brand\UpdateBrandRequest;
+use App\Http\Resources\api\v1\Customer\Brand\BrandCollection;
 use App\Services\SubCategoryService;
 use App\Models\Brand;
 
@@ -173,5 +174,17 @@ class BrandController extends Controller
     {
         $result = $this->brandService->changeStatus($brand);
         return redirect('admin/brands')->withStatus(__('Brand successfully updated.'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getDataBySubCategoryID($id)
+    {
+        $result = $this->brandService->getDataBySubCategoryID($id);
+        return new BrandCollection($result);
     }
 }

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Repositories\Backend\CategoryRepository;
 use App\Repositories\Backend\SubCategoryRepository;
 use App\Services\Interfaces\SubCategoryServiceInterface;
+use App\Http\Resources\api\v1\Customer\SubCategory\SubCategoryCollection;
 
 class SubCategoryService implements SubCategoryServiceInterface
 {
@@ -100,6 +101,11 @@ class SubCategoryService implements SubCategoryServiceInterface
         }
         DB::commit();
 
+        return $result;
+    }
+
+    public function getDataByCategoryID($id){
+        $result = $this->subcategoryRepository->findbyValue('category_id',$id);
         return $result;
     }
 

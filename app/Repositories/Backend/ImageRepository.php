@@ -33,9 +33,7 @@ class ImageRepository extends BaseRepository
      */
     public function create(array $data) : Image
     {
-        $image = Image::create([
-           
-        ]);
+        $image = Image::create($data);
         return $image;
     }
 

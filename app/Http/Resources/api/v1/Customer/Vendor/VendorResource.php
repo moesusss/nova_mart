@@ -40,7 +40,7 @@ class VendorResource extends JsonResource
             'closing_time' => $this->closing_time,
             'is_active' => $this->is_active,
             'is_closed' => $this->is_closed,
-            'cover_image' => $cover_image,
+            'cover_image' => ($cover_image)?$cover_image:null,
             'lat' => $this->lat,
             'lng' => $this->lng,
             'min_order_time' => $this->min_order_time,
