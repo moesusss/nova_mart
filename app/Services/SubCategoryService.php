@@ -10,6 +10,7 @@ use InvalidArgumentException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\Backend\ItemRepository;
 use App\Repositories\Backend\CategoryRepository;
 use App\Repositories\Backend\SubCategoryRepository;
 use App\Services\Interfaces\SubCategoryServiceInterface;
@@ -17,10 +18,14 @@ use App\Services\Interfaces\SubCategoryServiceInterface;
 class SubCategoryService implements SubCategoryServiceInterface
 {
     protected $subcategoryRepository;
+    protected $itemRepository;
 
-    public function __construct(SubCategoryRepository $subcategoryRepository)
+    public function __construct(SubCategoryRepository $subcategoryRepository,
+                            ItemRepository $itemRepository
+                            )
     {
         $this->subcategoryRepository = $subcategoryRepository;
+        $this->itemRepository = $itemRepository;
     }
 
     public function getAuthenticatedUser()
@@ -35,6 +40,11 @@ class SubCategoryService implements SubCategoryServiceInterface
         }
         return $this->subcategoryRepository->orderBy('created_at','desc')->get();
         
+    }
+
+    public function getSubCategoriesWithItems()
+    {
+        return $this->itemRepository->getItemsGroupBySubCategory();
     }
 
     public function getSubCategory($id)
