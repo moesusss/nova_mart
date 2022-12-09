@@ -18,6 +18,7 @@ class VendorResource extends JsonResource
     public function toArray($request)
     {
         $cover_image = Storage::disk('public')->exists('vendors/' . $this->cover_image);
+
         if ($cover_image) {
             $cover_image = $this->cover_image ? asset('storage/vendors/'.$this->cover_image):null;
             // $path = public_path().'/vendors/'.$this->cover_image;

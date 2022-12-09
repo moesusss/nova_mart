@@ -37,18 +37,6 @@ class ItemService implements ItemServiceInterface
     {
         return $this->itemRepository->getCategoryByVendor($id);
     }
-    public function getBestSellerItems($id)
-    {
-        return $this->itemRepository->getBestSellerItems($id);
-    }
-    public function getBestDealItems($id)
-    {
-        return $this->itemRepository->getBestDealItems($id);
-    }
-    public function getNewItems($id)
-    {
-        return $this->itemRepository->getNewItems($id);
-    }
 
     public function create(array $data)
     { 

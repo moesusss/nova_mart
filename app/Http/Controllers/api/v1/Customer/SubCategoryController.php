@@ -4,8 +4,9 @@ namespace App\Http\Controllers\api\v1\Customer;
 
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
-use App\Services\SubCategoryService;
 use App\Http\Controllers\Controller;
+use App\Services\SubCategoryService;
+use App\Http\Resources\api\v1\Customer\Item\ItemResource;
 use App\Http\Resources\api\v1\Customer\SubCategory\SubCategoryResource;
 use App\Http\Resources\api\v1\Customer\SubCategory\SubCategoryCollection;
 
@@ -32,8 +33,13 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
-        $subCategorys = $this->subCategoryService->getSubCategories();
-        return new SubCategoryCollection($subCategorys);
+        $items = $this->subCategoryService->getSubCategoriesWithItems();
+         return response()->json([
+            'status' => true, 
+            'data' => ItemResource::collection($items->load(['images']))->groupBy(function ($q) {
+                return $q->sub_category->name;
+            })
+        ]);
     }
 
    
