@@ -228,9 +228,19 @@
                                             
                                         </div>
                                         <div class="row">
-                                            <div class="images-preview-div"> </div>
+                                            <div class="images-preview-div"> 
+                                            @php
+                                                $item_images = $item->images()->get();
+                                            @endphp
+                                            @if(isset($item_images))
+                                                @foreach($item_images as $key=>$value)
+                                                <img src=" {{asset('storage/items/'.$value->image_url)}}" alt="">
+                                                @endforeach
+                                            @endif
+                                    
                                             </div>
                                         </div>
+                                    </div>
                                 </div>
           
                             

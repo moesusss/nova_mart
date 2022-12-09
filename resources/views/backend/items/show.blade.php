@@ -84,9 +84,18 @@
                                 <div class="col-md-6">{{ $item->description }}</div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-md-2"><strong>Image :</strong> </div>
-
-                                <div class="col-md-6"><img src="{{ asset('storage/vendors/'.$item->cover_image) }}" alt="" width="300px" class="img-responsive"></div>
+                            <div class="col-md-2"><strong>Images :</strong> </div>
+                                <div class="images-preview-div col-md-6"> 
+                                    @php
+                                        $item_images = $item->images()->get();
+                                    @endphp
+                                    @if(isset($item_images))
+                                        @foreach($item_images as $key=>$value)
+                                        <img src=" {{asset('storage/items/'.$value->image_url)}}" alt="">
+                                        @endforeach
+                                    @endif
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
