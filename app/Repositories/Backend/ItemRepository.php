@@ -121,20 +121,30 @@ class ItemRepository extends BaseRepository
         $item->item_type = isset($data['item_type']) ? $data['item_type'] : $item->item_type ;
         $item->unit_type = isset($data['unit_type']) ? $data['unit_type'] : $item->unit_type ;
 
-        // if(isset($data['images']))
-        //  {
-        //     foreach($data['images'] as $key => $file)
-        //     {
-        //         $imageRepository = new ImageRepository();
-        //         $path_name = 'items';
-        //         $image_path = $imageRepository->create_file($file, $path_name);
-        //         $image_data['resourceable_type']='Item';
-        //         $image_data['resourceable_id']=$item->id;
-        //         $image_data['image_url']=$image_path;
-        //         $image_data['is_default'] = ($key==0)?true:false;
-        //         $image = $imageRepository->create($image_data);
-        //     }
-        //  }
+        if(isset($data['images']))
+         {
+            $imageRepository = new ImageRepository();
+            $item_images = $item->images()->get();
+            if(isset($item_images)){
+                $path_name = 'items';
+                foreach($item_images as $key => $file){
+                    Storage::disk('public')->delete($path_name.'/'.$file->image_url);
+                    $item_images = $imageRepository->destroy($file);
+                }
+            }
+            
+            foreach($data['images'] as $key => $file)
+            {
+                $imageRepository = new ImageRepository();
+                $path_name = 'items';
+                $image_path = $imageRepository->create_file($file, $path_name);
+                $image_data['resourceable_type']='Item';
+                $image_data['resourceable_id']=$item->id;
+                $image_data['image_url']=$image_path;
+                $image_data['is_default'] = ($key==0)?true:false;
+                $image = $imageRepository->create($image_data);
+            }
+        }
         
         // if (isset($data['images']) && $data['cover_image']) {
         //    $imageRepository = new ImageRepository();
