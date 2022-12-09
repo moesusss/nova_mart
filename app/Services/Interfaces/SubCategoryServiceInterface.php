@@ -13,5 +13,6 @@ interface SubCategoryServiceInterface
     public function update(SubCategory $sub_category,array $data);
     public function destroy(SubCategory $sub_category);
     public function getSubCategoryCategoryPluckName(SubCategory $sub_category);
+    public function getDataByCategoryID($id);
     
 }

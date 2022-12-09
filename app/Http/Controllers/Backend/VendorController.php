@@ -159,7 +159,7 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vendor $vendor)
+    public function update(UpdateVendorRequest $request, Vendor $vendor)
     {
         $this->vendorService->update($vendor, $request->all());
         return redirect()->route('vendors.index')->with('status', 'Vendor has been updated successfully');

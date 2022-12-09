@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{ url('css/style.css') }}">
     <link rel="stylesheet" href="{{ url('plugins/toastr/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ url('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+    <link rel="stylesheet" href="{{ url('plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ url('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 
     <!-- Jquery.js -->
     <script src="{{ url('js/jquery.min.js') }}" type="text/javascript"></script>
@@ -110,6 +112,8 @@
 <script type="text/javascript"
     src="https://maps.google.com/maps/api/js?key={{env('GOOGLE_MAP_KEY')}}&libraries=places&callback=initialize" async defer></script>
 
+<!-- Select 2 Plugin -->
+<script src="{{ url('plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <!-- customer.js for all the custom javascript funcitons -->
 <script src="{{ url('js/custom.js') }}" type="text/javascript"></script>
 
@@ -119,30 +123,18 @@
 
 @stack('page_scripts')
 <script>
-    $(document).on('click','.destroy_btn',function(){
-        swal({
-            title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this imaginary file!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-            })
-            .then((willDelete) => {
-            if (willDelete) {
-                var form_id = $(this).attr('data-origin');
-                $('#'+form_id).submit();
-            } else {
-                // swal("Your imaginary file is safe!");
-            }
-        });
-    });
-
     $(document).ready(function(){
+        // alert message for all actions
         var status = "{{ session('status') }}";
         if(status){
         toastr.success(status);
         }
         $("#opening_time").attr('readonly',true);
+
+        // select 2 for list
+        $('.select2').select2({
+            theme: 'bootstrap4'
+        })
     });
 
 

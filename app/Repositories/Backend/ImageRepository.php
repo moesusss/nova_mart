@@ -26,6 +26,11 @@ class ImageRepository extends BaseRepository
         }
         return $images;
     }
+
+    public function getImage($field,$value){
+        return Image::where($field,$value)->get();
+    }
+
     /**
      * @param array $data
      *
@@ -33,9 +38,7 @@ class ImageRepository extends BaseRepository
      */
     public function create(array $data) : Image
     {
-        $image = Image::create([
-           
-        ]);
+        $image = Image::create($data);
         return $image;
     }
 
@@ -55,6 +58,7 @@ class ImageRepository extends BaseRepository
         }
          return $file_name;
     }
+    
 
    
     /**
@@ -62,7 +66,12 @@ class ImageRepository extends BaseRepository
      */
     public function destroy(Image $image)
     {
-       
+        $deleted = $this->deleteById($image->id);
+
+        if ($deleted) {
+            // $image->deleted_by = auth()->user()->id;
+            $image->save();
+        }
     }
 
    

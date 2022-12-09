@@ -48,7 +48,16 @@ class PermissionTableSeeder extends Seeder
            'vendor-create',
            'vendor-edit',
            'vendor-delete',
-           'customer-list'
+           'customer-list',
+           'item-list',
+           'item-create',
+           'item-edit',
+           'item-delete',
+           'customer-edit',
+           'customer-delete',
+           'order-list',
+           'order-edit',
+           'order-delete',
         ];
      
         foreach ($permissions as $permission) {

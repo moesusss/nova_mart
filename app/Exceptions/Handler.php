@@ -146,7 +146,7 @@ class Handler extends ExceptionHandler
         if ($this->isFrontend($request)) {
             return redirect()->guest('login');
         }
-        return response()->json(['status' => 3, 'message' => 'Unauthenticated'], Response::HTTP_UNAUTHORIZED);
+        return response()->json(['status' => false, 'message' => 'Unauthenticated'], Response::HTTP_UNAUTHORIZED);
     }
 
     private function isFrontend($request)

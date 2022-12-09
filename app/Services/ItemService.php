@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Exception;
 use App\Models\Item;
+use App\Repositories\Backend\CategoryRepository;
 use App\Repositories\Backend\HubItemRepository;
 use InvalidArgumentException;
 use Illuminate\Support\Facades\DB;
@@ -14,10 +15,12 @@ use App\Repositories\Backend\ItemRepository;
 class ItemService implements ItemServiceInterface
 {
     protected $itemRepository;
+    protected $categoryRepository;
 
-    public function __construct(ItemRepository $itemRepository)
+    public function __construct(ItemRepository $itemRepository,CategoryRepository $categoryRepository)
     {
         $this->itemRepository = $itemRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function getItems()
@@ -40,8 +43,12 @@ class ItemService implements ItemServiceInterface
 
     public function create(array $data)
     { 
+        $randomNumber = random_int(10000000, 99999999);
+        // $main_service_id = $this->categoryRepository->getCategory($data['category_id'])->main_service_id;
         DB::beginTransaction();
         try {
+
+            $data['sku'] = $randomNumber;
             $result = $this->itemRepository->create($data);
         }
         catch(Exception $exc){
@@ -83,6 +90,23 @@ class ItemService implements ItemServiceInterface
         }
         DB::commit();
         
+        return $result;
+    }
+    // change Status
+    public function changeStatus(Item $item)
+    {
+
+        DB::beginTransaction();
+        try {
+            $result = $this->itemRepository->changeStatus($item);
+        }
+        catch(Exception $exc){
+            DB::rollBack();
+            Log::error($exc->getMessage());
+            throw new InvalidArgumentException('Unable to active item');
+        }
+        DB::commit();
+
         return $result;
     }
 

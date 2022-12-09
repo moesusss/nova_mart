@@ -29,10 +29,12 @@ class DatabaseSeeder extends Seeder
             MainServiceTableSeeder::class,
             CategoryTableSeeder::class,
             SubCategoryTableSeeder::class,
+            BrandTableSeeder::class,
             HubVendorTableSeeder::class,
             VendorTableSeeder::class,
             ItemTableSeeder::class,
             ImageTableSeeder::class,
+            LookupTableSeeder::class,
         ]);
     }
 }
