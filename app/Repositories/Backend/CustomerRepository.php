@@ -51,4 +51,24 @@ class CustomerRepository extends BaseRepository
             return AppCustomer::whereNull('role_id')->get()->count();
         }
     }
+
+    /**
+     * @param Customer  $customer
+     * @param array $data
+     *
+     * @return mixed
+     */
+    public function changeStatus(AppCustomer $customer)
+    {
+       if($customer->is_active==0){
+            $customer->is_active=1;
+       }else{
+            $customer->is_active=0;
+       }
+       if($customer->isDirty()){
+        //    $main_service->updated_by = $data['updatedBy'];
+           $customer->save();
+       }
+       return $customer->refresh();
+    }
 }

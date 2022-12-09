@@ -124,6 +124,26 @@ $('.hub-vendor-data-table').DataTable({
     ]
 });
 
+//  Hub Vendor index table
+$('.customer-data-table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: $('#table_url').attr('data-table-url'),
+    columns: [
+        {data: 'name', name: 'name'},
+        {data: 'email', name: 'email'},
+        {data: 'mobile', name: 'mobile'},
+        {data: 'is_active', name: 'is_active'},
+        {
+            data: 'action', 
+            name: 'action', 
+            orderable: false, 
+            searchable: false,
+            "class" : "td-actions text-right",  
+        },
+    ]
+});
+
 //  Vendor index table
 $('.vendor-data-table').DataTable({
     processing: true,

@@ -129,7 +129,7 @@ class ItemController extends Controller
     public function store(CreateItemRequest $request)
     {
         $this->itemService->create($request->all());
-        return redirect()->route('vendors.index')->with('status', 'Item has been added successfully');
+        return redirect()->route('items.index')->with('status', 'Item has been added successfully');
     }
 
     /**

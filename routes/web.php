@@ -51,9 +51,12 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function () {
     // Vendor Route
     Route::resource('vendors', App\Http\Controllers\Backend\VendorController::class);
     Route::get('vendors/{vendor}/change_status', [App\Http\Controllers\Backend\VendorController::class,'changeStatus']);
-    // Vendor Item
+    //  Item
     Route::resource('items', App\Http\Controllers\Backend\ItemController::class);
     Route::get('items/{item}/change_status', [App\Http\Controllers\Backend\ItemController::class,'changeStatus']);
+    // Vendor Customer
+    Route::resource('customers', App\Http\Controllers\Backend\CustomerController::class);
+    Route::get('customers/{customer}/change_status', [App\Http\Controllers\Backend\CustomerController::class,'changeStatus']);
     
 
 });
