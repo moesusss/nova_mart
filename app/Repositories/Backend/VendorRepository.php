@@ -20,10 +20,24 @@ class VendorRepository extends BaseRepository
 
     public function getVendors()
     {
-        $vendors = Vendor::filter(request()->all())->orderBy('id','desc');
+        if(request()->has('lat') && request()->has('lng')){
+            $vendors = Vendor::selectRaw("id, name, address, lat, lng, 
+                     ( 6371000 * acos( cos( radians(?) ) *
+                       cos( radians( lat) )
+                       * cos( radians( lng ) - radians(?)
+                       ) + sin( radians(?) ) *
+                       sin( radians( lat ) ) )
+                     ) AS distance", [request()->lat, request()->lng, request()->lat])
+        ->having("distance", "<", env('RADIUS'))
+        ->orderBy("distance",'desc');
+        }else{
+            $vendors = Vendor::filter(request()->all())->orderBy('id','desc');
+        }
         if (request()->has('paginate')) {
+            
             $vendors = $vendors->paginate(request()->get('paginate'));
         } else {
+            
             $vendors = $vendors->paginate(25);
         }
         return $vendors;

@@ -17,15 +17,15 @@ class ImageResource extends JsonResource
      */
     public function toArray($request)
     {
-        $cover_image = Storage::disk('public')->exists('items/' . $this->image_url);
-        if ($cover_image) {
-            $cover_image = $this->image_url ? asset('storage/items/'.$this->image_url):null;
-        }
+        // $cover_image = Storage::disk('public')->exists('items/' . $this->image_url);
+        // if ($cover_image) {
+        //     $cover_image = $this->image_url ? asset('storage/items/'.$this->image_url):null;
+        // }
         return [
             'id'   => $this->id,
             'resourceable_type'   => $this->resourceable_type,
             'resourceable_id' => $this->naresourceable_idme,
-            'image_url' => $cover_image,
+            'image_url' => $this->image_url,
             'is_default' => $this->is_default,
             
         ];

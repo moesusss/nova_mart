@@ -26,7 +26,16 @@ class VendorService implements VendorServiceInterface
     public function getVendors()
     {
         if( request()->is('api/*')){
-            return $this->vendorRepository->getVendors();
+            $vendors =  $this->vendorRepository->getVendors();
+            // foreach($vendors as $vendor){
+            //     $data = [
+            //         'posts' => $posts, 
+            //         'standorts' => $standorts, 
+            //         'abteilungs' => $abteilungs,
+            //     ];
+                
+            // }
+            return $vendors;
         }
         return $this->vendorRepository->orderBy('created_at','desc')->get();
     }
@@ -96,4 +105,6 @@ class VendorService implements VendorServiceInterface
 
         return $result;
     }
+
+    
 }
