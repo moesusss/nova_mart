@@ -2,10 +2,11 @@
 
 namespace App\Http\Resources\api\v1\Customer\Vendor;
 
+use App\Models\Vendor;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\api\v1\Customer\MainService\MainServiceResource;
-use Illuminate\Support\Facades\Response;
 
 class VendorResource extends JsonResource
 {
@@ -21,10 +22,6 @@ class VendorResource extends JsonResource
 
         if ($cover_image) {
             $cover_image = $this->cover_image ? asset('storage/vendors/'.$this->cover_image):null;
-            // $path = public_path().'/vendors/'.$this->cover_image;
-            // $cover_image = Response::download($path);   
-
-            // Storage::url('vendors/' . $this->cover_image) : null;
         }
         return [
             'id'   => $this->id,
@@ -35,6 +32,7 @@ class VendorResource extends JsonResource
             'mobile' => $this->mobile,
             'main_service_id' => $this->main_service_id,
             'main_service' => MainServiceResource::make($this->whenLoaded('main_service')),
+            'km'        => Vendor::getDistance($request->lat, $request->lng, $this->lat, $this->lng).' km',
             'hub_vendor_id' => $this->hub_vendor_id,
             'address' => $this->address,
             'opening_time' => $this->opening_time,
