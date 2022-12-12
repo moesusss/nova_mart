@@ -20,10 +20,24 @@ class VendorRepository extends BaseRepository
 
     public function getVendors()
     {
-        $vendors = Vendor::filter(request()->all())->orderBy('id','desc');
+        if(request()->has('lat') && request()->has('lng')){
+            $vendors = Vendor::selectRaw("id, name, address, lat, lng, 
+                     ( 6371000 * acos( cos( radians(?) ) *
+                       cos( radians( lat) )
+                       * cos( radians( lng ) - radians(?)
+                       ) + sin( radians(?) ) *
+                       sin( radians( lat ) ) )
+                     ) AS distance", [request()->lat, request()->lng, request()->lat])
+        ->having("distance", "<", env('RADIUS'))
+        ->orderBy("distance",'desc');
+        }else{
+            $vendors = Vendor::filter(request()->all())->orderBy('id','desc');
+        }
         if (request()->has('paginate')) {
+            
             $vendors = $vendors->paginate(request()->get('paginate'));
         } else {
+            
             $vendors = $vendors->paginate(25);
         }
         return $vendors;
@@ -50,6 +64,7 @@ class VendorRepository extends BaseRepository
             'mobile' => isset($data['mobile']) ? $data['mobile'] : null,
             'password' => Hash::make($data['password']),
             'main_service_id' => $data['main_service_id'],
+            'sub_categories_id' => $data['sub_categories_id'],
             'hub_vendor_id' => $data['hub_vendor_id'],
             'address' => $data['address'],
             'opening_time' => $data['opening_time'],
@@ -87,6 +102,7 @@ class VendorRepository extends BaseRepository
         $vendor->mobile = isset($data['mobile']) ? $data['mobile'] : $vendor->mobile ;
         $vendor->password = isset($data['password']) ? Hash::make($data['password']) : $vendor->password ;
         $vendor->main_service_id = isset($data['main_service_id']) ? $data['main_service_id'] : $vendor->main_service_id ;
+        $vendor->sub_categories_id = isset($data['sub_categories_id']) ? $data['sub_categories_id'] : $vendor->sub_categories_id;
         $vendor->hub_vendor_id = isset($data['hub_vendor_id']) ? $data['hub_vendor_id'] : $vendor->hub_vendor_id ;
         $vendor->address = isset($data['address']) ? $data['address'] : $vendor->address ;
         $vendor->opening_time = isset($data['opening_time']) ? $data['opening_time'] : $vendor->opening_time ;

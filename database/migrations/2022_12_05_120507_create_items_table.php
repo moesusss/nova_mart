@@ -22,8 +22,8 @@ return new class extends Migration
             $table->uuid('sub_category_id');
             $table->uuid('brand_id')->nullable();
             $table->string('sku')->unique();
-            $table->string('barcode')->unique();
-            $table->decimal('qty', 16, 2)->default(2);
+            $table->string('barcode')->unique()->nullable();
+            $table->integer('qty');
             $table->decimal('price', 16, 2)->default(2);
             $table->decimal('weight', 16, 2)->default(2);
             $table->boolean('is_active')->default(false);

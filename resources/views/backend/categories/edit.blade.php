@@ -88,7 +88,7 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="cover_image" value="{{$category->cover_image}}" readonly>
+                                                <input type="text" class="form-control" name="cover_image" value="" readonly>
                                                 <span class="input-group-btn">
                                                     <span class="btn btn-default btn-file">
                                                         Browse… <input type="file" id="imgInp" name="cover_image">

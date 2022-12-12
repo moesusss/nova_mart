@@ -40,7 +40,7 @@
                                             <div class="col-sm-6">
                                                 <!-- <label>Please Select Role</label> -->
                                                 <div class="select2-purple">
-                                                    <select class="form-control @error('hub_vendor_id') is-invalid @enderror" name="hub_vendor_id" data-placeholder="Select Vendor" data-dropdown-css-class="" style="width: 100%;">
+                                                    <select class="form-control @error('hub_vendor_id') is-invalid @enderror select2" name="hub_vendor_id" data-placeholder="Select Vendor" data-dropdown-css-class="" style="width: 100%;">
                                                         <option value="">Select Hub Vendor</option>
                                                         @foreach ($hub_vendors as $hub_vendor)
                                                             <option value="{{ $hub_vendor->id }}">{{$hub_vendor->name}}</option>
@@ -211,12 +211,30 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <label for="sub_category_id" class="col-sm-3 col-form-label">Highlight Sub Category </label>
+                                            <div class="col-sm-6">
+                                                <!-- <label>Please Select Role</label> -->
+                                                <div class="select2-purple">
+                                                    <select class="form-control @error('sub_category_id') is-invalid @enderror sub_category_id" name="sub_category_id[]" data-placeholder="Select Sub Category" data-dropdown-css-class="" style="width: 100%;" multiple="multiple">>
+                                                        <option value="">Select Sub Category</option>
+                                                        @foreach ($sub_categories as $sub_cat)
+                                                            <option value="{{ $sub_cat->id }}">{{$sub_cat->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('sub_category_id')
+                                                        <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             
                             <div class="form-group row">
                                 <div class="offset-sm-2 col-sm-10">
-                                <a href="{{url('admin/hub_vendors')}}" class="btn btn-primary">Back</a>
+                                <a href="{{url('admin/vendors')}}" class="btn btn-primary">Back</a>
                                     <button type="submit" class="btn btn-danger">Submit</button>
                                 </div>
                             </div>

@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Item;
 use App\Models\User;
 use App\Traits\Uuids;
-use App\Models\Vendor;
 use App\Models\HubVendor;
 use App\Models\MainService;
 use Illuminate\Database\Eloquent\Model;
@@ -33,11 +32,13 @@ class Vendor extends Model
         'lat',
         'lng',
         'min_order_time',
+        'sub_categories_id',
         'cover_image',
         'created_by',
         'updated_by',
         'deleted_by',
     ];
+
     
     public function created_user()
     {
@@ -92,6 +93,18 @@ class Vendor extends Model
         }
         
     }
+
+    public static function getDistance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo) {
+		// Calculate distance between latitude and longitude
+		$distance_diff    = $longitudeFrom - $longitudeTo;
+		$distance = sin(deg2rad($latitudeFrom)) * sin(deg2rad($latitudeTo)) + cos(deg2rad($latitudeFrom)) * cos(deg2rad($latitudeTo)) * cos(deg2rad($distance_diff));
+		$distance = acos($distance);
+		$distance = rad2deg($distance);
+		$miles    = $distance * 60 * 1.1515;
+
+		// Convert KM and return distance
+		return round($miles * 1.609344, 2);
+	}
 }
 
 

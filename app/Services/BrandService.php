@@ -93,10 +93,15 @@ class BrandService implements BrandServiceInterface
         catch(Exception $exc){
             DB::rollBack();
             Log::error($exc->getMessage());
-            throw new InvalidArgumentException('Unable to active main service');
+            throw new InvalidArgumentException('Unable to active brand service');
         }
         DB::commit();
 
+        return $result;
+    }
+
+    public function getDataBySubCategoryID($id){
+        $result = $this->brandRepository->findbyValue('sub_category_id',$id);
         return $result;
     }
 

@@ -29,6 +29,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(false);
             $table->boolean('is_closed')->default(false);
             $table->string('cover_image')->nullable();
+            $table->string('sub_categories_id')->nullable();
             $table->string('lat');
             $table->string('lng');
             $table->integer('min_order_time')->default(0);

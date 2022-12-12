@@ -40,6 +40,8 @@ class VendorService implements VendorServiceInterface
     {   
         $hub_vendor= $this->hubvendorRepository->getHubVendor($data['hub_vendor_id']);
         $data['main_service_id'] = $hub_vendor->main_service_id;
+        $sub_categories = $data['sub_category_id'];
+        $data['sub_categories_id']=($sub_categories)?json_encode($sub_categories):null;
         $result = $this->vendorRepository->create($data);
         return $result;
     }
@@ -48,6 +50,8 @@ class VendorService implements VendorServiceInterface
     {
         $hub_vendor= $this->hubvendorRepository->getHubVendor($data['hub_vendor_id']);
         $data['main_service_id'] = $hub_vendor->main_service_id;
+        $sub_categories = $data['sub_category_id'];
+        $data['sub_categories_id']=($sub_categories)?json_encode($sub_categories):null;
 
         DB::beginTransaction();
         try {
@@ -96,4 +100,6 @@ class VendorService implements VendorServiceInterface
 
         return $result;
     }
+
+    
 }

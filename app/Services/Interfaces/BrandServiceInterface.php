@@ -13,5 +13,6 @@ interface BrandServiceInterface
     public function update(Brand $brand,array $data);
     public function destroy(Brand $brand);
     public function getBrandSubCategoryPluckName(Brand $brand);
+    public function getDataBySubCategoryID($id);
     
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Services\SubCategoryService;
 use App\Http\Requests\SubCategory\CreateSubCategoryRequest;
 use App\Http\Requests\SubCategory\UpdateSubCategoryRequest;
+use App\Http\Resources\api\v1\Customer\SubCategory\SubCategoryCollection;
 
 class SubCategoryController extends Controller
 {
@@ -171,5 +173,17 @@ class SubCategoryController extends Controller
     {
         $result = $this->subcategoryService->changeStatus($sub_category);
         return redirect('admin/sub_categories')->withStatus(__('Sub Category successfully updated.'));
+    }
+
+     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getDataByCategoryID($category_id)
+    {
+        $result = $this->subcategoryService->getDataByCategoryID($category_id);
+        return new SubCategoryCollection($result);
     }
 }

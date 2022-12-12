@@ -146,6 +146,26 @@ $('.vendor-data-table').DataTable({
 });
 
 
+//  Vendor index table
+$('.item-data-table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: $('#table_url').attr('data-table-url'),
+    columns: [
+        {data: 'name', name: 'name'},
+        {data: 'sub_category', name: 'sub_category'},
+        {data: 'is_active', name: 'is_active'},
+        {
+            data: 'action', 
+            name: 'action', 
+            orderable: false, 
+            searchable: false,
+            "class" : "td-actions text-right",  
+        },
+    ]
+});
+
+
 //  User index table
 $('.user-data-table').DataTable({
     processing: true,
@@ -256,4 +276,84 @@ $('#originMap').on('show.bs.modal', function (event) {
 function initialize() {
 }
 // google.maps.event.addDomListener(window, 'load', initialize);
+//  record delete
+$(document).on('click','.destroy_btn',function(){
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+        })
+        .then((willDelete) => {
+        if (willDelete) {
+            var form_id = $(this).attr('data-origin');
+            $('#'+form_id).submit();
+        } else {
+            // swal("Your imaginary file is safe!");
+        }
+    });
+});
+
+//  Get Sub Categories using category 
+$(document).on('change','.category_id',function(){
+    category_id = $(this).val();
+    url = $(this).attr('data-attr-url')+'/'+category_id;
+    $.ajax({
+		url: url,
+		type: "GET",
+		success: function(data) {
+            console.log(data);
+            if(data.status == true){
+                option = "<option value=''>Select Sub Category</option>";
+                $.each(data.data, function(index, value) {
+                        option += '<option value="'+value.id+'">'+value.name+'</option>';
+                    
+                });
+                $("#sub_category_id").html(option);
+            }
+		}
+	});
+})
+
+
+//  Get Brand using sub category 
+$(document).on('change','.sub_category_id',function(){
+    sub_category_id = $(this).val();
+    url = $(this).attr('data-attr-url')+'/'+sub_category_id;
+    $.ajax({
+		url: url,
+		type: "GET",
+		success: function(data) {
+            if(data.status == true){
+                option = "<option value=''>Select Brand</option>";
+                $.each(data.data, function(index, value) {
+                        option += '<option value="'+value.id+'">'+value.name+'</option>';
+                    
+                });
+                $("#brand_id").html(option);
+            }
+		}
+	});
+})
+
+ //  Image multiple upload
+ var previewImages = function(input, imgPreviewPlaceholder) {
+    if (input.files) {
+        var filesAmount = input.files.length;
+        for (i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
+        reader.onload = function(event) {
+        $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+        }
+        reader.readAsDataURL(input.files[i]);
+        }
+    }
+};
+    $('#images').on('change', function() {
+    previewImages(this, 'div.images-preview-div');
+});
+
+
+
 

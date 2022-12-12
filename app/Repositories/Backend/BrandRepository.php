@@ -29,6 +29,12 @@ class BrandRepository extends BaseRepository
         }
         return $sub_categories;
     }
+
+    public function findbyValue($field,$value)
+    {
+        $data = Brand::where($field,$value)->get();
+        return $data;
+    }
     /**
      * @param array $data
      *

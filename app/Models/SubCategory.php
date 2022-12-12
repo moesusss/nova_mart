@@ -49,5 +49,8 @@ class SubCategory extends Model
         if (isset($filter['is_active']) && $is_active = $filter['is_active']) {
             $query->where('is_active', $is_active );
         }
+        if (isset($filter['category_id']) && $category_id = $filter['category_id']) {
+            $query->where('category_id', $category_id );
+        }
     }
 }
