@@ -60,6 +60,17 @@ class Item extends Model
         return $this->belongsTo(Vendor::class);
     }
 
+    public function  scopeRelatedItem($query)
+    {
+        return $query->where('id', '!=', $this->id)
+                     ->where('vendor_id', $this->vendor_id)
+                     ->where(function ($q) {
+                        $q->where('sub_category_id', $this->sub_category_id)
+                            ->orWhere('category_id', $this->category_id);
+                     })
+                     ->get();
+    }
+
     public function images()
     {
         return $this->morphMany( Image::class, 'resourceable', 'resourceable_type', 'resourceable_id' );
