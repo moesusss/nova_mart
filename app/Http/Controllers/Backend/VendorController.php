@@ -13,6 +13,7 @@ use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Requests\Vendor\CreateVendorRequest;
 use App\Http\Requests\Vendor\UpdateVendorRequest;
+use App\Services\SubCategoryService;
 
 class VendorController extends Controller
 {
@@ -21,16 +22,18 @@ class VendorController extends Controller
      */
     protected $vendorService;
     protected $hubvendorService;
+    protected $subcategoryService;
 
     /**
      * AgentController constructor.
      *
      * @param VendorService $vendorService
      */
-    public function __construct(VendorService $vendorService,HubVendorService $hubvendorService)
+    public function __construct(VendorService $vendorService,HubVendorService $hubvendorService, SubCategoryService $subcategoryService)
     {
         $this->vendorService = $vendorService;
         $this->hubvendorService = $hubvendorService;
+        $this->subcategoryService = $subcategoryService;
         $this->middleware('permission:vendor-list|vendor-create|vendor-edit|vendor-delete', ['only' => ['index','show']]);
         $this->middleware('permission:vendor-create', ['only' => ['create','store']]);
         $this->middleware('permission:vendor-edit', ['only' => ['edit','update']]);
@@ -113,7 +116,8 @@ class VendorController extends Controller
     public function create()
     {
         $hub_vendors = $this->hubvendorService->getHubVendors();
-        return view('backend.vendors.create',compact('hub_vendors'));
+        $sub_categories = $this->subcategoryService->getSubCategories();
+        return view('backend.vendors.create',compact('hub_vendors','sub_categories'));
     }
 
     /**
@@ -148,8 +152,9 @@ class VendorController extends Controller
      */
     public function edit(Vendor $vendor)
     {
+        $sub_categories = $this->subcategoryService->getSubCategories();
         $hub_vendors = $this->hubvendorService->getHubVendors();
-        return view('backend.vendors.edit',compact('vendor','hub_vendors'));
+        return view('backend.vendors.edit',compact('vendor','hub_vendors','sub_categories'));
     }
 
     /**

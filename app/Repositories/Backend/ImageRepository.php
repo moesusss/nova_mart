@@ -56,7 +56,7 @@ class ImageRepository extends BaseRepository
             }
             Storage::setVisibility($path . '/' . $file_name, "public");
         }
-         return $file_name;
+        return $file_name;
     }
     
 

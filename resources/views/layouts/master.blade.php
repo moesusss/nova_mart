@@ -135,6 +135,12 @@
         $('.select2').select2({
             theme: 'bootstrap4'
         })
+        // Vendor highlight sub category
+        $('.sub_category_id').select2({
+            theme: 'bootstrap4',
+            maximumSelectionLength: 6
+        })
+
     });
 
 

@@ -64,6 +64,7 @@ class VendorRepository extends BaseRepository
             'mobile' => isset($data['mobile']) ? $data['mobile'] : null,
             'password' => Hash::make($data['password']),
             'main_service_id' => $data['main_service_id'],
+            'sub_categories_id' => $data['sub_categories_id'],
             'hub_vendor_id' => $data['hub_vendor_id'],
             'address' => $data['address'],
             'opening_time' => $data['opening_time'],
@@ -101,6 +102,7 @@ class VendorRepository extends BaseRepository
         $vendor->mobile = isset($data['mobile']) ? $data['mobile'] : $vendor->mobile ;
         $vendor->password = isset($data['password']) ? Hash::make($data['password']) : $vendor->password ;
         $vendor->main_service_id = isset($data['main_service_id']) ? $data['main_service_id'] : $vendor->main_service_id ;
+        $vendor->sub_categories_id = isset($data['sub_categories_id']) ? $data['sub_categories_id'] : $vendor->sub_categories_id;
         $vendor->hub_vendor_id = isset($data['hub_vendor_id']) ? $data['hub_vendor_id'] : $vendor->hub_vendor_id ;
         $vendor->address = isset($data['address']) ? $data['address'] : $vendor->address ;
         $vendor->opening_time = isset($data['opening_time']) ? $data['opening_time'] : $vendor->opening_time ;

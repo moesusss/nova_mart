@@ -32,8 +32,7 @@
                         
                         <!-- /.card-header -->
                         <!-- form start -->
-                        
-                        {!! Form::open(['route' => ['vendors.update', $vendor->id],'files' => 'true', 'class'=>'form-horizontal','method' => 'PATCH']) !!}
+                        {!! Form::model($vendor, ['method' => 'PATCH','files' => 'true','route' => ['vendors.update', $vendor->id]]) !!}
                         <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -199,7 +198,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" name="cover_image" value="{{$vendor->cover_image}}" readonly>
+                                                        <input type="text" class="form-control" name="cover_image" value="" readonly>
                                                         <span class="input-group-btn">
                                                             <span class="btn btn-default btn-file">
                                                                 Browse… <input type="file" id="imgInp" name="cover_image">
@@ -214,12 +213,32 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="form-group row">
+                                            <label for="sub_category_id" class="col-sm-3 col-form-label">Highlight Sub Category </label>
+                                            <div class="col-sm-6">
+                                                <!-- <label>Please Select Role</label> -->
+                                                <div class="select2-purple">
+                                                    <select class="form-control @error('sub_category_id') is-invalid @enderror sub_category_id" name="sub_category_id[]" data-placeholder="Select Sub Category" data-dropdown-css-class="" style="width: 100%;" multiple="multiple">>
+                                                        <option value="">Select Sub Category</option>
+                                                        @foreach ($sub_categories as $sub_cat)
+                                                            <option value="{{ $sub_cat->id }}" {{is_array(json_decode($vendor->sub_categories_id)) && in_array($sub_cat->id,json_decode($vendor->sub_categories_id)) ? 'selected' : '' }}>{{$sub_cat->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('sub_category_id')
+                                                        <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             
                             <div class="form-group row">
                                 <div class="offset-sm-2 col-sm-10">
-                                <a href="{{url('admin/hub_vendors')}}" class="btn btn-primary">Back</a>
+                                <a href="{{url('admin/vendors')}}" class="btn btn-primary">Back</a>
                                     <button type="submit" class="btn btn-danger">Submit</button>
                                 </div>
                             </div>

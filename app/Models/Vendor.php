@@ -32,11 +32,13 @@ class Vendor extends Model
         'lat',
         'lng',
         'min_order_time',
+        'sub_categories_id',
         'cover_image',
         'created_by',
         'updated_by',
         'deleted_by',
     ];
+
     
     public function created_user()
     {
