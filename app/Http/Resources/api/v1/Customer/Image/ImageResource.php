@@ -24,7 +24,7 @@ class ImageResource extends JsonResource
         return [
             'id'   => $this->id,
             'resourceable_type'   => $this->resourceable_type,
-            'resourceable_id' => $this->naresourceable_idme,
+            'resourceable_id' => $this->resourceable_id,
             'image_url' => ($this->image_url)?asset('storage/items/'.$this->image_url):null,
             'is_default' => $this->is_default,
             
