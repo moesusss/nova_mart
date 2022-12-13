@@ -72,6 +72,17 @@ class ItemRepository extends BaseRepository
         //     });\
         return $items;
     }
+    public function getHilightedItemsGroupBySubCategory($vendor)
+    {
+        // dd(json_decode($vendor->sub_categories_id));
+        $items = Item::with(['images'])
+                // ->filter(request()->all())
+                ->where('vendor_id', $vendor->id)
+                 ->whereIn('sub_category_id', json_decode($vendor->sub_categories_id))
+                ->orderBy('id','desc')
+                ->get();
+        return $items;
+    }
 
     /**
      * @param array $data
