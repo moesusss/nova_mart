@@ -28,6 +28,7 @@ class ItemResource extends JsonResource
         // }
         return [
             'id'   => $this->id,
+            'related_items'   => $this->relatedItem(),
             'name' => $this->name,
             'mm_name' => $this->mm_name,
             'vendor_id' => $this->vendor_id,
