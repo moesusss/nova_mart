@@ -21,7 +21,7 @@ class VendorRepository extends BaseRepository
     public function getVendors()
     {
         if(request()->has('lat') && request()->has('lng')){
-            $vendors = Vendor::selectRaw("id, name, address, lat, lng, 
+            $vendors = Vendor::selectRaw("*, 
                      ( 6371000 * acos( cos( radians(?) ) *
                        cos( radians( lat) )
                        * cos( radians( lng ) - radians(?)

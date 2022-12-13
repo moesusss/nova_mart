@@ -36,7 +36,13 @@ class CustomerAuthController extends Controller
     // Request OTP for login or register
     public function otpRequest(OTPRequest $request){
         if($request->is_login=='1'){
-            $valid_verify=true;
+            $customer = $this->customerAuth->checkMemberValid($request->mobile);
+            if($customer){
+                $valid_verify=true;
+            }else{
+                $valid_verify=false;
+                return response()->json(['status'=>false,'message'=>'Account does not exist. Please register to login.'],Response::HTTP_OK);
+            }
         }else{
             $customer = $this->customerAuth->checkMemberValid($request->mobile);
             if($customer){
