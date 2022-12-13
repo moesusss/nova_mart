@@ -29,6 +29,17 @@ class ItemRepository extends BaseRepository
         return $items;
     }
 
+    public function getRelatedItems($item)
+    {
+        $items = Item::with(['images'])->getRelatedItem($item);
+        if (request()->has('paginate')) {
+            $items = $items->paginate(request()->get('paginate'));
+        } else {
+            $items = $items->get();
+        }
+        return $items;
+    }
+
     public function getCategoryByVendor($id)
     {
         $result = Item::where('vendor_id',$id)
@@ -51,7 +62,7 @@ class ItemRepository extends BaseRepository
         } else {
             $items = $items->get();
         }
-        return $items;
+        return $items->groupBy('sub_category.name');
     }
 
     /**
