@@ -29,7 +29,7 @@ class CreateItemRequest extends FormRequest
             'vendor_id' => 'required|uuid|exists:vendors,id',
             'category_id' => 'required|uuid|exists:categories,id',
             'sub_category_id' => 'required|uuid|exists:sub_categories,id',
-            'brand_id' => 'required|uuid|exists:brands,id',
+            'brand_id' => 'nullable|uuid|exists:brands,id',
             'qty' => 'required',
             'price' => 'required',
             'weight' => 'required_if:unit_type,==,kg',

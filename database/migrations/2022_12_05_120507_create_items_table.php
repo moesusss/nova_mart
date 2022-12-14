@@ -24,11 +24,13 @@ return new class extends Migration
             $table->string('sku')->unique();
             $table->string('barcode')->unique()->nullable();
             $table->integer('qty');
+            $table->integer('maximum_order_count')->default(10);
             $table->decimal('price', 16, 2)->default(2);
             $table->decimal('weight', 16, 2)->default(2);
             $table->boolean('is_active')->default(false);
             $table->boolean('is_instock')->default(false);
             $table->boolean('is_package')->default(false);
+            $table->boolean('is_tax')->default(false);
             $table->longText('description');
             $table->string('item_type');
             $table->string('unit_type');

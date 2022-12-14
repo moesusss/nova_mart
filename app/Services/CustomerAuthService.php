@@ -31,7 +31,7 @@ class CustomerAuthService implements CustomerAuthServiceInterface
 
     public function create(array $data){       
         $customer = $this->authRepository->create($data); 
-        $data['customer_id']= $customer->id; 
+        $data['customer_id']= $customer->id;
         $address = $this->addressRepository->create($data);
         $token = $this->login($customer);
         $response['status'] = true;

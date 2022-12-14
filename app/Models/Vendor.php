@@ -27,6 +27,8 @@ class Vendor extends Model
         'address',
         'opening_time',
         'closing_time',
+        'order_closing_time',
+        'commission_fee',
         'is_active',
         'is_closed',
         'lat',

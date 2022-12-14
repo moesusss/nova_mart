@@ -199,6 +199,12 @@ $('#closing_time').datetimepicker({
     format: 'LT' 
 });
 
+//Date and time picker
+$('#order_closing_time').datetimepicker({ 
+    icons: { time: 'far fa-clock' },
+    format: 'LT' 
+});
+
 
 //  Image Upload
 $(document).on('change', '.btn-file :file', function() {

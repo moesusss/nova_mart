@@ -17,17 +17,17 @@ class BrandRepository extends BaseRepository
         return Brand::class;
     }
 
-    public function getSubCategories()
+    public function getBrands()
     {
-        $sub_categories = Brand::with(['category'])
+        $brannds = Brand::with(['category'])
                         ->filter(request()->all())
                         ->orderBy('id','desc');
          if (request()->has('paginate')) {
-            $sub_categories = $sub_categories->paginate(request()->get('paginate'));
+            $brannds = $brannds->paginate(request()->get('paginate'));
         } else {
-            $sub_categories = $sub_categories->get();
+            $brannds = $brannds->get();
         }
-        return $sub_categories;
+        return $brannds;
     }
 
     public function findbyValue($field,$value)

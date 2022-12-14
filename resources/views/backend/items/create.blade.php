@@ -138,7 +138,7 @@
                                         <div class="form-group row">
                                             <label for="qty" class="col-sm-3 col-form-label">Qty </label>
                                             <div class="col-sm-6">
-                                            <input type="number" name="qty" class="form-control @error('qty') is-invalid @enderror" id="qty" placeholder="Qty" min=0 value="{{ (old('bar_code'))?old('bar_code'):0 }}">
+                                            <input type="number" name="qty" class="form-control @error('qty') is-invalid @enderror" id="qty" placeholder="Qty" min=0 value="{{ (old('qty'))?old('qty'):0 }}">
                                                 @error('qty')
                                                     <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
                                                 @enderror
@@ -157,7 +157,7 @@
                                         <div class="form-group row">
                                             <label for="weight" class="col-sm-3 col-form-label"> Weight </label>
                                             <div class="col-sm-6">
-                                                <input type="number" name="weight" class="form-control @error('weight') is-invalid @enderror" id="weight" placeholder="Weight" min=0 value="{{ (old('weight'))?old('weight'):0 }}">
+                                                <input type="number" name="weight" class="form-control @error('weight') is-invalid @enderror" id="weight" placeholder="Weight" min=0 value="{{ (old('weight'))?old('weight'):0 }}" max=6>
                                                 @error('weight')
                                                     <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
                                                 @enderror
@@ -204,7 +204,7 @@
                                         <div class="form-group row">
                                             <label for="description" class="col-sm-3 col-form-label"> Description <span class="text-danger">*</span></label>
                                             <div class="col-sm-6">
-                                                <textarea name="description" id="" class="form-control @error('description') is-invalid @enderror"></textarea>
+                                                <textarea name="description" id="" class="form-control @error('description') is-invalid @enderror">{{old('description')}}</textarea>
                                                 @error('description')
                                                     <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
                                                 @enderror

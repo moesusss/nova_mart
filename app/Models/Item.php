@@ -60,6 +60,11 @@ class Item extends Model
         return $this->belongsTo(Vendor::class);
     }
 
+    public function stock_items()
+    {
+        return $this->hasMany(StockItem::class);
+    }
+
     public function  scopeGetRelatedItem($query, $filter)
     {
         $query->with(['images'])->where('id', '!=', $filter['id'])
