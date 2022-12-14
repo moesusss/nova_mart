@@ -60,15 +60,14 @@ class Item extends Model
         return $this->belongsTo(Vendor::class);
     }
 
-    public function  scopeRelatedItem($query)
+    public function  scopeGetRelatedItem($query, $filter)
     {
-        return $query->where('id', '!=', $this->id)
-                     ->where('vendor_id', $this->vendor_id)
-                     ->where(function ($q) {
-                        $q->where('sub_category_id', $this->sub_category_id)
-                            ->orWhere('category_id', $this->category_id);
-                     })
-                     ->get();
+        $query->with(['images'])->where('id', '!=', $filter['id'])
+            ->where('vendor_id', $filter['vendor_id'])
+            ->where(function ($q) use($filter) {
+            $q->where('sub_category_id', $filter['sub_category_id'])
+                ->orWhere('category_id', $filter['category_id']);
+            });
     }
 
     public function images()
