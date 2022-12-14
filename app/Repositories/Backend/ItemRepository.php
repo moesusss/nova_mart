@@ -29,6 +29,17 @@ class ItemRepository extends BaseRepository
         return $items;
     }
 
+    public function getRelatedItems($item)
+    {
+        $items = Item::with(['images'])->getRelatedItem($item);
+        if (request()->has('paginate')) {
+            $items = $items->paginate(request()->get('paginate'));
+        } else {
+            $items = $items->get();
+        }
+        return $items;
+    }
+
     public function getCategoryByVendor($id)
     {
         $result = Item::where('vendor_id',$id)
@@ -45,12 +56,20 @@ class ItemRepository extends BaseRepository
     public function getItemsGroupBySubCategory()
     {
         $items = Item::with(['images'])->filter(request()->all())
-                ->orderBy('id','desc');
-        if (request()->has('paginate')) {
-            $items = $items->paginate(request()->get('paginate'));
-        } else {
-            $items = $items->get();
-        }
+                ->orderBy('id','desc')
+                ->get();
+                // ->groupBy('sub_category.name')
+                // ->map(function ($deal) {
+                //     return $deal->take(4);
+                // });
+        // $result = DB::table('a16s')
+        //     ->select('p_id', 'u_id', 'time')
+        //     ->orderBy('time', 'desc')
+        //     ->get()
+        //     ->groupBy('p_id')
+        //     ->map(function ($deal) {
+        //         return $deal->take(2);
+        //     });\
         return $items;
     }
 

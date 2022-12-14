@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Http\Resources\api\v1\Customer\Item;
+namespace App\Http\Resources\api\v1\Customer\RelatedItem;
 
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\api\v1\Customer\Image\ImageCollection;
-use App\Http\Resources\api\v1\Customer\MainService\MainServiceResource;
 
-class ItemResource extends JsonResource
+class RelatedItemResource extends JsonResource
 {
     /**
      * Transform the resource collection into an array.
@@ -18,14 +15,7 @@ class ItemResource extends JsonResource
      */
     public function toArray($request)
     {
-        // $cover_image = Storage::disk('public')->exists('vendors/' . $this->cover_image);
-        // if ($cover_image) {
-        //     $cover_image = $this->cover_image ? asset('storage/vendors/'.$this->cover_image):null;
-        //     // $path = public_path().'/vendors/'.$this->cover_image;
-        //     // $cover_image = Response::download($path);   
-
-        //     // Storage::url('vendors/' . $this->cover_image) : null;
-        // }
+      
         return [
             'id'   => $this->id,
             'name' => $this->name,
@@ -38,9 +28,6 @@ class ItemResource extends JsonResource
             'sub_category_name' => optional($this->sub_category)->name,
             'brand_id' => $this->brand_id,
             'brand_name' => optional($this->brand)->name,
-            'sku' => $this->sku,
-            'barcode' => $this->barcode,
-            'qty' => $this->qty,
             'price' => $this->price,
             'weight' => $this->weight,
             'is_active' => $this->is_active,

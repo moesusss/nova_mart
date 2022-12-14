@@ -36,6 +36,11 @@ class ItemService implements ItemServiceInterface
         return $this->itemRepository->getItem($id);
     }
 
+    public function getRelatedItems($item)
+    {
+        return $this->itemRepository->getRelatedItems($item);
+    }
+
     public function getCategoryByVendor($id)
     {
         return $this->itemRepository->getCategoryByVendor($id);

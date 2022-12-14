@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\api\v1\Customer\Item\ItemResource;
 use App\Http\Resources\api\v1\Customer\Item\ItemCollection;
+use App\Http\Resources\api\v1\Customer\RelatedItem\RelatedItemCollection;
 
 class ItemController extends Controller
 {
@@ -48,7 +49,14 @@ class ItemController extends Controller
      */
     public function show(Item $item, Request $request)
     {
-        return new ItemResource($item->load(['images']));
+        $related_items = $this->itemService->getRelatedItems($item);
+         return response()->json([
+                'status'=>true,
+                'message'=>'Success',
+                'data' => new ItemResource($item->load(['images'])),
+                'related_items' => new RelatedItemCollection($related_items->load(['images'])),
+            
+            ],Response::HTTP_OK);
     }
 
     
