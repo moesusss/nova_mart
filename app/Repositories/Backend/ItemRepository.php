@@ -22,7 +22,7 @@ class ItemRepository extends BaseRepository
     {
         $items = Item::with(['images'])->filter(request()->all());
         if (request()->has('paginate')) {
-            $items = $items->paginate(request()->get('paginate'));
+            $items = $items->where("is_active",1)->paginate(request()->get('paginate'));
         } else {
             $items = $items->get();
         }

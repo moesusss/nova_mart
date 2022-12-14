@@ -23,7 +23,7 @@ class SubCategoryRepository extends BaseRepository
                         ->filter(request()->all())
                         ->orderBy('id','desc');
          if (request()->has('paginate')) {
-            $sub_categories = $sub_categories->paginate(request()->get('paginate'));
+            $sub_categories = $sub_categories->where("is_active",1)->paginate(request()->get('paginate'));
         } else {
             $sub_categories = $sub_categories->get();
         }

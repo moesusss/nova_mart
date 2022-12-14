@@ -128,6 +128,7 @@ class VendorController extends Controller
      */
     public function store(CreateVendorRequest $request)
     {
+        
         $this->vendorService->create($request->all());
         return redirect()->route('vendors.index')->with('status', 'Vendor has been added successfully');
     }

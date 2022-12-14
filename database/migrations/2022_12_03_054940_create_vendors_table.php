@@ -25,11 +25,13 @@ return new class extends Migration
             $table->uuid('hub_vendor_id');
             $table->string('address');
             $table->string('opening_time');
+            $table->string('order_closing_time');
             $table->string('closing_time');
             $table->boolean('is_active')->default(false);
             $table->boolean('is_closed')->default(false);
             $table->string('cover_image')->nullable();
-            $table->string('sub_categories_id')->nullable();
+            $table->longText('sub_categories_id')->nullable();
+            $table->string('commission_fee')->nullable();
             $table->string('lat');
             $table->string('lng');
             $table->integer('min_order_time')->default(0);
