@@ -13,8 +13,9 @@ use App\Http\Requests\api\Customer\Otp\OTPRequest;
 use App\Http\Requests\api\Customer\Otp\OTPVerifyRequest;
 use App\Http\Requests\CustomerAuth\CustomerLoginRequest;
 use App\Http\Resources\api\v1\OTPRequest\OTPRequestResource;
-use App\Http\Requests\api\Customer\Auth\CustomerRegisterRequest;
+use App\Http\Requests\api\Customer\Auth\UpdateProfileRequest;
 use App\Http\Resources\api\v1\Customer\Profile\ProfileResource;
+use App\Http\Requests\api\Customer\Auth\CustomerRegisterRequest;
 use App\Http\Resources\api\v1\CustomerAddress\CustomerAddressCollection;
 
 class CustomerAuthController extends Controller
@@ -114,6 +115,16 @@ class CustomerAuthController extends Controller
             
             ],Response::HTTP_OK);
         }
+    }
+
+    public function update_profile(UpdateProfileRequest $request)
+    {
+        $user = auth()->user();
+
+        $user = $request->updateProfile($user);
+
+        return new ProfileResource($user);
+        // return response()->json(['status' => 1, 'message' => 'Successfully updated!'], Response::HTTP_OK);
     }
     
 }
