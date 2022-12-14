@@ -28,7 +28,7 @@ class BrandService implements BrandServiceInterface
     public function getBrands()
     {
         if( request()->is('api/*')){
-            return $this->brandRepository->getSubCategories();
+            return $this->brandRepository->getBrands();
         }
         return $this->brandRepository->orderBy('created_at','desc')->get();
         

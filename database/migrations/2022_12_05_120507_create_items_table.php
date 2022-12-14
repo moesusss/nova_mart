@@ -30,6 +30,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(false);
             $table->boolean('is_instock')->default(false);
             $table->boolean('is_package')->default(false);
+            $table->boolean('is_tax')->default(false);
             $table->longText('description');
             $table->string('item_type');
             $table->string('unit_type');
