@@ -47,6 +47,11 @@ class SubCategoryService implements SubCategoryServiceInterface
     {
         return $this->itemRepository->getItemsGroupBySubCategory();
     }
+    
+    public function getSubCategoriesWithHighlightItems($vendor)
+    {
+        return $this->itemRepository->getHilightedItemsGroupBySubCategory($vendor);
+    }
 
     public function getSubCategory($id)
     {
