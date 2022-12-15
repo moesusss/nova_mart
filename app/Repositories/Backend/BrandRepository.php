@@ -19,15 +19,15 @@ class BrandRepository extends BaseRepository
 
     public function getBrands()
     {
-        $brannds = Brand::with(['category'])
+        $brands = Brand::with(['category'])
                         ->filter(request()->all())
                         ->orderBy('id','desc');
          if (request()->has('paginate')) {
-            $brannds = $brannds->paginate(request()->get('paginate'));
+            $brands = $brands->paginate(request()->get('paginate'));
         } else {
-            $brannds = $brannds->get();
+            $brands = $brands->get();
         }
-        return $brannds;
+        return $brands;
     }
 
     public function findbyValue($field,$value)

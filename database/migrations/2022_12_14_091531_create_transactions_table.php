@@ -32,10 +32,10 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->foreign('customer_address_id')->references('id')->on('customer_addersses')->onDelete('cascade');
+            // $table->foreign('customer_address_id')->references('id')->on('customer_addersses')->onDelete('cascade');
 
             $table->index([ 
-                'id','transaction_ref','transaction_date','payment_ref','customer_address_id'
+                'id','transaction_ref','transaction_date'
             ]);
         });
     }

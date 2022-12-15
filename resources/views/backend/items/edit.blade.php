@@ -142,7 +142,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group row">
+                                        <!-- <div class="form-group row">
                                             <label for="qty" class="col-sm-3 col-form-label">Qty </label>
                                             <div class="col-sm-6">
                                             <input type="number" name="qty" class="form-control @error('qty') is-invalid @enderror" id="qty" placeholder="Qty" min=0 value="{{$item->qty}}">
@@ -150,7 +150,7 @@
                                                     <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
                                                 @enderror
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="form-group row">
                                             <label for="price" class="col-sm-3 col-form-label"> Price <span class="text-danger">*</span></label>
                                             <div class="col-sm-6">
