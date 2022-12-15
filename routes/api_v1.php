@@ -2,13 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\CustomerAuthController;
 use App\Http\Controllers\api\v1\Customer\ItemController;
 use App\Http\Controllers\api\v1\Customer\VendorController;
 use App\Http\Controllers\api\v1\Customer\CategoryController;
 use App\Http\Controllers\api\v1\Customer\CustomerController;
 use App\Http\Controllers\api\v1\Customer\MainServiceController;
 use App\Http\Controllers\api\v1\Customer\SubCategoryController;
+use App\Http\Controllers\Api\v1\Customer\CustomerAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +29,8 @@ Route::post('/login',[App\Http\Controllers\Api\v1\Customer\CustomerAuthControlle
 // Route::apiResource('categories', CategoryController::class)->only(['index','show']);
 
 Route::group([ 'middleware' => ['auth:customer']], function () {
+    Route::post('profile', [CustomerAuthController::class, 'update_profile']);
+    Route::post('add_address', [CustomerAuthController::class, 'add_address']);
     Route::apiResource('main_services', MainServiceController::class)->only(['index','show']);
     Route::apiResource('categories', CategoryController::class)->only(['index','show']);
     Route::apiResource('sub_categories', SubCategoryController::class)->only(['index','show']);

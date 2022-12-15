@@ -117,6 +117,12 @@ class CustomerAuthService implements CustomerAuthServiceInterface
         $user = $this->authRepository->update_password($user,$password);
         return $user;
     }
+
+    public function add_address(array $data){       
+        $data['customer_id']= auth()->user()->id;
+        $address = $this->addressRepository->create($data);
+        return $address;
+    }
 }
 
 ?>
