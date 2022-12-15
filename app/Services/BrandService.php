@@ -8,14 +8,14 @@ use InvalidArgumentException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\Backend\brandRepository;
+use App\Repositories\Backend\BrandRepository;
 use App\Services\Interfaces\BrandServiceInterface;
 
 class BrandService implements BrandServiceInterface
 {
     protected $brandRepository;
 
-    public function __construct(brandRepository $brandRepository)
+    public function __construct(BrandRepository $brandRepository)
     {
         $this->brandRepository = $brandRepository;
     }

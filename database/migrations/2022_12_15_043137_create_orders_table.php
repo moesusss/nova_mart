@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vendor_transactions', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('transaction_id')->primary();
+            $table->string('transaction_id');
             $table->string('transaction_ref');
             $table->string('customer_id');
+            $table->string('customer_address_id');
             $table->double('sub_total');
             $table->boolean('is_coupon')->default(0);
             $table->double('discount_amount')->default(0);
@@ -28,7 +29,7 @@ return new class extends Migration
 
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
-            $table->foreign('customer_address_id')->references('id')->on('customer_addersses')->onDelete('cascade');
+            // $table->foreign('customer_address_id')->references('id')->on('customer_addersses')->onDelete('cascade');
 
             $table->index([ 
                 'id','transaction_id','customer_id','delivery_id'
@@ -43,6 +44,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vendor_transactions');
+        Schema::dropIfExists('orders');
     }
 };

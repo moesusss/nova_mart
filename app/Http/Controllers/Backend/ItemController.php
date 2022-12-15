@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Item\CreateItemRequest;
 use App\Http\Requests\Item\UpdateItemRequest;
+use App\Http\Resources\api\v1\Customer\Item\ItemCollection;
 use App\Models\Item;
 use App\Services\BrandService;
 use App\Services\CategoryService;
@@ -126,7 +127,7 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateItemRequest $request)
+    public function store(Request $request)
     {
         $this->itemService->create($request->all());
         return redirect()->route('items.index')->with('status', 'Item has been added successfully');
@@ -195,5 +196,10 @@ class ItemController extends Controller
     {
         $result = $this->itemService->changeStatus($item);
         return redirect('admin/items')->withStatus(__('Item successfully updated.'));
+    }
+
+    public function getDataByVendorID($id){
+        $result = $this->itemService->getDataByVendorID($id);
+        return new ItemCollection($result);
     }
 }

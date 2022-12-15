@@ -30,7 +30,7 @@ class UpdateItemRequest extends FormRequest
             'category_id' => 'required|uuid|exists:categories,id',
             'sub_category_id' => 'required|uuid|exists:sub_categories,id',
             'brand_id' => 'nullable|uuid|exists:brands,id',
-            'qty' => 'required',
+            // 'qty' => 'required',
             'price' => 'required',
             'weight' => 'required_if:unit_type,==,kg',
             'is_active' => 'nullable|boolean',

@@ -60,9 +60,9 @@ class Item extends Model
         return $this->belongsTo(Vendor::class);
     }
 
-    public function stock_items()
+    public function item_stocks()
     {
-        return $this->hasMany(StockItem::class);
+        return $this->hasMany(ItemStock::class);
     }
 
     public function  scopeGetRelatedItem($query, $filter)

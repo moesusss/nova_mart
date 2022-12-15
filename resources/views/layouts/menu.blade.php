@@ -100,4 +100,15 @@
         </a>
     </li>
     @endcan
+
+    @can('stock-list')
+    <li class="nav-item">
+        <a href="{{ route('item_stocks.index') }}" class="nav-link {{ $activePage == 'item_stock' ? ' active' : '' }}">
+            <i class="nav-icon fas fa-table"></i>
+            <p>
+            {{ __('Item Stock') }}
+            </p>
+        </a>
+    </li>
+    @endcan
 </li>

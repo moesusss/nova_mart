@@ -186,6 +186,19 @@ $('.user-data-table').DataTable({
     ]
 });
 
+//  Stock index table
+$('.stock-data-table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: $('#table_url').attr('data-table-url'),
+    columns: [
+        {data: 'item_name', name: 'item_name'},
+        {data: 'qty', name: 'qty'},
+        {data: 'created_by', name: 'created_by'},
+        {data: 'created_at', name: 'created_at'}
+    ]
+});
+
 //Date and time picker
 $('#opening_time').datetimepicker({ 
     icons: { time: 'far fa-clock' },
@@ -338,6 +351,26 @@ $(document).on('change','.sub_category_id',function(){
                     
                 });
                 $("#brand_id").html(option);
+            }
+		}
+	});
+})
+
+// Get Item using vendor
+$(document).on('change','.vendor_id',function(){
+    vendor_id = $(this).val();
+    url = $(this).attr('data-attr-url')+'/'+vendor_id;
+    $.ajax({
+		url: url,
+		type: "GET",
+		success: function(data) {
+            if(data.status == true){
+                option = "<option value=''>Select Item</option>";
+                $.each(data.data, function(index, value) {
+                        option += '<option value="'+value.id+'">'+value.name+'</option>';
+                    
+                });
+                $(".item_id").html(option);
             }
 		}
 	});
