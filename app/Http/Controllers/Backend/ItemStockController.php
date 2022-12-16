@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ItemStock\CreateItemStockRequest;
 use App\Services\ItemService;
 use App\Services\VendorService;
+use Carbon\Carbon;
 
 class ItemStockController extends Controller
 {
@@ -39,7 +40,11 @@ class ItemStockController extends Controller
                                 return $stock->item->name;
 
                             })->addColumn('created_by', function ($stock) {
-                                return $stock->item->name;
+                                return optional($stock->user)->name;
+
+                            })
+                            ->addColumn('created_at', function ($stock) {
+                                return date('Y-m-d H:i:s',strtotime($stock->created_at));
 
                             })
                             ->make(true);

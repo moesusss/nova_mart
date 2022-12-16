@@ -93,6 +93,7 @@
 
 
 @stack('third_party_scripts')
+
 <!-- Select 2 plugin -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -104,8 +105,15 @@
 <script src="{{ url('plugins/moment/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ url('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}" type="text/javascript"></script>
 
-<!--  -->
+<!-- Overlay scrollbar for sidebar -->
+<!-- <script src="{{ url('plugins/overlayScrollbars/js/jquery.overlayScrollbars.js') }}" type="text/javascript"></script> -->
+
+<!-- Bootstarp 4 theme -->
 <script src="{{ url('plugins/bootstrap/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>
+
+
+<!-- Adminlte theme -->
+<script src="{{ url('js/adminlte.js') }}" type="text/javascript"></script>
 
 <!-- Toastr for alert message -->
 <script src="{{ url('plugins/toastr/toastr.min.js') }}" type="text/javascript"></script>
@@ -116,10 +124,6 @@
 <script src="{{ url('plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <!-- customer.js for all the custom javascript funcitons -->
 <script src="{{ url('js/custom.js') }}" type="text/javascript"></script>
-
-
-
-
 
 @stack('page_scripts')
 <script>

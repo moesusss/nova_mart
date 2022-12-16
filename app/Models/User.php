@@ -52,4 +52,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function item_stocks(){
+        return $this->hasMany(ItemStock::class, 'created_by_id');
+    }
+
 }
