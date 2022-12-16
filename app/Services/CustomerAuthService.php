@@ -8,6 +8,7 @@ use App\Http\Requests\CustomerAuth\OTPRequest;
 use App\Repositories\CheckSMSVerifyLogRepository;
 use App\Services\Interfaces\CustomerAuthServiceInterface;
 use App\Http\Resources\V1\CustomerAuth\OTPRequestCollection;
+use App\Models\CustomerAddress;
 use App\Repositories\api\v1\Customer\CustomerAuthRepository;
 use App\Repositories\api\v1\Customer\CustomerAddressRepository;
 
@@ -54,13 +55,13 @@ class CustomerAuthService implements CustomerAuthServiceInterface
 
     public function VerifyOTP(array $data)
     {
-        // $result=true;
-        $result = $this->smsService->verify($data['request_id'], $data['otp_code']);
+        $result=true;
+        // $result = $this->smsService->verify($data['request_id'], $data['otp_code']);
         $response['status'] = false;
         if($result){
             if($data['is_login']==1){
                 $customer = $this->checkMemberValid($data['mobile']);
-                if($customer){
+                if($customer && $customer->is_active==1){
                     $token = $this->login($customer);
                     $data['customer_id']= $customer->id;
                     $response['status'] = true;
@@ -71,8 +72,6 @@ class CustomerAuthService implements CustomerAuthServiceInterface
                 }else{
                     $response['status'] = false;
                 }
-                
-                $response['status'] = true;
             }else{
                 $response['status'] = true;
             }
@@ -122,6 +121,40 @@ class CustomerAuthService implements CustomerAuthServiceInterface
         $data['customer_id']= auth()->user()->id;
         $address = $this->addressRepository->create($data);
         return $address;
+    }
+
+    public function destroy($data){ 
+        $customer_address = $this->addressRepository->getCustomerAddress($data['id']);
+        $address = $this->addressRepository->destroy($customer_address);
+        return $address;
+    }
+
+    public function checkAddress($data){
+        $customer_id = auth()->user()->id;
+        $customeraddress = $this->addressRepository->getCustomerAddressesByCustomerID($customer_id);
+        // dd(count($customeraddress));
+        foreach($customeraddress as $add){
+            $distance = $this->getDistanceBetweenPointsNew($add->lat,$add->lng,$data['lat'],$data['lng']);
+            if($distance == 0){
+                return $this->addressRepository->getCustomerAddress($add->id);
+            }
+        }
+        return false;
+    }
+
+    public function getDistanceBetweenPointsNew($latitude1, $longitude1, $latitude2, $longitude2, $unit = 'km') {
+        $theta = $longitude1 - $longitude2; 
+        $distance = (sin(deg2rad($latitude1)) * sin(deg2rad($latitude2))) + (cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * cos(deg2rad($theta))); 
+        $distance = acos($distance); 
+        $distance = rad2deg($distance); 
+        $distance = $distance * 60 * 1.1515; 
+        switch($unit) { 
+          case 'miles': 
+            break; 
+          case 'kilometers' : 
+            $distance = $distance * 1.609344; 
+        } 
+        return (round($distance,2)); 
     }
 }
 

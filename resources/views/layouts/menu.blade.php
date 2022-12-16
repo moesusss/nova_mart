@@ -158,3 +158,13 @@
     </ul>
 </li>
 @endcan
+@can('customer-list')
+    <li class="nav-item">
+        <a href="{{ route('customers.index') }}" class="nav-link {{ $activePage == 'customer' ? ' active' : '' }}">
+            <i class="nav-icon fas fa-user-circle"></i>
+            <p>
+            {{ __('Customer') }}
+            </p>
+        </a>
+    </li>
+@endcan
