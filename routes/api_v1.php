@@ -31,6 +31,8 @@ Route::post('/login',[App\Http\Controllers\Api\v1\Customer\CustomerAuthControlle
 Route::group([ 'middleware' => ['auth:customer']], function () {
     Route::post('profile', [CustomerAuthController::class, 'update_profile']);
     Route::post('add_address', [CustomerAuthController::class, 'add_address']);
+    Route::post('destroy_address', [CustomerAuthController::class, 'destroy_address']);
+    Route::post('check_address', [CustomerAuthController::class, 'check_address']);
     Route::apiResource('main_services', MainServiceController::class)->only(['index','show']);
     Route::apiResource('categories', CategoryController::class)->only(['index','show']);
     Route::apiResource('sub_categories', SubCategoryController::class)->only(['index','show']);

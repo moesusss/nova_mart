@@ -41,6 +41,25 @@ $('.main-service-data-table').DataTable({
     ]
 });
 
+//  Customer index table
+$('.customer-data-table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: $('#table_url').attr('data-table-url'),
+    columns: [
+        {data: 'name', name: 'name'},
+        {data: 'mobile', name: 'mobile'},
+        {data: 'is_active', name: 'is_active'},
+        {
+            data: 'action', 
+            name: 'action', 
+            orderable: false, 
+            searchable: false,
+            "class" : "td-actions text-right",  
+        },
+    ]
+});
+
 //  Category index table
 $('.category-data-table').DataTable({
     processing: true,
