@@ -1,4 +1,4 @@
-@extends('layouts.master', ['activePage' => 'new_role', 'titlePage' => __('New Role')])
+@extends('layouts.master', ['activePage' => 'role', 'titlePage' => __('New Role')])
 
 @section('content')
     <!-- Content Header (Page header) -->

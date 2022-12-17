@@ -58,6 +58,8 @@ class PermissionTableSeeder extends Seeder
            'order-list',
            'order-edit',
            'order-delete',
+           'stock-create',
+           'stock-list'
         ];
      
         foreach ($permissions as $permission) {

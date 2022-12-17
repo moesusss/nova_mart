@@ -54,10 +54,10 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function () {
     // Item
     Route::resource('items', App\Http\Controllers\Backend\ItemController::class);
     Route::get('items/{item}/change_status', [App\Http\Controllers\Backend\ItemController::class,'changeStatus']);
-
-    // Vendor Item
-    Route::resource('stocks', App\Http\Controllers\Backend\ItemController::class);
-
-    
-
+    Route::get('items/getDataByVendorID/{id}', [App\Http\Controllers\Backend\ItemController::class,'getDataByVendorID']);
+    // Item Stock
+    Route::resource('item_stocks', App\Http\Controllers\Backend\ItemStockController::class);
+    // Customer
+    Route::resource('customers', App\Http\Controllers\Backend\CustomerController::class);
+    Route::get('customers/{customer}/change_status', [App\Http\Controllers\Backend\CustomerController::class,'changeStatus']);
 });

@@ -12,5 +12,6 @@ interface ItemServiceInterface
     public function create(array $data);
     public function update(Item $item,array $data);
     public function destroy(Item $item);
+    public function getDataByVendorID($id);
     
 }

@@ -48,7 +48,7 @@ class ItemService implements ItemServiceInterface
 
     public function create(array $data)
     { 
-        $randomNumber = random_int(10000000, 99999999);
+        $randomNumber = random_int(00000001, 99999999);
         // $main_service_id = $this->categoryRepository->getCategory($data['category_id'])->main_service_id;
         DB::beginTransaction();
         try {
@@ -112,6 +112,11 @@ class ItemService implements ItemServiceInterface
         }
         DB::commit();
 
+        return $result;
+    }
+
+    public function getDataByVendorID($id){
+        $result = $this->itemRepository->findbyValue('vendor_id',$id);
         return $result;
     }
 

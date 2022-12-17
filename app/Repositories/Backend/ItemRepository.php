@@ -18,6 +18,10 @@ class ItemRepository extends BaseRepository
         return Item::class;
     }
 
+    public function getItem($id){
+        return Item::find($id);
+    }
+
     public function getItems()
     {
         $items = Item::with(['images'])->filter(request()->all());
@@ -38,6 +42,12 @@ class ItemRepository extends BaseRepository
             $items = $items->get();
         }
         return $items;
+    }
+
+    public function findbyValue($field,$value)
+    {
+        $data = Item::where($field,$value)->get();
+        return $data;
     }
 
     public function getCategoryByVendor($id)
@@ -101,11 +111,11 @@ class ItemRepository extends BaseRepository
             'brand_id' => $data['brand_id'],
             'sku' => $data['sku'],
             'barcode' => isset($data['barcode']) ? $data['barcode'] : null,
-            'qty' => $data['qty'],
+            'qty' => isset($data['qty'])?$data['qty']:0,
             'price' => $data['price'],
             'weight' => $data['weight'],
             'is_active' => 1,
-            'is_instock' => ($data['qty']>0)?1:0,
+            'is_instock' => 0,
             'is_package' => isset($data['is_package']) ? $data['is_package'] : false,
             'description' => $data['description'],
             'item_type' => $data['item_type'],
