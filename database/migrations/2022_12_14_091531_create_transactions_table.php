@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('transaction_ref');
+            $table->string('transaction_ref')->unique()->nullable();
             $table->uuid('customer_id')->index();
             $table->uuid('customer_address_id')->index();
             $table->boolean('is_coupon')->default(false);

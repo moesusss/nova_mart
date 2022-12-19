@@ -33,6 +33,10 @@ class Transaction extends Model
         'tax_amount',
     ];
 
+    public function setTransactionRefAttribute($value)
+    {
+        $this->attributes['transaction_ref'] = 'T' . str_pad($value, 6, '0', STR_PAD_LEFT);
+    }
     
     public function customer()
     {

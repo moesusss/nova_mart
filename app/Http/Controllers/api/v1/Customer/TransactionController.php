@@ -24,6 +24,9 @@ class TransactionController extends Controller
      */
     public function __construct(TransactionService $transactionService)
     {
+        $this->middleware('can:view,transaction')->only(['show']);
+        // $this->middleware('can:update,transaction')->only('update');
+        // $this->middleware('can:delete,transaction')->only('destroy');
         $this->transactionService = $transactionService;
     }
     /**
@@ -33,7 +36,7 @@ class TransactionController extends Controller
      */
     public function index(Request $request)
     {
-        $transactions = $this->transactionService->getTransactions();
+        $transactions = $this->transactionService->getTransactionsByAuthUser();
         return new TransactionCollection($transactions);
     }
 
@@ -58,7 +61,10 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        return new TransactionResource($transaction->load(['categories']));
+        return new TransactionResource($transaction->load([
+            'customer','customer_address','payment_method',
+            'orders','orders.vendor','orders.order_items','orders.order_items.item',
+        ]));
     }
 
     

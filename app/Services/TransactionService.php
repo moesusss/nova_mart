@@ -22,8 +22,12 @@ class TransactionService implements TransactionServiceInterface
 
     public function getTransactions()
     {
-    return $this->transactionRepository->getTransactions();
-        
+        return $this->transactionRepository->getTransactions();
+    }
+
+    public function getTransactionsByAuthUser()
+    {
+        return $this->transactionRepository->getTransactionsByAuthUser();
     }
 
     public function getTransaction($id)
@@ -33,9 +37,21 @@ class TransactionService implements TransactionServiceInterface
     
    
     public function create(array $data)
-    {        
-        $result = $this->transactionRepository->create($data);
+    {       
+        DB::beginTransaction();
+        try {
+            $result = $this->transactionRepository->create($data);
+        }
+        catch(Exception $exc){
+            DB::rollBack();
+            Log::error($exc->getMessage());
+            throw new InvalidArgumentException('Unable to update transaction');
+        }
+        DB::commit(); 
+        
         return $result;
     }
 
 }
+
+
