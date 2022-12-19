@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transaction_processors', function (Blueprint $table) {
+        Schema::create('payment_methods', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('receipt_no');
-            $table->decimal('sub_total', 16, 2)->default(0);
-            $table->string('customer_id');
-            $table->string('token');
+            $table->string('name')->unique();
+            $table->string('type')->nullable();
+            $table->boolean('is_active')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaction_processors');
+        Schema::dropIfExists('payment_methods');
     }
 };

@@ -4,7 +4,9 @@
   
 namespace App\Models;
 
+use App\Models\Order;
 use App\Traits\Uuids;
+use App\Models\Transaction;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
@@ -55,5 +57,15 @@ class Customer extends Authenticatable
     public function customer_addresses()
     {
         return $this->hasMany(CustomerAddress::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

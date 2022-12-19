@@ -41,7 +41,6 @@ return new class extends Migration
             $table->uuid('updated_by_type')->nullable();
             $table->uuid('deleted_by_type')->nullable();
             $table->softDeletes();
-            $table->rememberToken();
             $table->timestamps();
 
             $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade');

@@ -15,16 +15,19 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('transaction_id');
+            $table->uuid('transaction_id');
             $table->string('transaction_ref');
-            $table->string('customer_id');
-            $table->string('customer_address_id');
-            $table->double('sub_total');
+            $table->uuid('vendor_id');
+            $table->uuid('customer_id');
+            $table->uuid('customer_address_id');
             $table->boolean('is_coupon')->default(0);
-            $table->double('discount_amount')->default(0);
-            $table->string('delivery_id');
-            $table->string('delivery_charges');
-            $table->double('tax_amount')->default(0);
+            $table->decimal('total_discount_amount', 16, 2)->default(0);
+            $table->uuid('delivery_id')->nullable();
+            $table->decimal('delivery_amount', 16, 2)->default(0);
+            $table->decimal('tax_amount', 16, 2)->default(0);
+            $table->decimal('sub_total', 16, 2)->default(0);
+            $table->decimal('grand_total', 16, 2)->default(0);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');

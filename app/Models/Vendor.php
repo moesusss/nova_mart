@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Item;
 use App\Models\User;
+use App\Models\Order;
 use App\Traits\Uuids;
 use App\Models\HubVendor;
 use App\Models\MainService;
@@ -60,6 +61,11 @@ class Vendor extends Model
     public function items()
     {
         return $this->hasMany(Item::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
     public function scopeFilter($query, $filter)

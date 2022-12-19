@@ -7,6 +7,7 @@ use App\Models\Image;
 use App\Traits\Uuids;
 use App\Models\Vendor;
 use App\Models\Category;
+use App\Models\OrderItem;
 use App\Models\SubCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -63,6 +64,11 @@ class Item extends Model
     public function item_stocks()
     {
         return $this->hasMany(ItemStock::class);
+    }
+
+    public function order_items()
+    {
+        return $this->hasMany(OrderItem::class);
     }
 
     public function  scopeGetRelatedItem($query, $filter)
