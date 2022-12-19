@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transaction_processors', function (Blueprint $table) {
+        Schema::create('delivery_fees', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->decimal('sub_total', 16, 2)->default(0);
-            $table->string('customer_id');
-            $table->string('token');
+            $table->string('delivery_type');
+            $table->decimal('from', 16, 3)->default(0);
+            $table->decimal('to', 16, 3)->default(0);
+            $table->decimal('amount', 16, 3)->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaction_processors');
+        Schema::dropIfExists('delivery_fees');
     }
 };

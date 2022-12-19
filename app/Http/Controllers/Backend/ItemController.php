@@ -15,6 +15,7 @@ use App\Services\CategoryService;
 use App\Services\LookUpService;
 use App\Services\SubCategoryService;
 use App\Services\VendorService;
+use App\Services\WeightConventionService;
 
 class ItemController extends Controller
 {
@@ -24,8 +25,9 @@ class ItemController extends Controller
     protected $subCategoryService;
     protected $brandService;
     protected $lookupService;
+    protected $weightconventionService;
 
-    public function __construct(ItemService $itemService,VendorService $vendorService,CategoryService $categoryService,SubCategoryService $subCategoryService, BrandService $brandService, LookUpService $lookupService )
+    public function __construct(ItemService $itemService,VendorService $vendorService,CategoryService $categoryService,SubCategoryService $subCategoryService, BrandService $brandService, LookUpService $lookupService, WeightConventionService $weightconventionService )
     {
         $this->itemService = $itemService;
         $this->vendorService = $vendorService;
@@ -33,6 +35,7 @@ class ItemController extends Controller
         $this->subCategoryService = $subCategoryService;
         $this->brandService = $brandService;
         $this->lookupService = $lookupService;
+        $this->weightconventionService = $weightconventionService;
         $this->middleware('permission:item-list|item-create|item-edit|item-delete', ['only' => ['index','store']]);
         $this->middleware('permission:item-create', ['only' => ['create','store']]);
         $this->middleware('permission:item-edit', ['only' => ['edit','update']]);
@@ -117,8 +120,8 @@ class ItemController extends Controller
         $vendors = $this->vendorService->getVendors();
         $categories = $this->categoryService->getCategories();
         $item_types = $this->lookupService->getLookupByType('item_type');
-        $unit_types = $this->lookupService->getLookupByType('unit_type');
-        return view('backend.items.create',compact('vendors','categories','item_types','unit_types'));
+        $weight_conventions = $this->weightconventionService->getWeightConventions();
+        return view('backend.items.create',compact('vendors','categories','item_types','weight_conventions'));
     }
 
     /**
@@ -127,8 +130,9 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateItemRequest $request)
     {
+        // dd($request->all());
         $this->itemService->create($request->all());
         return redirect()->route('items.index')->with('status', 'Item has been added successfully');
     }
@@ -155,10 +159,11 @@ class ItemController extends Controller
         $vendors = $this->vendorService->getVendors();
         $categories = $this->categoryService->getCategories();
         $item_types = $this->lookupService->getLookupByType('item_type');
-        $unit_types = $this->lookupService->getLookupByType('unit_type');
+        // $unit_types = $this->lookupService->getLookupByType('unit_type');
         $sub_categories = $this->subCategoryService->getDataByCategoryID($item->category_id);
         $brands = $this->brandService->getDataBySubCategoryID($item->sub_category_id);
-        return view('backend.items.edit',compact('vendors','categories','item_types','unit_types','item','sub_categories','brands'));
+        $weight_conventions = $this->weightconventionService->getWeightConventions();
+        return view('backend.items.edit',compact('vendors','categories','item_types','weight_conventions','item','sub_categories','brands'));
 
     }
 

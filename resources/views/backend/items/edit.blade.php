@@ -162,7 +162,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="weight" class="col-sm-3 col-form-label"> Weight </label>
+                                            <label for="weight" class="col-sm-3 col-form-label"> Weight  </label>
                                             <div class="col-sm-6">
                                                 <input type="number" name="weight" class="form-control @error('weight') is-invalid @enderror" id="weight" placeholder="Weight" min=0 value="{{$item->weight}}">
                                                 @error('weight')
@@ -172,16 +172,16 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="unit_type" class="col-sm-3 col-form-label">Unit Type </label>
+                                            <label for="weight_convention_id" class="col-sm-3 col-form-label">Unit Type <span class="text-danger">*</span></label>
                                             <div class="col-sm-6">
                                                 <div class="select2-purple">
-                                                    <select class="unit_type form-control @error('unit_type') is-invalid @enderror select2" name="unit_type" data-placeholder="Select Unit Type" data-dropdown-css-class="" style="width: 100%;">
+                                                    <select class="weight_convention_id form-control @error('weight_convention_id') is-invalid @enderror select2" name="weight_convention_id" data-placeholder="Select Unit Type" data-dropdown-css-class="" style="width: 100%;">
                                                         <option value="">Select Unit Type</option>
-                                                        @foreach ($unit_types as $unit_type)
-                                                            <option value="{{ $unit_type->key }}" {{ ($item->unit_type==$unit_type->key)?"selected":"" }}>{{$unit_type->value}}</option>
+                                                        @foreach ($weight_conventions as $weight_con)
+                                                            <option value="{{ $weight_con->id }}" {{ ($item->weight_convention_id==$weight_con->id)?"selected":"" }}>{{$weight_con->unit_type}}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('unit_type')
+                                                    @error('weight_convention_id')
                                                         <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -206,6 +206,16 @@
                                                 </div>
                                             
                                             </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <!-- <div class="form-check"> -->
+                                                
+                                                <label for="is_tax" class="col-sm-3 col-form-label" name="is_tax">Exclusive Tax?</label>
+                                                <div class="col-sm-6 ">
+                                                <input type="checkbox" class="form-check-input " id="is_tax" name="is_tax" {{($item->is_tax)?'checked':''}}>
+                                                </div>
+                                            <!-- </div> -->
                                         </div>
 
                                         <div class="form-group row">
