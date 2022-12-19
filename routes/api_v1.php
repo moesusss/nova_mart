@@ -8,6 +8,7 @@ use App\Http\Controllers\api\v1\Customer\CategoryController;
 use App\Http\Controllers\api\v1\Customer\CustomerController;
 use App\Http\Controllers\api\v1\Customer\MainServiceController;
 use App\Http\Controllers\api\v1\Customer\SubCategoryController;
+use App\Http\Controllers\api\v1\Customer\TransactionController;
 use App\Http\Controllers\Api\v1\Customer\CustomerAuthController;
 
 /*
@@ -39,6 +40,6 @@ Route::group([ 'middleware' => ['auth:customer']], function () {
     Route::apiResource('customers', CustomerController::class)->only(['index','show']);
     Route::apiResource('vendors', VendorController::class)->only(['index','show']);
     Route::apiResource('items', ItemController::class)->only(['index','show']);
-    
+    Route::apiResource('transactions', TransactionController::class)->only(['index','store','show']);
     
 });

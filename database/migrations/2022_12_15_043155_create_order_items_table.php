@@ -15,14 +15,16 @@ return new class extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('order_id');
+            $table->string('transaction_id');
             $table->string('item_id');
             $table->integer('qty');
-            $table->double('total');
-            $table->string('transaction_id');
-            $table->string('order_id');
-            $table->boolean('is_promotion')->default(0);
-            $table->double('discount_amount');
+            $table->decimal('price', 16, 2)->default(0);
+            $table->decimal('total', 16, 2)->default(0);
+            $table->boolean('is_promotion')->default(false);
+            $table->decimal('discount_amount', 16, 2)->default(0);
             $table->longText('description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');

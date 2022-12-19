@@ -31,6 +31,7 @@ class VendorFactory extends Factory
             'address'      => $this->faker->address,
             'opening_time'      =>  $this->faker->time('H:i A'),
             'closing_time'      =>  $this->faker->time('H:i A'),
+            'order_closing_time'      =>  $this->faker->time('H:i A'),
             'lat'      => $this->faker->latitude($min = -90, $max = 90),
             'lng'      => $this->faker->longitude($min = -180, $max = 180),
             'is_active'      => 1,

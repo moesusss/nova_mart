@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             CountrySeeder::class,
             CitySeeder::class,
             CreateAdminUserSeeder::class,
+            PaymentMethodTableSeeder::class,
             MainServiceTableSeeder::class,
             CategoryTableSeeder::class,
             SubCategoryTableSeeder::class,
