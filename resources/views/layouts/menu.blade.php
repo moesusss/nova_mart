@@ -168,3 +168,14 @@
         </a>
     </li>
 @endcan
+
+@can('delivery-fee-list')
+    <li class="nav-item">
+        <a href="{{ route('delivery_fees.index') }}" class="nav-link {{ $activePage == 'delivery_fee' ? ' active' : '' }}">
+            <i class="nav-icon fas fa-bicycle"></i>
+            <p>
+            {{ __('Delivery Fee') }}
+            </p>
+        </a>
+    </li>
+@endcan

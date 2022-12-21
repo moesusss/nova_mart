@@ -41,6 +41,26 @@ $('.main-service-data-table').DataTable({
     ]
 });
 
+//  Delivery Fee index table
+$('.delivery-fee-data-table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: $('#table_url').attr('data-table-url'),
+    columns: [
+        {data: 'delivery_type', name: 'delivery_type'},
+        {data: 'from', name: 'from'},
+        {data: 'to', name: 'to'},
+        {data: 'amount', name: 'amount'},
+        {
+            data: 'action', 
+            name: 'action', 
+            orderable: false, 
+            searchable: false,
+            "class" : "td-actions text-right",  
+        },
+    ]
+});
+
 //  Customer index table
 $('.customer-data-table').DataTable({
     processing: true,

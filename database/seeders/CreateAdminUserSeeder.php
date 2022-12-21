@@ -21,7 +21,7 @@ class CreateAdminUserSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('123456'),
-            'mobile' => '0912345678',
+            'mobile' => '09123456788',
             'is_active'=>1
         ]);
 
