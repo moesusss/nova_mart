@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('transaction_processors', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('receipt_no');
-            $table->decimal('sub_total', 16, 2)->default(0);
+            $table->string('receipt_no')->nullable();
+            $table->decimal('total_amount', 16, 2)->default(0);
             $table->string('customer_id');
             $table->string('token');
+            $table->boolean('is_complete')->default(false);
             $table->timestamps();
         });
     }

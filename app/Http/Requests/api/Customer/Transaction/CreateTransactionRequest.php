@@ -24,7 +24,7 @@ class CreateTransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'customer_id' => 'required|uuid|exists:customers,id',
+            'transaction_token' => 'required|string',
             'customer_address_id' => 'required|uuid|exists:customer_addresses,id',
             'is_coupon' => 'nullable|boolean',
             'coupon_code' => 'nullable|string',

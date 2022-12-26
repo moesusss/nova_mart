@@ -9,5 +9,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TransactionProcessor extends Model
 {
-    use HasFactory,SoftDeletes,Uuids;
+    use HasFactory,Uuids;
+    
+    protected $fillable = [
+        'receipt_no',
+        'total_amount',
+        'customer_id',
+        'token',
+        'is_complete'
+    ];
+
 }
