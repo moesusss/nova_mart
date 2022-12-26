@@ -10,4 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DeliveryFee extends Model
 {
     use HasFactory,Uuids,SoftDeletes;
+
+    protected $fillable = [
+        'delivery_type', 'from', 'to', 'amount'
+    ];
 }

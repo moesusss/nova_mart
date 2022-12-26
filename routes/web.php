@@ -60,4 +60,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function () {
     // Customer
     Route::resource('customers', App\Http\Controllers\Backend\CustomerController::class);
     Route::get('customers/{customer}/change_status', [App\Http\Controllers\Backend\CustomerController::class,'changeStatus']);
+    // Delivery Fees
+    Route::resource('delivery_fees', App\Http\Controllers\Backend\DeliveryFeeController::class);
+    Route::get('delivery_fees/{delivery_fee}/change_status', [App\Http\Controllers\Backend\DeliveryFeeController::class,'changeStatus']);
 });

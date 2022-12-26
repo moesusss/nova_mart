@@ -1,4 +1,4 @@
-@extends('layouts.master', ['activePage' => 'main_service', 'titlePage' => __('Main Service')])
+@extends('layouts.master', ['activePage' => 'delivery_fee', 'titlePage' => __('Delivery Fee')])
 
 @section('content')
 <!-- Content Header (Page header) -->
@@ -11,7 +11,7 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
-                <li class="breadcrumb-item active">Main Services</li>
+                <li class="breadcrumb-item active">Delivery Fees</li>
             </ol>
         </div>
     </div>
@@ -25,20 +25,21 @@
                 <div class="card">
                     <div class="card-header">
                     <div class="col-md-3">
-                    <a href="{{route('main_services.create')}}" class="btn btn-block btn-primary"><i class="fas fa-plus"></i>
-                    Add Main Services</a>
+                    <a href="{{route('delivery_fees.create')}}" class="btn btn-block btn-primary"><i class="fas fa-plus"></i>
+                    Add Delivery Fees</a>
                     </div>
                     </div>
                     <div class="card-body">
                        
-                        <div id="table_url" data-table-url="{{route('main_services.index')}}"></div>
+                        <div id="table_url" data-table-url="{{route('delivery_fees.index')}}"></div>
                         <div class="row table-responsive">
-                            <table class="table table-bordered table-hover main-service-data-table">
+                            <table class="table table-bordered table-hover delivery-fee-data-table">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Code</th>
-                                        <th>Active Status</th>
+                                        <th>Delivery Fee Type</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Amount</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

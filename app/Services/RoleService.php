@@ -43,16 +43,16 @@ class RoleService implements RoleServiceInterface
 
     public function update(Role $role,array $data)
     {
-        DB::beginTransaction();
-        try {
+        // DB::beginTransaction();
+        // try {
             $result = $this->roleRepository->update($role, $data);
-        }
-        catch(Exception $exc){
-            DB::rollBack();
-            Log::error($exc->getMessage());
-            throw new InvalidArgumentException('Unable to update user');
-        }
-        DB::commit();
+        // }
+        // catch(Exception $exc){
+        //     DB::rollBack();
+        //     Log::error($exc->getMessage());
+        //     throw new InvalidArgumentException('Unable to update role');
+        // }
+        // DB::commit();
 
         return $result;
     }
@@ -66,7 +66,7 @@ class RoleService implements RoleServiceInterface
         catch(Exception $exc){
             DB::rollBack();
             Log::error($exc->getMessage());
-            throw new InvalidArgumentException('Unable to delete user');
+            throw new InvalidArgumentException('Unable to delete role');
         }
         DB::commit();
         
