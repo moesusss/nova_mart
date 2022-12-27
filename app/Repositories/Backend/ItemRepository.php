@@ -116,10 +116,12 @@ class ItemRepository extends BaseRepository
             'weight' => $data['weight'],
             'is_active' => 1,
             'is_instock' => 0,
+            'is_tax' => isset($data['is_tax']) ? true : false,
             'is_package' => isset($data['is_package']) ? $data['is_package'] : false,
             'description' => $data['description'],
-            'item_type' => $data['item_type'],
-            'unit_type' => $data['unit_type'],
+            'item_type' => isset($data['item_type'])? $data['item_type']: null,
+            'weight_convention_id' => $data['weight_convention_id'],
+            'weight_by_kg' => $data['weight_by_kg'],
             'created_by' => auth()->user()->id,
         ]);
 
@@ -168,10 +170,12 @@ class ItemRepository extends BaseRepository
         $item->weight = isset($data['weight']) ? $data['weight'] : $item->weight ;
         $item->is_active = isset($data['is_active']) ? $data['is_active'] : $item->is_active ;
         $item->is_instock = isset($data['is_instock']) ? $data['is_instock'] : $item->is_instock ;
+        $item->is_tax = isset($data['is_tax']) ? true : false ;
         $item->is_package = isset($data['is_package']) ? $data['is_package'] : $item->is_package ;
         $item->description = isset($data['description']) ? $data['description'] : $item->description ;
         $item->item_type = isset($data['item_type']) ? $data['item_type'] : $item->item_type ;
-        $item->unit_type = isset($data['unit_type']) ? $data['unit_type'] : $item->unit_type ;
+        $item->weight_convention_id = isset($data['weight_convention_id']) ? $data['weight_convention_id'] : $item->weight_convention_id;
+        $item->weight_by_kg = isset($data['weight_by_kg']) ? $data['weight_by_kg'] : $item->weight_by_kg;
 
         if(isset($data['images']))
          {

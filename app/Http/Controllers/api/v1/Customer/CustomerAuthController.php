@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\v1\Customer;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Laravel\Ui\Presets\React;
+use App\Models\CustomerAddress;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Services\CustomerAuthService;
@@ -17,10 +19,9 @@ use App\Http\Resources\api\v1\OTPRequest\OTPRequestResource;
 use App\Http\Requests\api\Customer\Auth\UpdateProfileRequest;
 use App\Http\Resources\api\v1\Customer\Profile\ProfileResource;
 use App\Http\Requests\api\Customer\Auth\CustomerRegisterRequest;
+use App\Http\Resources\api\v1\Customer\Category\CategoryCollection;
 use App\Http\Resources\api\v1\CustomerAddress\CustomerAddressResource;
 use App\Http\Resources\api\v1\CustomerAddress\CustomerAddressCollection;
-use App\Models\CustomerAddress;
-use Laravel\Ui\Presets\React;
 
 class CustomerAuthController extends Controller
 {
@@ -134,8 +135,11 @@ class CustomerAuthController extends Controller
     public function add_address(AddAddressRequest $request)
     {
         $result = $this->customerAuth->add_address($request->all());
-
-        return new CustomerAddressResource($result);
+        return response()->json([
+            'status'=>true,
+            'data' => new CategoryCollection($result)
+        
+        ],Response::HTTP_OK);
         // return response()->json(['status' => 1, 'message' => 'Successfully updated!'], Response::HTTP_OK);
     }
 

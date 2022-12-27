@@ -120,7 +120,8 @@ class CustomerAuthService implements CustomerAuthServiceInterface
     public function add_address(array $data){       
         $data['customer_id']= auth()->user()->id;
         $address = $this->addressRepository->create($data);
-        return $address;
+        $customer_addresses = $this->addressRepository->getCustomerAddressesByCustomerID(auth()->user()->id);
+        return $customer_addresses;
     }
 
     public function destroy($data){ 

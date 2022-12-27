@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transaction_processors', function (Blueprint $table) {
+        Schema::create('weight_conventions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->decimal('sub_total', 16, 2)->default(0);
-            $table->string('customer_id');
-            $table->string('token');
-            $table->boolean('is_complete')->default(false);
+            $table->string('unit_type');
+            $table->decimal('rate', 16, 3)->default(0);
+            $table->boolean('is_active')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaction_processors');
+        Schema::dropIfExists('weight_conventions');
     }
 };

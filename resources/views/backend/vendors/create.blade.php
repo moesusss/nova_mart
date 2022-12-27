@@ -43,7 +43,7 @@
                                                     <select class="form-control @error('hub_vendor_id') is-invalid @enderror select2" name="hub_vendor_id" data-placeholder="Select Vendor" data-dropdown-css-class="" style="width: 100%;">
                                                         <option value="">Select Hub Vendor</option>
                                                         @foreach ($hub_vendors as $hub_vendor)
-                                                            <option value="{{ $hub_vendor->id }}">{{$hub_vendor->name}}</option>
+                                                            <option value="{{ $hub_vendor->id }}" {{old('hub_vendor_id')==$hub_vendor->id?'selected':''}}>{{$hub_vendor->name}}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('hub_vendor_id')
@@ -155,7 +155,7 @@
                                             <label for="opening_time" class="col-sm-4 col-form-label"> Opening Time <span class="text-danger">*</span></label>
                                                 <div class="col-sm-6">
                                                     <div class="input-group date" id="opening_time" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input @error('opening_time') is-invalid @enderror" data-target="#opening_time" name="opening_time" onkeydown="return false" autocomplete="off"/>
+                                                    <input type="text" class="form-control datetimepicker-input @error('opening_time') is-invalid @enderror" data-target="#opening_time" name="opening_time" onkeydown="return false" autocomplete="off" value="{{old('opening_time')}}"/>
                                                     <div class="input-group-append" data-target="#opening_time" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="far fa-clock"></i></div>
                                                     </div>
@@ -174,7 +174,7 @@
                                             <label for="closing_time" class="col-sm-4 col-form-label"> Closing Time <span class="text-danger">*</span></label>
                                                 <div class="col-sm-6">
                                                     <div class="input-group date" id="closing_time" data-target-input="nearest" >
-                                                    <input type="text" class="form-control datetimepicker-input @error('closing_time') is-invalid @enderror" data-target="#closing_time" name="closing_time" onkeydown="return false" autocomplete="off"/>
+                                                    <input type="text" class="form-control datetimepicker-input @error('closing_time') is-invalid @enderror" data-target="#closing_time" name="closing_time" onkeydown="return false" autocomplete="off" value="{{old('closing_time')}}"/>
                                                     <div class="input-group-append" data-target="#closing_time" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="far fa-clock"></i></div>
                                                     </div>
@@ -193,7 +193,7 @@
                                             <label for="order_closing_time" class="col-sm-4 col-form-label"> Order Closing Time <span class="text-danger">*</span></label>
                                                 <div class="col-sm-6">
                                                     <div class="input-group date" id="order_closing_time" data-target-input="nearest" >
-                                                    <input type="text" class="form-control datetimepicker-input @error('order_closing_time') is-invalid @enderror" data-target="#order_closing_time" name="order_closing_time" onkeydown="return false" autocomplete="off"/>
+                                                    <input type="text" class="form-control datetimepicker-input @error('order_closing_time') is-invalid @enderror" data-target="#order_closing_time" name="order_closing_time" onkeydown="return false" autocomplete="off" value="{{old('order_closing_time')}}"/>
                                                     <div class="input-group-append" data-target="#order_closing_time" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="far fa-clock"></i></div>
                                                     </div>
@@ -209,14 +209,14 @@
                                         <div class="form-group row">
                                         <label for="origin_address" class="col-sm-4 col-form-label">Address <span class="text-danger">*</span></label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control @error('address') is-invalid @enderror" data-toggle="modal" data-target="#originMap" id="origin_address" placeholder="Enter Address" name="origin_address" value="" readonly>
+                                                <input type="text" class="form-control @error('address') is-invalid @enderror" data-toggle="modal" data-target="#originMap" id="origin_address" placeholder="Enter Address" name="origin_address" value="{{old('origin_address')}}" readonly>
                                                 @error('address')
                                                     <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
                                                 @enderror
 
-                                                <input type="hidden" name="address" id="address" value="">
-                                                <input type="hidden" name="lat" id="lat" value="">
-                                                <input type="hidden" name="lng" id="lng" value="">
+                                                <input type="hidden" name="address" id="address" value="{{old('address')}}" >
+                                                <input type="hidden" name="lat" id="lat" value="{{old('lat')}}" >
+                                                <input type="hidden" name="lng" id="lng" value="{{old('lng')}}">
                                             </div>
                                         </div>
 
@@ -247,7 +247,7 @@
                                                     <select class="form-control @error('sub_category_id') is-invalid @enderror sub_category_id" name="sub_category_id[]" data-placeholder="Select Sub Category" data-dropdown-css-class="" style="width: 100%;" multiple="multiple">>
                                                         <option value="">Select Sub Category</option>
                                                         @foreach ($sub_categories as $sub_cat)
-                                                            <option value="{{ $sub_cat->id }}">{{$sub_cat->name}}</option>
+                                                            <option value="{{ $sub_cat->id }}" >{{$sub_cat->name}}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('sub_category_id')
