@@ -86,7 +86,7 @@
 
                                 <div class="form-group row">
                                     <div class="offset-sm-2 col-sm-10">
-                                    <a class="btn btn-primary" href="{{url('admin/sub_categories')}}">Back</a>
+                                    <a class="btn btn-primary" href="{{url('admin/brands')}}">Back</a>
                                     <button type="submit" class="btn btn-danger">Submit</button>
                                     </div>
                                 </div>

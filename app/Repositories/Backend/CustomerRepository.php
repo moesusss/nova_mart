@@ -2,10 +2,11 @@
 
 namespace App\Repositories\Backend;
 
-use App\Models\Customer as AppCustomer;
+use App\Models\Customer;
 use Illuminate\Support\Str;
 use App\Repositories\BaseRepository;
 use Illuminate\Foundation\Auth\User;
+use App\Models\Customer as AppCustomer;
 
 class CustomerRepository extends BaseRepository
 {
@@ -50,5 +51,24 @@ class CustomerRepository extends BaseRepository
         }else{
             return AppCustomer::whereNull('role_id')->get()->count();
         }
+    }
+
+    /**
+     * @param Customer  $customer
+     * @param array $data
+     *
+     * @return mixed
+     */
+    public function changeStatus(Customer $customer)
+    {
+       if($customer->is_active==0){
+            $customer->is_active=1;
+       }else{
+            $customer->is_active=0;
+       }
+       if($customer->isDirty()){
+           $customer->save();
+       }
+       return $customer->refresh();
     }
 }

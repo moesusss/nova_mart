@@ -24,14 +24,17 @@ return new class extends Migration
             $table->string('sku')->unique();
             $table->string('barcode')->unique()->nullable();
             $table->integer('qty');
+            $table->integer('maximum_order_count')->default(10);
             $table->decimal('price', 16, 2)->default(2);
             $table->decimal('weight', 16, 2)->default(2);
+            $table->uuid('weight_convention_id');
+            $table->decimal('weight_by_kg', 16, 3)->default(3);
             $table->boolean('is_active')->default(false);
             $table->boolean('is_instock')->default(false);
             $table->boolean('is_package')->default(false);
+            $table->boolean('is_tax')->default(false);
             $table->longText('description');
-            $table->string('item_type');
-            $table->string('unit_type');
+            $table->string('item_type')->nullable();
             $table->uuid('created_by_id')->nullable();
             $table->uuid('updated_by_id')->nullable();
             $table->uuid('deleted_by_id')->nullable();
@@ -39,7 +42,6 @@ return new class extends Migration
             $table->uuid('updated_by_type')->nullable();
             $table->uuid('deleted_by_type')->nullable();
             $table->softDeletes();
-            $table->rememberToken();
             $table->timestamps();
 
             $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('cascade');

@@ -3,6 +3,8 @@
 namespace App\Http\Resources\api\v1\Customer\Profile;
 
 use App\Http\Resources\api\v1\CustomerAddress\CustomerAddressCollection;
+use App\Http\Resources\api\v1\Customer\PaymentMethod\PaymentMethodCollection;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProfileResource extends JsonResource
@@ -21,7 +23,8 @@ class ProfileResource extends JsonResource
             'email'         => $this->email,
             'mobile'        => $this->mobile,
             'is_active'     => $this->is_active,
-            'addresses'     => CustomerAddressCollection::make($this->whenLoaded('customer_addresses'))
+            'addresses'     => CustomerAddressCollection::make($this->whenLoaded('customer_addresses')),
+            'payment_methods' => new PaymentMethodCollection(PaymentMethod::all())
         ];
     }
 }

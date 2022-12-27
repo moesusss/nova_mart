@@ -21,15 +21,16 @@ class VendorRepository extends BaseRepository
     public function getVendors()
     {
         if(request()->has('lat') && request()->has('lng')){
-            $vendors = Vendor::selectRaw("id, name, address, lat, lng, 
+            $vendors = Vendor::selectRaw("*, 
                      ( 6371000 * acos( cos( radians(?) ) *
                        cos( radians( lat) )
                        * cos( radians( lng ) - radians(?)
                        ) + sin( radians(?) ) *
                        sin( radians( lat ) ) )
                      ) AS distance", [request()->lat, request()->lng, request()->lat])
-        ->having("distance", "<", env('RADIUS'))
-        ->orderBy("distance",'desc');
+                    ->where("is_active",1)
+                    ->having("distance", "<", env('RADIUS'))
+                    ->orderBy("distance",'desc');
         }else{
             $vendors = Vendor::filter(request()->all())->orderBy('id','desc');
         }
@@ -69,11 +70,13 @@ class VendorRepository extends BaseRepository
             'address' => $data['address'],
             'opening_time' => $data['opening_time'],
             'closing_time' => $data['closing_time'],
+            'order_closing_time' => $data['order_closing_time'],
             'is_active' => isset($data['is_active']) ? $data['is_active'] : false,
             'is_closed' => isset($data['is_closed']) ? $data['is_closed'] : false,
             'lat' => $data['lat'],
             'lng' => $data['lng'],
             'min_order_time' => isset($data['min_order_time']) ? $data['min_order_time'] : 0,
+            'commission_fee' => isset($data['commission_fee']) ? $data['commission_fee'] : 0,
             'min_order_amount' => isset($data['min_order_amount']) ? $data['min_order_amount'] : 0,
             'created_by' => auth()->user()->id,
         ]);
@@ -107,11 +110,13 @@ class VendorRepository extends BaseRepository
         $vendor->address = isset($data['address']) ? $data['address'] : $vendor->address ;
         $vendor->opening_time = isset($data['opening_time']) ? $data['opening_time'] : $vendor->opening_time ;
         $vendor->closing_time = isset($data['closing_time']) ? $data['closing_time'] : $vendor->closing_time ;
+        $vendor->order_closing_time = isset($data['order_closing_time']) ? $data['order_closing_time'] : $vendor->order_closing_time ;
         $vendor->is_active = isset($data['is_active']) ? $data['is_active'] : $vendor->is_active ;
         $vendor->is_closed = isset($data['is_closed']) ? $data['is_closed'] : $vendor->is_closed ;
         $vendor->lat = isset($data['lat']) ? $data['lat'] : $vendor->lat ;
         $vendor->lng = isset($data['lng']) ? $data['lng'] : $vendor->lng ;
         $vendor->min_order_time = isset($data['min_order_time']) ? $data['min_order_time'] : $vendor->min_order_time ;
+        $vendor->min_order_time = isset($data['commission_fee']) ? $data['commission_fee'] : $vendor->commission_fee ;
         
         if (isset($data['cover_image']) && $data['cover_image']) {
            $imageRepository = new ImageRepository();

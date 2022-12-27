@@ -24,7 +24,7 @@ class CategoryRepository extends BaseRepository
         $categories = Category::with(['sub_categories'])
                             ->filter(request()->all())->orderBy('id','desc');
          if (request()->has('paginate')) {
-            $categories = $categories->paginate(request()->get('paginate'));
+            $categories = $categories->where("is_active",1)->paginate(request()->get('paginate'));
         } else {
             $categories = $categories->get();
         }

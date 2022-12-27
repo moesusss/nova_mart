@@ -18,6 +18,14 @@ class CustomerAddressRepository extends BaseRepository
         return CustomerAddress::class;
     }
 
+    public function getCustomerAddress($id){
+        return CustomerAddress::find($id);
+    }
+
+    public function getCustomerAddressesByCustomerID($customer_id){
+        return CustomerAddress::where('customer_id',$customer_id)->get();
+    }
+
     /**
      * @param array $data
      *
@@ -61,12 +69,15 @@ class CustomerAddressRepository extends BaseRepository
     /**
      * @param CustomerAddress $customer_address
      */
-    public function destroy(CustomerAddress $customer_address)
+    public function destroy($customer_address)
     {
-        $deleted = $this->deleteById($customer_address->id);
+        if($customer_address){
+            $deleted = $this->deleteById($customer_address->id);
 
-        if ($deleted) {
-            $customer_address->save();
+            if ($deleted) {
+                $customer_address->save();
+            }
         }
+        
     }
 }

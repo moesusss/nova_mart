@@ -65,8 +65,8 @@ class VendorController extends Controller
         $request['orderBy'] = 'created_at';
         $request['sortBy'] = 'desc';
         $categories = $this->itemService->getCategoryByVendor($vendor->id);
-        $best_sellers = $this->itemService->getItems($request['item_type'] = 'best_seller');
-        $best_deals = $this->itemService->getItems($request['item_type'] = 'best_deal');
+        $best_sellers = $this->itemService->getItems($request['item_type'] = 'best_sellers');
+        $best_deals = $this->itemService->getItems($request['item_type'] = 'special_deals');
         $new_arrivals = $this->itemService->getItems($request);
 
         $items = $this->subCategoryService->getSubCategoriesWithHighlightItems($vendor);

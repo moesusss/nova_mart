@@ -51,9 +51,16 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth']], function () {
     // Vendor Route
     Route::resource('vendors', App\Http\Controllers\Backend\VendorController::class);
     Route::get('vendors/{vendor}/change_status', [App\Http\Controllers\Backend\VendorController::class,'changeStatus']);
-    // Vendor Item
+    // Item
     Route::resource('items', App\Http\Controllers\Backend\ItemController::class);
     Route::get('items/{item}/change_status', [App\Http\Controllers\Backend\ItemController::class,'changeStatus']);
-    
-
+    Route::get('items/getDataByVendorID/{id}', [App\Http\Controllers\Backend\ItemController::class,'getDataByVendorID']);
+    // Item Stock
+    Route::resource('item_stocks', App\Http\Controllers\Backend\ItemStockController::class);
+    // Customer
+    Route::resource('customers', App\Http\Controllers\Backend\CustomerController::class);
+    Route::get('customers/{customer}/change_status', [App\Http\Controllers\Backend\CustomerController::class,'changeStatus']);
+    // Delivery Fees
+    Route::resource('delivery_fees', App\Http\Controllers\Backend\DeliveryFeeController::class);
+    Route::get('delivery_fees/{delivery_fee}/change_status', [App\Http\Controllers\Backend\DeliveryFeeController::class,'changeStatus']);
 });

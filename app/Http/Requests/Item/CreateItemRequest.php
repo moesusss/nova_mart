@@ -29,16 +29,17 @@ class CreateItemRequest extends FormRequest
             'vendor_id' => 'required|uuid|exists:vendors,id',
             'category_id' => 'required|uuid|exists:categories,id',
             'sub_category_id' => 'required|uuid|exists:sub_categories,id',
-            'brand_id' => 'required|uuid|exists:brands,id',
-            'qty' => 'required',
+            'brand_id' => 'nullable|uuid|exists:brands,id',
+            // 'qty' => 'required',
             'price' => 'required',
-            'weight' => 'required_if:unit_type,==,kg',
+            'weight' => 'required',
             'is_active' => 'nullable|boolean',
+            'is_tax'    => 'nullable|boolean',
             'is_instock' => 'nullable|boolean',
             'is_package' => 'nullable|boolean',
             'description' => 'required',
-            'item_type' => 'required',
-            'unit_type' => 'required',
+            'item_type' => 'nullable',
+            'weight_convention_id' => 'required|uuid|exists:weight_conventions,id',
         ];
     }
 }

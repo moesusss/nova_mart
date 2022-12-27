@@ -41,6 +41,45 @@ $('.main-service-data-table').DataTable({
     ]
 });
 
+//  Delivery Fee index table
+$('.delivery-fee-data-table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: $('#table_url').attr('data-table-url'),
+    columns: [
+        {data: 'delivery_type', name: 'delivery_type'},
+        {data: 'from', name: 'from'},
+        {data: 'to', name: 'to'},
+        {data: 'amount', name: 'amount'},
+        {
+            data: 'action', 
+            name: 'action', 
+            orderable: false, 
+            searchable: false,
+            "class" : "td-actions text-right",  
+        },
+    ]
+});
+
+//  Customer index table
+$('.customer-data-table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: $('#table_url').attr('data-table-url'),
+    columns: [
+        {data: 'name', name: 'name'},
+        {data: 'mobile', name: 'mobile'},
+        {data: 'is_active', name: 'is_active'},
+        {
+            data: 'action', 
+            name: 'action', 
+            orderable: false, 
+            searchable: false,
+            "class" : "td-actions text-right",  
+        },
+    ]
+});
+
 //  Category index table
 $('.category-data-table').DataTable({
     processing: true,
@@ -186,6 +225,19 @@ $('.user-data-table').DataTable({
     ]
 });
 
+//  Stock index table
+$('.stock-data-table').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: $('#table_url').attr('data-table-url'),
+    columns: [
+        {data: 'item_name', name: 'item_name'},
+        {data: 'qty', name: 'qty'},
+        {data: 'created_by', name: 'created_by'},
+        {data: 'created_at', name: 'created_at'}
+    ]
+});
+
 //Date and time picker
 $('#opening_time').datetimepicker({ 
     icons: { time: 'far fa-clock' },
@@ -195,6 +247,12 @@ $('#opening_time').datetimepicker({
 
 //Date and time picker
 $('#closing_time').datetimepicker({ 
+    icons: { time: 'far fa-clock' },
+    format: 'LT' 
+});
+
+//Date and time picker
+$('#order_closing_time').datetimepicker({ 
     icons: { time: 'far fa-clock' },
     format: 'LT' 
 });
@@ -332,6 +390,26 @@ $(document).on('change','.sub_category_id',function(){
                     
                 });
                 $("#brand_id").html(option);
+            }
+		}
+	});
+})
+
+// Get Item using vendor
+$(document).on('change','.vendor_id',function(){
+    vendor_id = $(this).val();
+    url = $(this).attr('data-attr-url')+'/'+vendor_id;
+    $.ajax({
+		url: url,
+		type: "GET",
+		success: function(data) {
+            if(data.status == true){
+                option = "<option value=''>Select Item</option>";
+                $.each(data.data, function(index, value) {
+                        option += '<option value="'+value.id+'">'+value.name+'</option>';
+                    
+                });
+                $(".item_id").html(option);
             }
 		}
 	});

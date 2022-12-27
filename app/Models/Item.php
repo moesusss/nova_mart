@@ -7,6 +7,7 @@ use App\Models\Image;
 use App\Traits\Uuids;
 use App\Models\Vendor;
 use App\Models\Category;
+use App\Models\OrderItem;
 use App\Models\SubCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -33,7 +34,8 @@ class Item extends Model
         'is_package',
         'description',
         'item_type',
-        'unit_type',
+        'weight_convention_id',
+        'weight_by_kg',
         'created_by_id',
         'updated_by_id',
         'deleted_by_id',
@@ -58,6 +60,16 @@ class Item extends Model
     public function vendor()
     {
         return $this->belongsTo(Vendor::class);
+    }
+
+    public function item_stocks()
+    {
+        return $this->hasMany(ItemStock::class);
+    }
+
+    public function order_items()
+    {
+        return $this->hasMany(OrderItem::class);
     }
 
     public function  scopeGetRelatedItem($query, $filter)

@@ -50,7 +50,7 @@ class ImageService implements ImageServiceInterface
         catch(Exception $exc){
             DB::rollBack();
             Log::error($exc->getMessage());
-            throw new InvalidArgumentException('Unable to update user');
+            throw new InvalidArgumentException('Unable to update image');
         }
         DB::commit();
 
@@ -66,7 +66,7 @@ class ImageService implements ImageServiceInterface
         catch(Exception $exc){
             DB::rollBack();
             Log::error($exc->getMessage());
-            throw new InvalidArgumentException('Unable to delete user');
+            throw new InvalidArgumentException('Unable to delete image');
         }
         DB::commit();
         

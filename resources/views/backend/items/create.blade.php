@@ -74,7 +74,7 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="category_id" class="col-sm-3 col-form-label">Category </label>
+                                            <label for="category_id" class="col-sm-3 col-form-label">Category <span class="text-danger">*</span></label>
                                             <div class="col-sm-6">
                                                 <!-- <label>Please Select Role</label> -->
                                                 <div class="select2-purple">
@@ -93,7 +93,7 @@
                                         </div>
                                 
                                         <div class="form-group row">
-                                            <label for="sub_category_id" class="col-sm-3 col-form-label">Sub Category </label>
+                                            <label for="sub_category_id" class="col-sm-3 col-form-label">Sub Category <span class="text-danger">*</span></label>
                                             <div class="col-sm-6">
                                                 <!-- <label>Please Select Role</label> -->
                                                 <div class="select2-purple">
@@ -136,15 +136,6 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            <label for="qty" class="col-sm-3 col-form-label">Qty </label>
-                                            <div class="col-sm-6">
-                                            <input type="number" name="qty" class="form-control @error('qty') is-invalid @enderror" id="qty" placeholder="Qty" min=0 value="{{ (old('bar_code'))?old('bar_code'):0 }}">
-                                                @error('qty')
-                                                    <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
                                             <label for="price" class="col-sm-3 col-form-label"> Price <span class="text-danger">*</span></label>
                                             <div class="col-sm-6">
                                                 <input type="number" name="price" class="form-control @error('price') is-invalid @enderror" id="price" placeholder="Price" min=0 value="{{ (old('price'))?old('price'):0 }}">
@@ -155,9 +146,9 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="weight" class="col-sm-3 col-form-label"> Weight </label>
+                                            <label for="weight" class="col-sm-3 col-form-label"> Weight<span class="text-danger">*</span>  </label>
                                             <div class="col-sm-6">
-                                                <input type="number" name="weight" class="form-control @error('weight') is-invalid @enderror" id="weight" placeholder="Weight" min=0 value="{{ (old('weight'))?old('weight'):0 }}">
+                                                <input type="number" name="weight" class="form-control @error('weight') is-invalid @enderror" id="weight" placeholder="Weight" min=0 value="{{ (old('weight'))?old('weight'):0 }}" max=6>
                                                 @error('weight')
                                                     <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
                                                 @enderror
@@ -165,16 +156,16 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="unit_type" class="col-sm-3 col-form-label">Unit Type </label>
+                                            <label for="weight_convention_id" class="col-sm-3 col-form-label">Unit Type <span class="text-danger">*</span></label>
                                             <div class="col-sm-6">
                                                 <div class="select2-purple">
-                                                    <select class="unit_type form-control @error('unit_type') is-invalid @enderror select2" name="unit_type" data-placeholder="Select Unit Type" data-dropdown-css-class="" style="width: 100%;">
+                                                    <select class="weight_convention_id form-control @error('weight_convention_id') is-invalid @enderror select2" name="weight_convention_id" data-placeholder="Select Unit Type" data-dropdown-css-class="" style="width: 100%;">
                                                         <option value="">Select Unit Type</option>
-                                                        @foreach ($unit_types as $unit_type)
-                                                            <option value="{{ $unit_type->key }}" {{ (old('unit_type')==$unit_type->key)?"selected":"" }}>{{$unit_type->value}}</option>
+                                                        @foreach ($weight_conventions as $weight_con)
+                                                            <option value="{{ $weight_con->id }}" {{ (old('weight_convention_id')==$weight_con->id)?"selected":"" }}>{{$weight_con->unit_type}}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('unit_type')
+                                                    @error('weight_convention_id')
                                                         <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -202,9 +193,19 @@
                                         </div>
 
                                         <div class="form-group row">
+                                            <!-- <div class="form-check"> -->
+                                                
+                                                <label for="is_tax" class="col-sm-3 col-form-label" name="is_tax">Exclusive Tax?</label>
+                                                <div class="col-sm-6 ">
+                                                <input type="checkbox" class="form-check-input " id="is_tax" name="is_tax">
+                                                </div>
+                                            <!-- </div> -->
+                                        </div>
+
+                                        <div class="form-group row">
                                             <label for="description" class="col-sm-3 col-form-label"> Description <span class="text-danger">*</span></label>
                                             <div class="col-sm-6">
-                                                <textarea name="description" id="" class="form-control @error('description') is-invalid @enderror"></textarea>
+                                                <textarea name="description" id="" class="form-control @error('description') is-invalid @enderror">{{old('description')}}</textarea>
                                                 @error('description')
                                                     <span id="exampleInputEmail1-error" class="error invalid-feedback">{{ $message }}</span>
                                                 @enderror

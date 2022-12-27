@@ -8,14 +8,14 @@ use InvalidArgumentException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\Backend\brandRepository;
+use App\Repositories\Backend\BrandRepository;
 use App\Services\Interfaces\BrandServiceInterface;
 
 class BrandService implements BrandServiceInterface
 {
     protected $brandRepository;
 
-    public function __construct(brandRepository $brandRepository)
+    public function __construct(BrandRepository $brandRepository)
     {
         $this->brandRepository = $brandRepository;
     }
@@ -28,7 +28,7 @@ class BrandService implements BrandServiceInterface
     public function getBrands()
     {
         if( request()->is('api/*')){
-            return $this->brandRepository->getSubCategories();
+            return $this->brandRepository->getBrands();
         }
         return $this->brandRepository->orderBy('created_at','desc')->get();
         
@@ -59,7 +59,7 @@ class BrandService implements BrandServiceInterface
         catch(Exception $exc){
             DB::rollBack();
             Log::error($exc->getMessage());
-            throw new InvalidArgumentException('Unable to update user');
+            throw new InvalidArgumentException('Unable to update brand');
         }
         DB::commit();
 
@@ -75,7 +75,7 @@ class BrandService implements BrandServiceInterface
         catch(Exception $exc){
             DB::rollBack();
             Log::error($exc->getMessage());
-            throw new InvalidArgumentException('Unable to delete user');
+            throw new InvalidArgumentException('Unable to delete brand');
         }
         DB::commit();
         

@@ -34,12 +34,14 @@ class UpdateVendorRequest extends FormRequest
             'address' => 'required|string',
             'opening_time' => 'required',
             'closing_time' => 'required|after_or_equal:opening_time',
+            'order_closing_time' => 'required|before_or_equal:closing_time|after_or_equal:opening_time',
             'is_active' => 'nullable|boolean',
             'is_closed' => 'nullable|boolean',
             'lat' => 'required',
             'lng' => 'required',
             'min_order_time' => 'required',
             'min_order_amount' => 'required',
+            'commission_fee' => 'required',
         ];
     }
 }
