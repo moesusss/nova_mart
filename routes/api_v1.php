@@ -41,5 +41,6 @@ Route::group([ 'middleware' => ['auth:customer']], function () {
     Route::apiResource('vendors', VendorController::class)->only(['index','show']);
     Route::apiResource('items', ItemController::class)->only(['index','show']);
     Route::apiResource('transactions', TransactionController::class)->only(['index','store','show']);
+    Route::post('check_transaction', [TransactionController::class, 'check_transaction']);
     
 });

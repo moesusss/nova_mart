@@ -24,7 +24,7 @@ class CreateTransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer_id' => 'required|uuid|exists:customers,id',
+            'transaction_token' => 'required|string',
             'customer_address_id' => 'required|uuid|exists:customer_addresses,id',
             'is_coupon' => 'nullable|boolean',
             'coupon_code' => 'nullable|string',
@@ -35,7 +35,7 @@ class CreateTransactionRequest extends FormRequest
             'orders' => 'required|array',
             'orders.*.vendor_id'  =>  'required|uuid|exists:vendors,id',
             'orders.*.is_coupon'  =>  'nullable|boolean',
-            'orders.*.delivery_amount' =>  'required|regex:/^\d{1,14}(\.\d{1,2})?$/',
+            // 'orders.*.delivery_amount' =>  'required|regex:/^\d{1,14}(\.\d{1,2})?$/',
             'orders.*.tax_amount'  =>  'nullable|regex:/^\d{1,14}(\.\d{1,2})?$/',
 
             'orders.*.order_items' => 'required|array',

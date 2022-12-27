@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Rangoon',
 
     /*
     |--------------------------------------------------------------------------
@@ -204,6 +204,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+         App\Providers\ObserverServiceProvider::class,
 
     ],
 

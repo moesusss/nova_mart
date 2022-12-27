@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('sub_total', 16, 2)->default(0);
             $table->string('customer_id');
             $table->string('token');
+            $table->boolean('is_complete')->default(false);
             $table->timestamps();
         });
     }

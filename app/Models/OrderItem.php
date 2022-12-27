@@ -17,6 +17,7 @@ class OrderItem extends Model
         'transaction_id',
         'item_id',
         'qty',
+        'price',
         'total',
         'is_promotion',
         'discount_amount',
